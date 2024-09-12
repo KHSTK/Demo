@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e21874e05b199654da150bf39f2a749b, type: 3}
+  m_Name: "\u7BAD\u5854"
+  m_EditorClassIdentifier: 
+  nameString: "\u7BAD\u5854"
+  prefab: {fileID: 4035302042029911038, guid: 82d9795f73218dd4f96fda8fe4dbadfc, type: 3}
+  resourceGeneratorData:
+    timerMax: 0
+    resourceType: {fileID: 0}
+    resourecDetectionRadius: 0
+    maxResourceAmount: 0
+  sprite: {fileID: 21300000, guid: 2299a5217bd67be44af18146dee32564, type: 3}
+  minConstructionRadius: 0
+  constructionResourceCostArray:
+  - resourceType: {fileID: 11400000, guid: 027b6eac18e7129429145ea3045827ed, type: 2}
+    amount: 50
+  - resourceType: {fileID: 11400000, guid: 942e549d38dc554428cd3f5487c8665b, type: 2}
+    amount: 10
+  - resourceType: {fileID: 11400000, guid: c23ed5b5130ae954182aacca8d65a25b, type: 2}
+    amount: 5
+  healthAmountMax: 100
+  constructionTimerMax: 3
