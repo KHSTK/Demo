@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddd73d4634ed04c47b175a60ba1df310, type: 3}
+  m_Name: CardData
+  m_EditorClassIdentifier: 
+  cardItemDataList:
+  - name: "\u8C4C\u8C46\u5C04\u624B"
+    waitTime: 4
+    useSun: 100
+    prefab: {fileID: 9221997868393722769, guid: e26d9433c8d7afe4380090bf8408e0cc, type: 3}
+    sprite: {fileID: 21300000, guid: bea4cbe66fef17b44aeffff46d275d78, type: 3}
+  - name: "\u5411\u65E5\u8475"
+    waitTime: 4
+    useSun: 50
+    prefab: {fileID: 8830687208626840497, guid: dd1d1ca3ac22b0a48b12448c71216926, type: 3}
+    sprite: {fileID: 21300000, guid: 1ab9677e36f73de469ed34e6f9087422, type: 3}
+  - name: "\u575A\u679C\u5899"
+    waitTime: 15
+    useSun: 50
+    prefab: {fileID: 272578776125192885, guid: 04fae1ec540cae44fba37048154e9a68, type: 3}
+    sprite: {fileID: 21300000, guid: 78aabd7e9cd2fba40ace52286b7f37dc, type: 3}
+  - name: "\u706B\u70AC\u6811\u6869"
+    waitTime: 5
+    useSun: 175
+    prefab: {fileID: 1497266745197649597, guid: 03343193736cc3943bbbcdd59290457f, type: 3}
+    sprite: {fileID: 21300000, guid: 86ffa484e2a50b546a551336dc793dc2, type: 3}
+  - name: "\u502D\u74DC"
+    waitTime: 15
+    useSun: 50
+    prefab: {fileID: 2871192547235682841, guid: 8f6ca155bfa60f247b1f523686506239, type: 3}
+    sprite: {fileID: 21300000, guid: 9f526b9a97e2b8844b5b071a5ae67cc1, type: 3}
