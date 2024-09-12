@@ -32,7 +32,7 @@ public class CameraHandler : MonoBehaviour
         transform.position += moveDir * moveSpeed * Time.deltaTime;
     }
 
-    // 处理缩放
+    // 处理摄像机缩放
     private void HandleZoom()
     {
         float zoomAmount = 2f;
