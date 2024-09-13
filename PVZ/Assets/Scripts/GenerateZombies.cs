@@ -41,7 +41,7 @@ public class GenerateZombies : MonoBehaviour
         if (!canCreate)
         {
             StopAllCoroutines();//停止所有的携程
-            //TODO:游戏胜利处理
+        //TODO: 游戏胜利处理
             Debug.Log("游戏胜利");
         }
     }

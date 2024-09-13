@@ -25,6 +25,7 @@ public class Squash : Plants
     {
         if (other.CompareTag("Enemy"))
         {
+            AudioManager.Instance.PlaySFX("Ÿ¡πœ¥•∑¢");
             GetComponent<Collider2D>().enabled = false;
             targetEnemy = other.gameObject;
             Invoke("SetAttack", 1f);

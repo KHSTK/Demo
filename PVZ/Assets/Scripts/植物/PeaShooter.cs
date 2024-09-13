@@ -53,6 +53,7 @@ public class PeaShooter : Plants
     }
     void FirePea()
     {
+        AudioManager.Instance.PlaySFX("豌豆发射");
         Instantiate(bullet, bulletPos.position, Quaternion.identity); // 生成子弹
         animator.SetBool("Attacking", false);
 

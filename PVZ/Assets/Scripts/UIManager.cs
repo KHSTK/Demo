@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -9,19 +10,48 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI sunSumText;
     public ProgressPanel progressPanel;
     int zombieDiedCount = 0;//À¿ÕˆΩ© ¨ ˝¡ø
+    public SpriteRenderer spriteRenderer;
+    public GameObject cardPanel;
+    public GameObject chooserCard;
+    public Camera Camera;
+
     private void Awake()
     {
         Instance = this;
-
     }
 
     private void Start()
     {
+        //≈‰÷√±≥æ∞
+        spriteRenderer.sprite = LevelItemData.Instance.item.bgSprite;
+
         Init();
         zombieDiedCount = 0;
         InitProgressPanel();
+        StartCoroutine(StartUI());
     }
-
+    
+    IEnumerator StartUI()
+    {
+        yield return new WaitForSeconds(1f);
+        Camera.transform.DOMove(new Vector3(Camera.transform.position.x + 310, Camera.transform.position.y, -10), 2f);
+        yield return new WaitForSeconds(2f);
+        cardPanel.SetActive(true);
+        cardPanel.transform.DOMove(new Vector3(cardPanel.transform.position.x + 350, cardPanel.transform.position.y, 0), 0.3f);
+        chooserCard.SetActive(true);
+        chooserCard.transform.DOMove(new Vector3(chooserCard.transform.position.x, chooserCard.transform.position.y - 60, 0), 0.3f);
+    }
+    public void SatrSetPlant()
+    {
+        StartCoroutine(SetPlant());
+    }
+    IEnumerator SetPlant()
+    {
+        yield return new WaitForSeconds(0.3f);
+        Camera.transform.DOMove(new Vector3(Camera.transform.position.x - 310, Camera.transform.position.y, -10), 2f);
+        yield return new WaitForSeconds(3f);
+        chooserCard.SetActive(true);
+    }
     public void Init()
     {
         sunSumText.text = GameManager.Instance.sunSum.ToString();

@@ -44,7 +44,7 @@ public class PeaBullet : MonoBehaviour, IInteractable
         if (other.CompareTag("Enemy"))
         {
             other.GetComponent<Character>()?.TakeDamage(damage);
-            //AudioManager.Instance.PlaySFX("豌豆击中");
+            AudioManager.Instance.PlaySFX("豌豆击中");
             //生成火焰效果
             if (isFire)
             {

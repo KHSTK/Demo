@@ -44,6 +44,7 @@ public class Sun : MonoBehaviour
     {
         Debug.Log("经过阳光");
         GameManager.Instance.SetSunSum(sun);
+        AudioManager.Instance.PlaySFX("收集阳光");
         // 移动阳光到目标位置
         StartCoroutine(MoveToTargetPosition());
     }
