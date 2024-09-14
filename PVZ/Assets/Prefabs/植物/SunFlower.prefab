@@ -124,7 +124,7 @@ MonoBehaviour:
   isOpen: 0
   interval: 10
   sunshine: {fileID: 41677234710274326, guid: f781af4ff73051649b4f254757e0500e, type: 3}
-  produceDistance: 100
+  produceDistance: 60
 --- !u!114 &-5652438578823966948
 MonoBehaviour:
   m_ObjectHideFlags: 0

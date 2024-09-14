@@ -60,5 +60,29 @@ public class AudioManager : MonoBehaviour
 			sfxSource.PlayOneShot(s.clip);
 		}
 	}
+	//切换音乐的静音状态
+	public void ToggleMusic()
+	{
+		musicSource.mute = !musicSource.mute;
+	}
+
+	//切换音效的静音状态
+	public void ToggleSFX()
+	{
+		sfxSource.mute = !sfxSource.mute;
+	}
+
+	//设置音乐音量的方法，参数为音量值
+	public void MusicVolume(float volume)
+	{
+		musicSource.volume = volume;
+	}
+
+	//设置音效音量的方法，参数为音量值
+	public void SFXVolume(float volume)
+	{
+		sfxSource.volume = volume;
+	}
+
 }
 
