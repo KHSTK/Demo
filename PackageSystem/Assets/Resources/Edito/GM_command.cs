@@ -46,4 +46,9 @@ public class GM_command
             Debug.Log(item);
         }
     }
+    [MenuItem("GM_command/打开背包主界面")]
+    public static void OpenPackagePanel()
+    {
+        UIManager.Instance.OpenPanel(UIConst.PackagePanel);
+    }
 }
