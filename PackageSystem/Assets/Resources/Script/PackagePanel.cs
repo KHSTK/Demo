@@ -25,6 +25,20 @@ public class PackagePanel : BasePanel
     private Transform UIDetailBtn;
 
     public GameObject PackageUIItemPrefab;
+    //当前选择
+    private string _chooseUid;
+    public string chooseUID
+    {
+        get
+        {
+            return _chooseUid;
+        }
+        set
+        {
+            _chooseUid = value;
+            RefreshDetail();
+        }
+    }
     override protected void Awake()
     {
         base.Awake();
@@ -43,6 +57,14 @@ public class PackagePanel : BasePanel
     private void RefreshUI()
     {
         RefreshScroll();
+    }
+    //刷新详情页面
+    private void RefreshDetail()
+    {
+        //找到uid对应数据
+        PackageLocalItem localItem = GameManager.Instance.GetPackageLocalItemByUid(chooseUID);
+        //刷新详情页面
+        UIDetailPanel.GetComponent<PackageDetail>().Refresh(localItem, this);
     }
     //刷新滚动容器
     private void RefreshScroll()
@@ -71,7 +93,7 @@ public class PackagePanel : BasePanel
         UICloseBtn = transform.Find("RightTop/Close");
         UICenter = transform.Find("Center");
         UIScrollView = transform.Find("Center/Scroll View");
-        UIDetailPanel = transform.Find("Center/DeatilPanel");
+        UIDetailPanel = transform.Find("Center/DetailPanel");
         UILeftBtn = transform.Find("Left/Button");
         UIRightBtn = transform.Find("Right/Button");
 

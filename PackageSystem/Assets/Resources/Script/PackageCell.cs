@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class PackageCell : MonoBehaviour
+public class PackageCell : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler,IPointerExitHandler
 {
     //定义物品各项
     private Transform UIIcon;
@@ -13,6 +14,9 @@ public class PackageCell : MonoBehaviour
     private Transform UILevel;
     private Transform UIStars;
     private Transform UIDeleteSelect;
+
+    private Transform UISelectAni;
+    private Transform UIMouseOverAni;
     //动态数据
     private PackageLocalItem packageLocalData;
     //静态数据
@@ -33,8 +37,13 @@ public class PackageCell : MonoBehaviour
         UILevel = transform.Find("Bottom/LevelText");
         UIStars= transform.Find("Bottom/Stars");
         UIDeleteSelect = transform.Find("DeleteSelect");
+        UISelectAni = transform.Find("SelectAni");
+        UIMouseOverAni = transform.Find("MouseOverAni");
+
 
         UIDeleteSelect.gameObject.SetActive(false);
+        UISelectAni.gameObject.SetActive(false);
+        UIMouseOverAni.gameObject.SetActive(false);
     }
     //刷新物品状态
     public void Refresh(PackageLocalItem packageLocalData,PackagePanel uiPanel)
@@ -68,5 +77,31 @@ public class PackageCell : MonoBehaviour
                 star.gameObject.SetActive(false);
             }
         }
+    }
+    //点击事件
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        Debug.Log("OnPointerClick:" + eventData.ToString());
+        if (this.uiPanel.chooseUID == this.packageLocalData.uid)
+        {
+            return;
+        }
+        //根据点击设置最新的uid———》刷新详情界面
+        this.uiPanel.chooseUID = packageLocalData.uid;
+        UISelectAni.gameObject.SetActive(true);
+        UISelectAni.GetComponent<Animator>().SetTrigger("in");
+    }
+    //鼠标进入事件
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        Debug.Log("OnPointerEnter:" + eventData.ToString());
+        UIMouseOverAni.gameObject.SetActive(true);
+        UIMouseOverAni.GetComponent<Animator>().SetTrigger("in");
+    }
+    //鼠标离开事件
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        Debug.Log("OnPointerExit:" + eventData.ToString());
+        UIMouseOverAni.GetComponent<Animator>().SetTrigger("out");
     }
 }
