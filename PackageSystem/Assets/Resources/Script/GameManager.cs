@@ -21,7 +21,31 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        UIManager.Instance.OpenPanel(UIConst.PackagePanel);
+        
+        UIManager.Instance.OpenPanel(UIConst.MainPanel);
+    }
+    //删除多个物品
+    public void DeletePackageItems(List<string> uids)
+    {
+        foreach(string uid in uids)
+        {
+            DeletePackageItem(uid,false);
+        }
+        PackageLocalData.Instance.SavePackage();
+    }
+    //删除单个物品
+    public void DeletePackageItem(string uid, bool needSave = true)
+    {
+        PackageLocalItem packageLocalItem = GetPackageLocalItemByUid(uid);
+        if (packageLocalItem == null)
+        {
+            return;
+        }
+        PackageLocalData.Instance.items.Remove(packageLocalItem);
+        if (needSave)
+        {
+            PackageLocalData.Instance.SavePackage();
+        }
     }
     //获取静态数据
     public PackageTable GetPackageTable()
@@ -31,6 +55,70 @@ public class GameManager : MonoBehaviour
             packageTable = Resources.Load<PackageTable>("TableData/PackageTable");
         }
         return packageTable;
+    }
+
+    //根据类型获取配置的表格数据
+    public List<PackageTableItem> GetPackageDataByType(int type)
+    {
+        List<PackageTableItem> packagesItems = new List<PackageTableItem>();
+        foreach(PackageTableItem packageItem in GetPackageTable().DataList)
+        {
+            if (packageItem.type == type)
+            {
+                packagesItems.Add(packageItem);
+            }
+        }
+        return packagesItems;
+    }
+    //单抽
+    public PackageLocalItem GetLotteryRandom1()
+    {
+        //随机获取静态数据
+        List<PackageTableItem> packagesItems = GetPackageDataByType(GameConst.PackageTypeWeapon);
+        int index = Random.Range(0, packagesItems.Count);
+        PackageTableItem packageItem = packagesItems[index];
+        //添加动态数据
+        PackageLocalItem packageLocalItem = new()
+        {
+            uid = System.Guid.NewGuid().ToString(),
+            id = packageItem.id,
+            num = 1,
+            level = 1,
+            isNew = CheckWeaponIsNew(packageItem.id)
+        };
+        //存档抽卡
+        PackageLocalData.Instance.items.Add(packageLocalItem);
+        PackageLocalData.Instance.SavePackage();
+        return packageLocalItem;
+    }
+    //十连
+    public List<PackageLocalItem> GetLotteryRandom10(bool sort = false)
+    {
+        //随机抽卡
+        List<PackageLocalItem> packageLocalItems = new();
+        for(int i=0;i<10; i++)
+        {
+            PackageLocalItem packageLocalItem = GetLotteryRandom1();
+            packageLocalItems.Add(packageLocalItem);
+        }
+        if (sort)
+        {
+            packageLocalItems.Sort(new PackageItemComparer());
+        }
+        return packageLocalItems;
+    }
+
+    //是否新获得
+    public bool CheckWeaponIsNew(int id)
+    {
+        foreach(PackageLocalItem packageLocalItem in GetPackageLocalDatas())
+        {
+            if (packageLocalItem.id == id)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     //根据id取表格物体
@@ -86,10 +174,17 @@ public class PackageItemComparer : IComparer<PackageLocalItem>
             int idComparison = y.id.CompareTo(x.id);
             if (idComparison == 0)
             {
-                return b.level.CompareTo(a);
+                return b.level.CompareTo(a.level);
             }
             return idComparison;
         }
         return starComparison;
     }
+}
+public class GameConst
+{
+    //武器类型
+    public const int PackageTypeWeapon = 1;
+    //食物类型
+    public const int PackageTypeFood = 2;
 }

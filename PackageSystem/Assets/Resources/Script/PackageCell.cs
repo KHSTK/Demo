@@ -78,10 +78,25 @@ public class PackageCell : MonoBehaviour, IPointerClickHandler,IPointerEnterHand
             }
         }
     }
+    public void RefreshDeleteState()
+    {
+        if (this.uiPanel.deleteChooseUid.Contains(this.packageLocalData.uid))
+        {
+            this.UIDeleteSelect.gameObject.SetActive(true);
+        }
+        else
+        {
+            this.UIDeleteSelect.gameObject.SetActive(false);
+        }
+    }
     //µã»÷ÊÂ¼þ
     public void OnPointerClick(PointerEventData eventData)
     {
         Debug.Log("OnPointerClick:" + eventData.ToString());
+        if (uiPanel.curMode == PackageMod.delete)
+        {
+            this.uiPanel.AddChooseDeleteUid(this.packageLocalData.uid);
+        }
         if (this.uiPanel.chooseUID == this.packageLocalData.uid)
         {
             return;

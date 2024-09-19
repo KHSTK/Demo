@@ -4,6 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum PackageMod
+{
+    normal,
+    delete,
+    sort,
+}
+
 public class PackagePanel : BasePanel
 {
     //定义背包UI各项
@@ -25,6 +32,11 @@ public class PackagePanel : BasePanel
     private Transform UIDetailBtn;
 
     public GameObject PackageUIItemPrefab;
+    //当前处于哪种模式
+    public PackageMod curMode = PackageMod.normal;
+
+    //选中删除物品
+    public List<string> deleteChooseUid;
     //当前选择
     private string _chooseUid;
     public string chooseUID
@@ -39,6 +51,32 @@ public class PackagePanel : BasePanel
             RefreshDetail();
         }
     }
+    //添加删除选中项
+    public void AddChooseDeleteUid(string uid)
+    {
+        this.deleteChooseUid ??= new List<string>();
+        if (!this.deleteChooseUid.Contains(uid))
+        {
+            this.deleteChooseUid.Add(uid);
+        }
+        else
+        {
+            this.deleteChooseUid.Remove(uid);
+        }
+        RefreshDeletePanel();
+    }
+    //刷新删除界面
+    private void RefreshDeletePanel()
+    {
+        RectTransform scrollContent = UIScrollView.GetComponent<ScrollRect>().content;
+        //遍历子物品调用删除接口
+        foreach(Transform cell in scrollContent)
+        {
+            PackageCell packageCell = cell.GetComponent<PackageCell>();
+            packageCell.RefreshDeleteState();
+        }
+    }
+
     override protected void Awake()
     {
         base.Awake();
@@ -127,20 +165,40 @@ public class PackagePanel : BasePanel
     {
         Debug.Log("OnDeatil");
     }
-
+    //进入删除模式
     private void OnDelete()
     {
         Debug.Log("OnDelete");
-    }
+        curMode = PackageMod.delete;
+        UIDeletePanel.gameObject.SetActive(true);
 
+    }
+    //确认删除
     private void OnDeleteConfirm()
     {
         Debug.Log("OnDeleteConfirm");
+        if (this.deleteChooseUid == null)
+        {
+            return;
+        }
+        if (this.deleteChooseUid.Count == 0)
+        {
+            return;
+        }
+        GameManager.Instance.DeletePackageItems(this.deleteChooseUid);
+        //删除后刷新整个背包
+        RefreshUI();
     }
-
+    //退出删除模式
     private void OnDeleteBack()
     {
         Debug.Log("OnDeleteBack");
+        curMode = PackageMod.normal;
+        UIDeletePanel.gameObject.SetActive(false);
+        //重置选中的删除列表
+        deleteChooseUid = new List<string>();
+        //刷新选中状态
+        RefreshDeletePanel();
     }
 
     private void OnClickRight()
@@ -157,7 +215,7 @@ public class PackagePanel : BasePanel
     {
         Debug.Log("OnClickClose");
         ClosePanel();
-        //UIManager.Instance.ClosePanel(UIConst.PackagePanel);
+        UIManager.Instance.OpenPanel(UIConst.MainPanel);
 
     }
 
