@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/Prefebs/GameStar.unity
+    guid: 1c6ce934545a2a44dbe91f2eebdd43f3
+  - enabled: 1
+    path: Assets/Scenes/Prefebs/WhackAMove.unity
+    guid: 311f11e2092d8a84d929d99a305584ee
+  - enabled: 1
+    path: Assets/Scenes/Prefebs/WhackAMove 2.unity
+    guid: 965bbdef9140eff47a10bfea699bfa31
+  - enabled: 1
+    path: Assets/Scenes/Prefebs/GameEnd.unity
+    guid: ff7c19c9534559346b3646f4a9ee5ac2
+  m_configObjects: {}
