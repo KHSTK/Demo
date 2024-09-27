@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 inputDirection;
     private SpriteRenderer spriteRenderer;
     private Rigidbody2D rb;
+    private PhysicsCheck physicsCheck;
     [Header("基本属性")]
     public float speed;
     public float jumpForce;
@@ -18,6 +19,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         inputCentrol = new PlayerInputCentrol();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        physicsCheck = GetComponent<PhysicsCheck>();
         //started按下时执行
         inputCentrol.GamePlayer.Jump.started+=Jump;
     }
@@ -50,6 +52,7 @@ public class PlayerController : MonoBehaviour
     private void Jump(InputAction.CallbackContext obj)
     {
         //Debug.Log("Jump");
-        rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
+
+        if(physicsCheck.isGround)rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
     }
 }

@@ -110,7 +110,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Tiles_0
+      name: Grass_1
       rect:
         serializedVersion: 2
         x: 0
@@ -131,7 +131,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tiles_1
+      name: Grass_2
       rect:
         serializedVersion: 2
         x: 16
@@ -152,7 +152,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tiles_2
+      name: Grass_3
       rect:
         serializedVersion: 2
         x: 32
@@ -173,7 +173,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tiles_3
+      name: Grass_4
       rect:
         serializedVersion: 2
         x: 48
@@ -194,7 +194,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tiles_4
+      name: Grass_5
       rect:
         serializedVersion: 2
         x: 64
@@ -9864,6 +9864,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      Grass_1: 724764022
+      Grass_2: 1903971768
+      Grass_3: 1149996402
+      Grass_4: -642160633
+      Grass_5: 730779555
       Ground1_1: -1518984491
       Ground1_10: 1373114615
       Ground1_11: -908312496
@@ -9904,8 +9909,6 @@ TextureImporter:
       Ground_2: -674104611
       Ground_3: 1388903111
       Ground_4: -2096039311
-      Tiles_0: 724764022
-      Tiles_1: 1903971768
       Tiles_10: -826098154
       Tiles_100: 1255446791
       Tiles_101: 103923404
@@ -9997,7 +10000,6 @@ TextureImporter:
       Tiles_195: 1601587958
       Tiles_196: -12931989
       Tiles_197: 1721438494
-      Tiles_2: 1149996402
       Tiles_200: -784782246
       Tiles_201: -1848344123
       Tiles_202: -453308338
@@ -10104,7 +10106,6 @@ TextureImporter:
       Tiles_297: 1853937884
       Tiles_298: 2125712270
       Tiles_299: 2060512113
-      Tiles_3: -642160633
       Tiles_30: 1528559699
       Tiles_300: -1858207309
       Tiles_301: 1681146764
@@ -10203,7 +10204,6 @@ TextureImporter:
       Tiles_397: -1482245200
       Tiles_398: 1955761926
       Tiles_399: 8923020
-      Tiles_4: 730779555
       Tiles_400: 1179932970
       Tiles_401: 112851817
       Tiles_402: -1841070463
