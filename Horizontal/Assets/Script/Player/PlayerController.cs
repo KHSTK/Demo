@@ -41,6 +41,12 @@ public class PlayerController : MonoBehaviour
     {
         Move();
     }
+    //≤‚ ‘
+    //private void OnTriggerStay2D(Collider2D collision)
+    //{
+    //    Debug.Log(collision.name);
+    //}
+
     //“∆∂Ø
     public void Move()
     {
