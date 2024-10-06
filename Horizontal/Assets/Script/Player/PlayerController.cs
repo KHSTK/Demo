@@ -11,13 +11,16 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private CapsuleCollider2D collider2D;
     private PhysicsCheck physicsCheck;
+    private PlayerAnimation playerAnimation;
     [Header("基本属性")]
     public float speed;
     public float jumpForce;
     public float hurtForce;
+    [Header("状态")]
     public bool isHurt;
     public bool isCrouch;
     public bool isDead;
+    public bool isAttack;
     private Vector2 originalSize;
     private Vector2 originalOffset;
     private void Awake()
@@ -28,6 +31,7 @@ public class PlayerController : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         physicsCheck = GetComponent<PhysicsCheck>();
         collider2D = GetComponent<CapsuleCollider2D>();
+        playerAnimation = GetComponent<PlayerAnimation>();
         originalSize = collider2D.size;
         originalOffset = collider2D.offset;
         //started按下时执行
@@ -35,7 +39,12 @@ public class PlayerController : MonoBehaviour
         //performed按住时执行
         inputCentrol.GamePlayer.Crouch.performed += CrouchDown;
         inputCentrol.GamePlayer.Crouch.canceled += CrouchOver;
+        //攻击
+        inputCentrol.GamePlayer.Attack.started += PlayerAttack;
     }
+
+
+
     //创建后
     private void OnEnable()
     {
@@ -74,6 +83,7 @@ public class PlayerController : MonoBehaviour
 
         if(physicsCheck.isGround)rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
     }
+
     private void CrouchDown(InputAction.CallbackContext obj)
     {
         isCrouch = true;
@@ -86,6 +96,13 @@ public class PlayerController : MonoBehaviour
         collider2D.size = originalSize;
         collider2D.offset = originalOffset;
     }
+
+    private void PlayerAttack(InputAction.CallbackContext obj)
+    {
+        playerAnimation.PlayAttack();
+        isAttack = true;
+    }
+    #region UnityEvetn
     //受伤位移
     public void GetHurt(Transform attacker)
     {
@@ -100,4 +117,5 @@ public class PlayerController : MonoBehaviour
         isDead = true;
         inputCentrol.GamePlayer.Disable();
     }
+    #endregion
 }
