@@ -16,6 +16,9 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public float jumpForce;
     public float hurtForce;
+    [Header("物理材质")]
+    public PhysicsMaterial2D nomal;
+    public PhysicsMaterial2D wall;
     [Header("状态")]
     public bool isHurt;
     public bool isCrouch;
@@ -48,20 +51,26 @@ public class PlayerController : MonoBehaviour
     //创建后
     private void OnEnable()
     {
+        //初始化控制器
         inputCentrol.Enable();
     }
     //销毁后
     private void OnDisable()
     {
+        //销毁控制器
         inputCentrol.Disable();
     }
     private void Update()
     {
+        //控制器输入
         inputDirection = inputCentrol.GamePlayer.Move.ReadValue<Vector2>();
+        //检测状态
+        CheckState();
     }
     private void FixedUpdate()
     {
-        if(!isHurt)Move();
+        //移动
+        if(!isHurt&&!isAttack)Move();
     }
     //测试
     //private void OnTriggerStay2D(Collider2D collision)
@@ -80,23 +89,26 @@ public class PlayerController : MonoBehaviour
     private void Jump(InputAction.CallbackContext obj)
     {
         //Debug.Log("Jump");
-
+        //按下跳跃键施加力向上
         if(physicsCheck.isGround)rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
     }
 
     private void CrouchDown(InputAction.CallbackContext obj)
     {
+        //蹲下修改碰撞器
         isCrouch = true;
         collider2D.size = new Vector2(originalSize.x, originalSize.y * 0.75f);
         collider2D.offset = new Vector2(originalOffset.x, originalOffset.y * 0.75f);
     }
     private void CrouchOver(InputAction.CallbackContext obj)
     {
+        //恢复站立修改碰撞器
         isCrouch = false;
         collider2D.size = originalSize;
         collider2D.offset = originalOffset;
     }
 
+    //攻击
     private void PlayerAttack(InputAction.CallbackContext obj)
     {
         playerAnimation.PlayAttack();
@@ -118,4 +130,9 @@ public class PlayerController : MonoBehaviour
         inputCentrol.GamePlayer.Disable();
     }
     #endregion
+    //检测状态
+    private void CheckState()
+    {
+        collider2D.sharedMaterial = physicsCheck.isGround?nomal:wall;
+    }
 }
