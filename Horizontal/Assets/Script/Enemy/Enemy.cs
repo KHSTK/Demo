@@ -12,10 +12,15 @@ public class Enemy : MonoBehaviour
     public float chaseSpeed;
     public float currentSpeed;
     public Vector3 faceDir;
+    public Transform attacker;
+    public float hurtForce;
     [Header("¼ÆÊ±Æ÷")]
     public float waitTime;
     public float waitTimeCounter;
     public bool wait;
+    [Header("×´Ì¬")]
+    public bool isDead;
+    public bool isHurt;
     private void Awake()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
@@ -37,7 +42,7 @@ public class Enemy : MonoBehaviour
     //¸ÕÌåÒÆ¶¯´úÂë·ÅÔÚFixedUpdate
     private void FixedUpdate()
     {
-        Move();
+        if(!isHurt)Move();
     }
     public virtual void Move()
     {
@@ -56,5 +61,37 @@ public class Enemy : MonoBehaviour
                 wait = false;
             }
         }
+    }
+    public void OnTakeDamage(Transform attackerTrans)
+    {
+        //¼ÇÂ¼¹¥»÷ÕßÊÇË­
+        attacker = attackerTrans;
+        wait = false;
+        waitTimeCounter = 0;
+        //ÊÜÉËÃæ³¯¹¥»÷Õß
+        if (attackerTrans.position.x - transform.position.x > 0) transform.localScale = new Vector3(-1, 1, 1);
+        if (attackerTrans.position.x - transform.position.x < 0) transform.localScale = new Vector3(1, 1, 1);
+        //ÊÜÉË»÷ÍË
+        isHurt = true;
+        anim.SetTrigger("hurt");
+        Vector2 dir = new Vector2(-(attackerTrans.position.x - transform.position.x), 0).normalized;
+        StartCoroutine(OnHurt(dir));
+    }
+    IEnumerator OnHurt(Vector2 dir)
+    {
+        rb.AddForce(dir * hurtForce, ForceMode2D.Impulse);
+        yield return new WaitForSeconds(0.5f);
+        isHurt = false;
+    }
+    public void OnDead()
+    {
+        //ÐÞ¸ÄÍ¼²ã±ÜÃâÅö×²
+        gameObject.layer = 2;
+        anim.SetBool("dead", true);
+        isDead = true;
+    }
+    public void DistroyAtferAnimator()
+    {
+        Destroy(gameObject);
     }
 }

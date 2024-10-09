@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     private PhysicsCheck physicsCheck;
     private PlayerAnimation playerAnimation;
     [Header("基本属性")]
+    public float faceDir;
     public float speed;
     public float jumpForce;
     public float hurtForce;
@@ -37,6 +38,7 @@ public class PlayerController : MonoBehaviour
         playerAnimation = GetComponent<PlayerAnimation>();
         originalSize = collider2D.size;
         originalOffset = collider2D.offset;
+        faceDir = 1;
         //started按下时执行
         inputCentrol.GamePlayer.Jump.started+=Jump;
         //performed按住时执行
@@ -83,8 +85,11 @@ public class PlayerController : MonoBehaviour
     {
         rb.velocity = new Vector2(inputDirection.x*speed*Time.deltaTime,rb.velocity.y);
         //人物翻转
-        if (inputDirection.x > 0) spriteRenderer.flipX=false;
-        if (inputDirection.x < 0) spriteRenderer.flipX =true;
+        //if (inputDirection.x > 0) spriteRenderer.flipX=false;
+        //if (inputDirection.x < 0) spriteRenderer.flipX =true;
+        if (inputDirection.x > 0) faceDir = 1;
+        if (inputDirection.x < 0) faceDir = -1;
+        transform.localScale = new Vector3(faceDir, 1, 1);
     }
     private void Jump(InputAction.CallbackContext obj)
     {
