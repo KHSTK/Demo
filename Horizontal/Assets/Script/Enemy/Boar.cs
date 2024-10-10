@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Boar : Enemy {
-    public override void Move()
+    protected override void Awake()
     {
-        base.Move();
-        anim.SetBool("walk", true);
+        base.Awake();
+        //创建巡逻逻辑,相当于给Enemy的patrolState赋值
+        patrolState = new BoarPatrolState();
     }
 }

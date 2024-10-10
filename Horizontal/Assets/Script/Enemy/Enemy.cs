@@ -5,12 +5,12 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     protected Rigidbody2D rb;
-    protected Animator anim;
-    protected PhysicsCheck physicsCheck;
+    [HideInInspector] public Animator anim;
+    [HideInInspector] public PhysicsCheck physicsCheck;
     [Header("基础属性")]
     public float nomalSpeed;
     public float chaseSpeed;
-    public float currentSpeed;
+    [HideInInspector]public float currentSpeed;
     public Vector3 faceDir;
     public Transform attacker;
     public float hurtForce;
@@ -21,28 +21,43 @@ public class Enemy : MonoBehaviour
     [Header("状态")]
     public bool isDead;
     public bool isHurt;
-    private void Awake()
+    private BaseState currentState;
+    protected BaseState patrolState;
+    protected virtual void Awake()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
         anim = gameObject.GetComponent<Animator>();
         physicsCheck = gameObject.GetComponent<PhysicsCheck>();
         currentSpeed = nomalSpeed;
+        wait = false;
         waitTimeCounter = waitTime;
+    }
+    //物体被激活时
+    private void OnEnable()
+    {
+        //将当前状态设置为巡逻状态
+        currentState = patrolState;
+        //执行巡逻状态
+        currentState.OnEnter(this);
     }
     private void Update()
     {
         faceDir = new Vector3(-transform.localScale.x, 0, 0);
-        if (physicsCheck.touchLeftWall&&faceDir.x<0 || physicsCheck.touchRightWall && faceDir.x >0)
-        {
-            wait = true;
-            anim.SetBool("walk", false);
-        }
+        
+        //执行当前状态的Update
+        currentState.LogicUpdate();
         TimeCounter();
     }
     //刚体移动代码放在FixedUpdate
     private void FixedUpdate()
     {
-        if(!isHurt)Move();
+        if(!isHurt&&!isDead&&!wait)Move();
+        //执行当前状态的FixedUpdata
+        currentState.Physicsupdate();
+    }
+    private void OnDisable()
+    {
+        currentState.OnExit();
     }
     public virtual void Move()
     {
