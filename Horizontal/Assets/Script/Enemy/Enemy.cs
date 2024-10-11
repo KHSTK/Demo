@@ -18,11 +18,23 @@ public class Enemy : MonoBehaviour
     public float waitTime;
     public float waitTimeCounter;
     public bool wait;
+    public float lostTime;
+    public float lostTimeCounter;
+    [Header("检测")]
+    //中心点
+    public Vector2 centerOffest;
+    //检测盒尺寸
+    public Vector2 checkSize;
+    //检测距离
+    public float checkDistance;
+    //检测层
+    public LayerMask attackLayer;
     [Header("状态")]
     public bool isDead;
     public bool isHurt;
     private BaseState currentState;
     protected BaseState patrolState;
+    protected BaseState chaseState;
     protected virtual void Awake()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
@@ -30,7 +42,6 @@ public class Enemy : MonoBehaviour
         physicsCheck = gameObject.GetComponent<PhysicsCheck>();
         currentSpeed = nomalSpeed;
         wait = false;
-        waitTimeCounter = waitTime;
     }
     //物体被激活时
     private void OnEnable()
@@ -76,7 +87,36 @@ public class Enemy : MonoBehaviour
                 wait = false;
             }
         }
+        if (!FoundPlayer()&&lostTimeCounter>-1)
+        {
+            lostTimeCounter -= Time.deltaTime;
+        }
     }
+    //发现敌人
+    public bool FoundPlayer()
+    {
+        //盒型检测正前方
+        return Physics2D.BoxCast(transform.position + (Vector3)centerOffest, checkSize, 0, faceDir,checkDistance,attackLayer);
+    }
+    //切换状态
+    public void SwitchState(NPCState state)
+    {
+        var newState = state switch
+        {
+            NPCState.Patrol => patrolState,
+            NPCState.Chase => chaseState,
+            _ => null
+        };
+        currentState.OnExit();
+        currentState = newState;
+        currentState.OnEnter(this);
+    }
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(transform.position + (Vector3)centerOffest+new Vector3(checkDistance*-transform.localScale.x,0), 0.2f);
+    }
+
+    #region 事件执行方法
     public void OnTakeDamage(Transform attackerTrans)
     {
         //记录攻击者是谁
@@ -91,6 +131,7 @@ public class Enemy : MonoBehaviour
         anim.SetTrigger("hurt");
         Vector2 dir = new Vector2(-(attackerTrans.position.x - transform.position.x), 0).normalized;
         StartCoroutine(OnHurt(dir));
+        rb.velocity = new Vector2(0, rb.velocity.y);
     }
     IEnumerator OnHurt(Vector2 dir)
     {
@@ -109,4 +150,5 @@ public class Enemy : MonoBehaviour
     {
         Destroy(gameObject);
     }
+#endregion
 }
