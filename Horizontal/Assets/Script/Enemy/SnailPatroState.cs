@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
-public class BoarPatrolState : BaseState
+public class SnailPatroState : BaseState
 {
     public override void OnEnter(Enemy enemy)
     {
@@ -11,13 +8,13 @@ public class BoarPatrolState : BaseState
     }
     public override void LogicUpdate()
     {
-        //发现player进入追击状态
+        //发现player进入特殊状态
         if (currentEnemy.FoundPlayer())
         {
-            currentEnemy.SwitchState(NPCState.Chase);
+            currentEnemy.SwitchState(NPCState.Skill);
         }
         //巡逻状态
-        if (!currentEnemy.physicsCheck.isGround||currentEnemy.physicsCheck.touchLeftWall && currentEnemy.faceDir.x < 0 || currentEnemy.physicsCheck.touchRightWall && currentEnemy.faceDir.x > 0)
+        if (!currentEnemy.physicsCheck.isGround || currentEnemy.physicsCheck.touchLeftWall && currentEnemy.faceDir.x < 0 || currentEnemy.physicsCheck.touchRightWall && currentEnemy.faceDir.x > 0)
         {
             Debug.Log("转向");
             currentEnemy.anim.SetBool("walk", false);
@@ -30,11 +27,10 @@ public class BoarPatrolState : BaseState
     }
     public override void Physicsupdate()
     {
-        
+
     }
     public override void OnExit()
     {
-        currentEnemy.anim.SetBool("walk", false);
-        Debug.Log("Exit Patrol");
+
     }
 }

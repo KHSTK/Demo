@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//自动添加必须项
+[RequireComponent(typeof(Rigidbody2D), typeof(Animator), typeof(PhysicsCheck))] 
 public class Enemy : MonoBehaviour
 {
     protected Rigidbody2D rb;
@@ -62,9 +63,9 @@ public class Enemy : MonoBehaviour
     //刚体移动代码放在FixedUpdate
     private void FixedUpdate()
     {
+        currentState.Physicsupdate();
         if(!isHurt&&!isDead&&!wait)Move();
         //执行当前状态的FixedUpdata
-        currentState.Physicsupdate();
     }
     private void OnDisable()
     {
@@ -72,6 +73,7 @@ public class Enemy : MonoBehaviour
     }
     public virtual void Move()
     {
+        if(!anim.GetCurrentAnimatorStateInfo(0).IsName("PreMove"))
         rb.velocity = new Vector2(currentSpeed * faceDir.x * Time.deltaTime, rb.velocity.y);
     }
     //计时器

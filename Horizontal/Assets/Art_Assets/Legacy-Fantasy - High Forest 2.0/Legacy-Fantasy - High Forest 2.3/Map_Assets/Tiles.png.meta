@@ -2252,7 +2252,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tiles_102
+      name: Rock_1
       rect:
         serializedVersion: 2
         x: 0
@@ -2273,7 +2273,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tiles_103
+      name: Rock_2
       rect:
         serializedVersion: 2
         x: 16
@@ -2294,7 +2294,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tiles_104
+      name: Rock_3
       rect:
         serializedVersion: 2
         x: 32
@@ -2315,7 +2315,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tiles_105
+      name: Rock_4
       rect:
         serializedVersion: 2
         x: 48
@@ -2336,7 +2336,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tiles_106
+      name: Rock_5
       rect:
         serializedVersion: 2
         x: 64
@@ -9909,14 +9909,14 @@ TextureImporter:
       Ground_2: -674104611
       Ground_3: 1388903111
       Ground_4: -2096039311
+      Rock_1: 2049002035
+      Rock_2: -451453664
+      Rock_3: -720034507
+      Rock_4: 1125552052
+      Rock_5: 1830149792
       Tiles_10: -826098154
       Tiles_100: 1255446791
       Tiles_101: 103923404
-      Tiles_102: 2049002035
-      Tiles_103: -451453664
-      Tiles_104: -720034507
-      Tiles_105: 1125552052
-      Tiles_106: 1830149792
       Tiles_107: -1115427558
       Tiles_108: 742096875
       Tiles_109: -306653538
