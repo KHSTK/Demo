@@ -36,6 +36,7 @@ public class Enemy : MonoBehaviour
     private BaseState currentState;
     protected BaseState patrolState;
     protected BaseState chaseState;
+    protected BaseState skillState;
     protected virtual void Awake()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
@@ -73,7 +74,7 @@ public class Enemy : MonoBehaviour
     }
     public virtual void Move()
     {
-        if(!anim.GetCurrentAnimatorStateInfo(0).IsName("PreMove"))
+        if(!anim.GetCurrentAnimatorStateInfo(0).IsName("PreMove")&& !anim.GetCurrentAnimatorStateInfo(0).IsName("SnailHideOver"))
         rb.velocity = new Vector2(currentSpeed * faceDir.x * Time.deltaTime, rb.velocity.y);
     }
     //¼ÆÊ±Æ÷
@@ -107,6 +108,7 @@ public class Enemy : MonoBehaviour
         {
             NPCState.Patrol => patrolState,
             NPCState.Chase => chaseState,
+            NPCState.Skill=>skillState,
             _ => null
         };
         currentState.OnExit();

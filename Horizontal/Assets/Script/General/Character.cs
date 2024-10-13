@@ -10,7 +10,7 @@ public class Character : MonoBehaviour
     public float currentHealth;
     [Header("ÊÜÉËÎŞµĞ")]
     public float invulnerableDuration;
-    private float invulnerableCounter;
+    public float invulnerableCounter;
     public bool invulnerable;
 
     public UnityEvent<Transform> OnTakeDamage;

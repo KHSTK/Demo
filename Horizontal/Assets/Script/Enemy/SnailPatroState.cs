@@ -5,6 +5,7 @@ public class SnailPatroState : BaseState
     {
         currentEnemy = enemy;
         currentEnemy.currentSpeed = currentEnemy.nomalSpeed;
+        currentEnemy.waitTimeCounter = currentEnemy.waitTime;
     }
     public override void LogicUpdate()
     {
