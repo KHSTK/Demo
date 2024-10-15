@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d3d456b39a9f0dd4e8db5df8ea1a33e0
+guid: 6997676d58ef07d4396ccc98fc67c476
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,7 +110,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Fly-Sheet_0
+      name: Hit-Sheet 1_0
       rect:
         serializedVersion: 2
         x: 0
@@ -124,14 +124,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f1d166e33e113da48a5e21a3008e2a82
-      internalID: -1080825672
+      spriteID: 958505520b04f38439b6b416bd1d68fe
+      internalID: -1549129631
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fly-Sheet_1
+      name: Hit-Sheet 1_1
       rect:
         serializedVersion: 2
         x: 64
@@ -145,14 +145,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fdb2b57ec6bb66b49ab9c80a69bc7ce6
-      internalID: 1049626948
+      spriteID: 9b8998702ea63b44884fbc93d13e345e
+      internalID: -442132054
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fly-Sheet_2
+      name: Hit-Sheet 1_2
       rect:
         serializedVersion: 2
         x: 128
@@ -166,14 +166,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fe5bd40c07e2fbb48a978e4d1517ffba
-      internalID: -1136878910
+      spriteID: e061d80418d675a4ab337b77b5173b8d
+      internalID: 1883704550
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fly-Sheet_3
+      name: Hit-Sheet 1_3
       rect:
         serializedVersion: 2
         x: 192
@@ -187,8 +187,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1a99bb1d661853047bfd08f0af2e6e93
-      internalID: -282646814
+      spriteID: f7122d85b862a3a44814f35c89220910
+      internalID: -464902284
       vertices: []
       indices: 
       edges: []
@@ -204,10 +204,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Fly-Sheet_0: -1080825672
-      Fly-Sheet_1: 1049626948
-      Fly-Sheet_2: -1136878910
-      Fly-Sheet_3: -282646814
+      Hit-Sheet 1_0: -1549129631
+      Hit-Sheet 1_1: -442132054
+      Hit-Sheet 1_2: 1883704550
+      Hit-Sheet 1_3: -464902284
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

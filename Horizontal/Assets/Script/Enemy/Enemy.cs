@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D), typeof(Animator), typeof(PhysicsCheck))] 
 public class Enemy : MonoBehaviour
 {
-    protected Rigidbody2D rb;
+    [HideInInspector] public Rigidbody2D rb;
     [HideInInspector] public Animator anim;
     [HideInInspector] public PhysicsCheck physicsCheck;
     [Header("基础属性")]
@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
     public Vector3 faceDir;
     public Transform attacker;
     public float hurtForce;
+    public Vector3 spwanPoint;
     [Header("计时器")]
     public float waitTime;
     public float waitTimeCounter;
@@ -44,6 +45,7 @@ public class Enemy : MonoBehaviour
         physicsCheck = gameObject.GetComponent<PhysicsCheck>();
         currentSpeed = nomalSpeed;
         wait = false;
+        spwanPoint = transform.position;
     }
     //物体被激活时
     private void OnEnable()
@@ -96,7 +98,7 @@ public class Enemy : MonoBehaviour
         }
     }
     //发现敌人
-    public bool FoundPlayer()
+    public virtual bool FoundPlayer()
     {
         //盒型检测正前方
         return Physics2D.BoxCast(transform.position + (Vector3)centerOffest, checkSize, 0, faceDir,checkDistance,attackLayer);
@@ -115,7 +117,14 @@ public class Enemy : MonoBehaviour
         currentState = newState;
         currentState.OnEnter(this);
     }
-    private void OnDrawGizmosSelected()
+    //创建新初始点
+    public virtual Vector3 GetNewPoint()
+    {
+        return transform.position;
+    }
+
+    //绘制检测范围
+    public virtual void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireSphere(transform.position + (Vector3)centerOffest+new Vector3(checkDistance*-transform.localScale.x,0), 0.2f);
     }
