@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class BeePatrolState : BaseState
 {
+    //目标点
     private Vector3 target;
+    //移动朝向
     private Vector3 moveDir;
     public override void OnEnter(Enemy enemy)
     {
