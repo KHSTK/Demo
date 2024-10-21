@@ -67,7 +67,7 @@ public class Enemy : MonoBehaviour
     private void FixedUpdate()
     {
         currentState.Physicsupdate();
-        if(!isHurt&&!isDead&&!wait)Move();
+        if (!isHurt && !isDead && !wait) Move();
         //执行当前状态的FixedUpdata
     }
     private void OnDisable()
@@ -145,10 +145,13 @@ public class Enemy : MonoBehaviour
         Vector2 dir = new Vector2(-(attackerTrans.position.x - transform.position.x), 0).normalized;
         StartCoroutine(OnHurt(dir));
         rb.velocity = new Vector2(0, rb.velocity.y);
+        rb.AddForce(dir * hurtForce, ForceMode2D.Impulse);
+
     }
     IEnumerator OnHurt(Vector2 dir)
     {
-        rb.AddForce(dir * hurtForce, ForceMode2D.Impulse);
+        Debug.Log("击退方向" + dir);
+        Debug.Log("击退施加"+hurtForce);
         yield return new WaitForSeconds(0.5f);
         isHurt = false;
     }
