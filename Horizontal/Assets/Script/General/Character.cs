@@ -13,12 +13,15 @@ public class Character : MonoBehaviour
     public float invulnerableCounter;
     public bool invulnerable;
 
+    public UnityEvent<Character> OnHealthChange;
     public UnityEvent<Transform> OnTakeDamage;
     public UnityEvent OnDead;
 
     private void Start()
     {
         currentHealth = maxHealth;
+        OnHealthChange.Invoke(this);
+
     }
     private void Update()
     {
@@ -44,6 +47,7 @@ public class Character : MonoBehaviour
 
             //¥•∑¢À¿Õˆ
             OnDead.Invoke();
+            OnHealthChange.Invoke(this);
             return;
         }
         currentHealth -=attacker.damage;
@@ -51,6 +55,7 @@ public class Character : MonoBehaviour
         TriggerInvulnerable();
         //÷¥–– ‹…À
         OnTakeDamage?.Invoke(attacker.transform);
+        OnHealthChange.Invoke(this);
     }
     public void TriggerInvulnerable()
     {

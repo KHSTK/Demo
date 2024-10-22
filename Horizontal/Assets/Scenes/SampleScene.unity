@@ -218,7 +218,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0.865
+  m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -363,7 +363,7 @@ GameObject:
   - component: {fileID: 305305040}
   - component: {fileID: 305305039}
   m_Layer: 5
-  m_Name: Health Frame
+  m_Name: Power Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1166,7 +1166,7 @@ Tilemap:
       - {fileID: -254112670, guid: 1e379ad5f83846146b213dc2b69af491, type: 3}
       - {fileID: -276945143, guid: 1e379ad5f83846146b213dc2b69af491, type: 3}
       - {fileID: 283014084, guid: 1e379ad5f83846146b213dc2b69af491, type: 3}
-      m_AnimationSpeed: 10.000001
+      m_AnimationSpeed: 10
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -4, y: -1, z: 0}
@@ -1408,7 +1408,7 @@ Tilemap:
       - {fileID: -254112670, guid: 1e379ad5f83846146b213dc2b69af491, type: 3}
       - {fileID: -276945143, guid: 1e379ad5f83846146b213dc2b69af491, type: 3}
       - {fileID: 283014084, guid: 1e379ad5f83846146b213dc2b69af491, type: 3}
-      m_AnimationSpeed: 10
+      m_AnimationSpeed: 10.000001
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -4, y: 3, z: 0}
@@ -1584,7 +1584,7 @@ Tilemap:
       - {fileID: 1418611346, guid: 1e379ad5f83846146b213dc2b69af491, type: 3}
       - {fileID: 1355677448, guid: 1e379ad5f83846146b213dc2b69af491, type: 3}
       - {fileID: -2025223559, guid: 1e379ad5f83846146b213dc2b69af491, type: 3}
-      m_AnimationSpeed: 10.000001
+      m_AnimationSpeed: 10
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 0, y: 5, z: 0}
@@ -1628,7 +1628,7 @@ Tilemap:
       - {fileID: 1418611346, guid: 1e379ad5f83846146b213dc2b69af491, type: 3}
       - {fileID: 1355677448, guid: 1e379ad5f83846146b213dc2b69af491, type: 3}
       - {fileID: -2025223559, guid: 1e379ad5f83846146b213dc2b69af491, type: 3}
-      m_AnimationSpeed: 10.000001
+      m_AnimationSpeed: 10
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -2, y: 6, z: 0}
@@ -1650,7 +1650,7 @@ Tilemap:
       - {fileID: 1418611346, guid: 1e379ad5f83846146b213dc2b69af491, type: 3}
       - {fileID: 1355677448, guid: 1e379ad5f83846146b213dc2b69af491, type: 3}
       - {fileID: -2025223559, guid: 1e379ad5f83846146b213dc2b69af491, type: 3}
-      m_AnimationSpeed: 10
+      m_AnimationSpeed: 10.000001
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 0, y: 6, z: 0}
@@ -1727,7 +1727,7 @@ Tilemap:
       - {fileID: 1529334636, guid: 1e379ad5f83846146b213dc2b69af491, type: 3}
       - {fileID: -1588843200, guid: 1e379ad5f83846146b213dc2b69af491, type: 3}
       - {fileID: 934896527, guid: 1e379ad5f83846146b213dc2b69af491, type: 3}
-      m_AnimationSpeed: 10
+      m_AnimationSpeed: 10.000001
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -5, y: 8, z: 0}
@@ -2694,6 +2694,21 @@ MonoBehaviour:
   invulnerableDuration: 1
   invulnerableCounter: 0
   invulnerable: 0
+  OnHealthChange:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 3a266a0e33f96ba41adc870e97870935, type: 2}
+        m_TargetAssemblyTypeName: CharacterEventSO, Assembly-CSharp
+        m_MethodName: RaiseEvent
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnTakeDamage:
     m_PersistentCalls:
       m_Calls:
@@ -3032,6 +3047,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1162646097}
   m_CullTransparentMesh: 1
+--- !u!1 &1348964478
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1348964479}
+  - component: {fileID: 1348964480}
+  m_Layer: 0
+  m_Name: UIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1348964479
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348964478}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1348964480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348964478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4a5cdfdde3dd824aa2381fe3cb261ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerStatBar: {fileID: 1467303475}
+  healthEvetn: {fileID: 11400000, guid: 3a266a0e33f96ba41adc870e97870935, type: 2}
 --- !u!1 &1389754520
 GameObject:
   m_ObjectHideFlags: 0
@@ -3044,7 +3105,7 @@ GameObject:
   - component: {fileID: 1389754523}
   - component: {fileID: 1389754522}
   m_Layer: 5
-  m_Name: Health Frame Green
+  m_Name: Power Frame Yellow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3191,8 +3252,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1467303474}
+  - component: {fileID: 1467303475}
   m_Layer: 5
-  m_Name: Plyaer Start Bar
+  m_Name: Plyaer Stat Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3220,6 +3282,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1467303475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1467303473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf26a5a0f2a0724995e735f10ea63f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthImage: {fileID: 1407490187}
+  healthDelayImage: {fileID: 119311975}
+  powerImage: {fileID: 1389754522}
 --- !u!1 &1762477564
 GameObject:
   m_ObjectHideFlags: 0
@@ -10104,3 +10181,4 @@ SceneRoots:
   - {fileID: 4662220466132497405}
   - {fileID: 579576852}
   - {fileID: 1762477567}
+  - {fileID: 1348964479}
