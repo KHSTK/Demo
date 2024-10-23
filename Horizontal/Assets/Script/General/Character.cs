@@ -8,6 +8,9 @@ public class Character : MonoBehaviour
     [Header("基本属性")]
     public float maxHealth;
     public float currentHealth;
+    public float maxPower;
+    public float currentPower;
+    public float powerRecoverSpeed;
     [Header("受伤无敌")]
     public float invulnerableDuration;
     public float invulnerableCounter;
@@ -20,6 +23,7 @@ public class Character : MonoBehaviour
     private void Start()
     {
         currentHealth = maxHealth;
+        currentPower = maxPower;
         OnHealthChange.Invoke(this);
 
     }
@@ -32,6 +36,10 @@ public class Character : MonoBehaviour
             {
                 invulnerable = false;
             }
+        }
+        if (currentPower < maxPower)
+        {
+
         }
     }
     //受伤掉血
@@ -64,5 +72,10 @@ public class Character : MonoBehaviour
             invulnerable = true;
             invulnerableCounter = invulnerableDuration;
         }
+    }
+    public void OnSlide(int cost)
+    {
+        currentPower -= cost;
+        OnHealthChange.Invoke(this);
     }
 }

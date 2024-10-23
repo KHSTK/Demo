@@ -12,11 +12,16 @@ public class PlayerController : MonoBehaviour
     private CapsuleCollider2D collider2D;
     private PhysicsCheck physicsCheck;
     private PlayerAnimation playerAnimation;
+    private Character character;
     [Header("基本属性")]
     public float faceDir;
     public float speed;
     public float jumpForce;
+    public float wallJumpForce;
     public float hurtForce;
+    public float slideDistance;
+    public float slideSpeed;
+    public int slidePowerCost;
     [Header("物理材质")]
     public PhysicsMaterial2D nomal;
     public PhysicsMaterial2D wall;
@@ -25,6 +30,8 @@ public class PlayerController : MonoBehaviour
     public bool isCrouch;
     public bool isDead;
     public bool isAttack;
+    public bool isSlide;
+    public bool wallJump;
     private Vector2 originalSize;
     private Vector2 originalOffset;
     private void Awake()
@@ -36,9 +43,11 @@ public class PlayerController : MonoBehaviour
         physicsCheck = GetComponent<PhysicsCheck>();
         collider2D = GetComponent<CapsuleCollider2D>();
         playerAnimation = GetComponent<PlayerAnimation>();
+        character = GetComponent<Character>();
         originalSize = collider2D.size;
         originalOffset = collider2D.offset;
         faceDir = 1;
+        wallJump = false;
         //started按下时执行
         inputCentrol.GamePlayer.Jump.started+=Jump;
         //performed按住时执行
@@ -46,7 +55,11 @@ public class PlayerController : MonoBehaviour
         inputCentrol.GamePlayer.Crouch.canceled += CrouchOver;
         //攻击
         inputCentrol.GamePlayer.Attack.started += PlayerAttack;
+        inputCentrol.GamePlayer.Slide.started += Slide;
+
     }
+
+
 
 
 
@@ -72,7 +85,7 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         //移动
-        if(!isHurt&&!isAttack)Move();
+        if(!isHurt&&!isAttack&&!isSlide)Move();
     }
     //测试
     //private void OnTriggerStay2D(Collider2D collision)
@@ -83,6 +96,7 @@ public class PlayerController : MonoBehaviour
     //移动
     public void Move()
     {
+        if(!wallJump)
         rb.velocity = new Vector2(inputDirection.x*speed*Time.deltaTime,rb.velocity.y);
         //人物翻转
         //if (inputDirection.x > 0) spriteRenderer.flipX=false;
@@ -95,9 +109,53 @@ public class PlayerController : MonoBehaviour
     {
         //Debug.Log("Jump");
         //按下跳跃键施加力向上
-        if(physicsCheck.isGround)rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
+        if (physicsCheck.isGround)
+        {
+            rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
+            //打断滑铲
+            isSlide = false;
+            StopAllCoroutines();
+        }
+        else if (physicsCheck.onWall)
+        {
+            Debug.Log("wallJump");
+            rb.AddForce(new Vector2(-inputDirection.x/2, 3f) * wallJumpForce, ForceMode2D.Impulse);
+            wallJump = true;
+        }
     }
-
+    private void Slide(InputAction.CallbackContext obj)
+    {
+        var currentInputDirection = inputDirection;
+        if (!isSlide&& physicsCheck.isGround&&character.currentPower>slidePowerCost)
+        {
+            isSlide = true;
+            var targetPos = new Vector3(transform.position.x + slideDistance * transform.localScale.x, transform.position.y);
+            character.invulnerableCounter = 0.5f;
+            character.invulnerable = true;
+            StartCoroutine(TriggerSlide(targetPos, currentInputDirection));
+            GetComponent<Character>().OnSlide(slidePowerCost);
+        }
+    }
+    private IEnumerator TriggerSlide(Vector3 target, Vector2 currentInputDirection)
+    {
+        do
+        {
+            yield return null;
+            //滑到悬崖时
+            if (!physicsCheck.isGround)
+            {
+                break;
+            }
+            if (physicsCheck.touchLeftWall&& currentInputDirection.x<0f || physicsCheck.touchRightWall&& currentInputDirection.x>0f)
+            {
+                isSlide = false;
+                break;
+            }
+            rb.MovePosition(new Vector2(transform.position.x + slideSpeed * transform.localScale.x, transform.position.y));
+        } while (MathF.Abs(target.x - transform.position.x) > 0.1f);
+        isSlide = false;
+        character.invulnerable = false;
+    }
     private void CrouchDown(InputAction.CallbackContext obj)
     {
         //蹲下修改碰撞器
@@ -139,5 +197,17 @@ public class PlayerController : MonoBehaviour
     private void CheckState()
     {
         collider2D.sharedMaterial = physicsCheck.isGround?nomal:wall;
+        if (physicsCheck.onWall)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y / 2);
+        }
+        else
+        {
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y);
+        }
+        if (wallJump && rb.velocity.y < 5)
+        {
+            wallJump = false;
+        }
     }
 }

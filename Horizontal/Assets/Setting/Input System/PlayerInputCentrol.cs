@@ -80,6 +80,15 @@ public partial class @PlayerInputCentrol: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Slide"",
+                    ""type"": ""Button"",
+                    ""id"": ""450f77db-5371-49dc-96ba-45bbcf0b7922"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -306,7 +315,7 @@ public partial class @PlayerInputCentrol: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""c01bc609-31bc-47a3-9668-13fe64cf8d8a"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""path"": ""<Keyboard>/k"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
@@ -333,6 +342,17 @@ public partial class @PlayerInputCentrol: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""039322ed-c976-41a5-94e7-76d05c47fefc"",
+                    ""path"": ""<Keyboard>/l"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Slide"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -926,6 +946,7 @@ public partial class @PlayerInputCentrol: IInputActionCollection2, IDisposable
         m_GamePlayer_Jump = m_GamePlayer.FindAction("Jump", throwIfNotFound: true);
         m_GamePlayer_Crouch = m_GamePlayer.FindAction("Crouch", throwIfNotFound: true);
         m_GamePlayer_Attack = m_GamePlayer.FindAction("Attack", throwIfNotFound: true);
+        m_GamePlayer_Slide = m_GamePlayer.FindAction("Slide", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1005,6 +1026,7 @@ public partial class @PlayerInputCentrol: IInputActionCollection2, IDisposable
     private readonly InputAction m_GamePlayer_Jump;
     private readonly InputAction m_GamePlayer_Crouch;
     private readonly InputAction m_GamePlayer_Attack;
+    private readonly InputAction m_GamePlayer_Slide;
     public struct GamePlayerActions
     {
         private @PlayerInputCentrol m_Wrapper;
@@ -1015,6 +1037,7 @@ public partial class @PlayerInputCentrol: IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_GamePlayer_Jump;
         public InputAction @Crouch => m_Wrapper.m_GamePlayer_Crouch;
         public InputAction @Attack => m_Wrapper.m_GamePlayer_Attack;
+        public InputAction @Slide => m_Wrapper.m_GamePlayer_Slide;
         public InputActionMap Get() { return m_Wrapper.m_GamePlayer; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1042,6 +1065,9 @@ public partial class @PlayerInputCentrol: IInputActionCollection2, IDisposable
             @Attack.started += instance.OnAttack;
             @Attack.performed += instance.OnAttack;
             @Attack.canceled += instance.OnAttack;
+            @Slide.started += instance.OnSlide;
+            @Slide.performed += instance.OnSlide;
+            @Slide.canceled += instance.OnSlide;
         }
 
         private void UnregisterCallbacks(IGamePlayerActions instance)
@@ -1064,6 +1090,9 @@ public partial class @PlayerInputCentrol: IInputActionCollection2, IDisposable
             @Attack.started -= instance.OnAttack;
             @Attack.performed -= instance.OnAttack;
             @Attack.canceled -= instance.OnAttack;
+            @Slide.started -= instance.OnSlide;
+            @Slide.performed -= instance.OnSlide;
+            @Slide.canceled -= instance.OnSlide;
         }
 
         public void RemoveCallbacks(IGamePlayerActions instance)
@@ -1252,6 +1281,7 @@ public partial class @PlayerInputCentrol: IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
+        void OnSlide(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
