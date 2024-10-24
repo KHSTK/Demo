@@ -236,6 +236,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   manual: 0
+  isPlayer: 0
   bottomOffset: {x: 0, y: 0}
   leftOffset: {x: 0, y: 0}
   rightOffset: {x: 0, y: 0}
@@ -244,6 +245,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   isGround: 0
+  onWall: 0
   touchLeftWall: 0
   touchRightWall: 0
 --- !u!114 &5127205406295255160
@@ -331,9 +333,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 30
   currentHealth: 0
+  maxPower: 0
+  currentPower: 0
+  powerRecoverSpeed: 0
   invulnerableDuration: 0.5
   invulnerableCounter: 0
   invulnerable: 0
+  OnHealthChange:
+    m_PersistentCalls:
+      m_Calls: []
   OnTakeDamage:
     m_PersistentCalls:
       m_Calls:
@@ -341,6 +349,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: Enemy, Assembly-CSharp
         m_MethodName: OnTakeDamage
         m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 11400000, guid: 8676312e3135ea9468da46ce9ad78d68, type: 2}
+        m_TargetAssemblyTypeName: VoidEventSO, Assembly-CSharp
+        m_MethodName: RaiseEvent
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

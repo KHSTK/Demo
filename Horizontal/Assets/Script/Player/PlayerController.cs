@@ -125,18 +125,17 @@ public class PlayerController : MonoBehaviour
     }
     private void Slide(InputAction.CallbackContext obj)
     {
-        var currentInputDirection = inputDirection;
         if (!isSlide&& physicsCheck.isGround&&character.currentPower>slidePowerCost)
         {
             isSlide = true;
             var targetPos = new Vector3(transform.position.x + slideDistance * transform.localScale.x, transform.position.y);
             character.invulnerableCounter = 0.5f;
             character.invulnerable = true;
-            StartCoroutine(TriggerSlide(targetPos, currentInputDirection));
+            StartCoroutine(TriggerSlide(targetPos));
             GetComponent<Character>().OnSlide(slidePowerCost);
         }
     }
-    private IEnumerator TriggerSlide(Vector3 target, Vector2 currentInputDirection)
+    private IEnumerator TriggerSlide(Vector3 target)
     {
         do
         {
@@ -146,7 +145,7 @@ public class PlayerController : MonoBehaviour
             {
                 break;
             }
-            if (physicsCheck.touchLeftWall&& currentInputDirection.x<0f || physicsCheck.touchRightWall&& currentInputDirection.x>0f)
+            if (physicsCheck.touchLeftWall&& faceDir < 0f || physicsCheck.touchRightWall&& faceDir>0f)
             {
                 isSlide = false;
                 break;
