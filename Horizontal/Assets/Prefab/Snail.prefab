@@ -268,7 +268,7 @@ MonoBehaviour:
   hurtForce: 3
   spwanPoint: {x: 0, y: 0, z: 0}
   waitTime: 2
-  waitTimeCounter: 0
+  waitTimeCounter: 2
   wait: 0
   lostTime: 4
   lostTimeCounter: 0
