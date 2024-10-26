@@ -20,7 +20,6 @@ public class PlayerStatBar : MonoBehaviour
         {
             float persentage = currentCharacter.currentPower / currentCharacter.maxPower;
             powerImage.fillAmount = persentage;
-            currentCharacter.currentPower += currentCharacter.powerRecoverSpeed;
             if (persentage >= 1f)
             {
                 isRecovering = false;

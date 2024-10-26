@@ -39,7 +39,17 @@ public class Character : MonoBehaviour
         }
         if (currentPower < maxPower)
         {
+            currentPower += Time.deltaTime * powerRecoverSpeed;
+        }
+    }
 
+    public void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.CompareTag("Water"))
+        {
+            currentHealth = 0;
+            OnHealthChange.Invoke(this);
+            OnDead?.Invoke();
         }
     }
     //ÊÜÉËµôÑª

@@ -14,6 +14,7 @@ public class BoarPatrolState : BaseState
         //·¢ÏÖplayer½øÈë×·»÷×´Ì¬
         if (currentEnemy.FoundPlayer())
         {
+            currentEnemy.lostTimeCounter = currentEnemy.lostTime;
             currentEnemy.SwitchState(NPCState.Chase);
         }
         //Ñ²Âß×´Ì¬
