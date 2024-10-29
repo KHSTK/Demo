@@ -173,8 +173,11 @@ public class PlayerController : MonoBehaviour
     //π•ª˜
     private void PlayerAttack(InputAction.CallbackContext obj)
     {
-        playerAnimation.PlayAttack();
-        isAttack = true;
+        if (!physicsCheck.onWall)
+        {
+            playerAnimation.PlayAttack();
+            isAttack = true;
+        }
     }
     #region UnityEvetn
     // ‹…ÀŒª“∆

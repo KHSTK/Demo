@@ -10,7 +10,9 @@ public class Sign : MonoBehaviour
     private Animator anim;
     public Transform playerTransform;
     public GameObject signSprite;
-    private bool canPress;
+    //获取可交互物体
+    private IInteractable targetItem;
+    public bool canPress;
     private void Awake()
     {
         //初始状态关闭无法获得组件
@@ -23,6 +25,17 @@ public class Sign : MonoBehaviour
     {
         //输入设备更改
         InputSystem.onActionChange += OnActionChange;
+        playerInput.GamePlayer.Confirm.started += OnConfirm;
+    }
+
+    private void OnConfirm(InputAction.CallbackContext obj)
+    {
+        if (canPress)
+        {
+            //在范围内按键后调用交互接口
+            targetItem.TriggerAction();
+            GetComponent<AudioDefination>()?.PlayAudioClip();
+        }
     }
 
     private void OnActionChange(object obj, InputActionChange actionChange)
@@ -54,13 +67,12 @@ public class Sign : MonoBehaviour
         if (other.CompareTag("Interactable"))
         {
             canPress = true;
+            //获取可交互物体的接口
+            targetItem = other.GetComponent<IInteractable>();
         }
     }
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Interactable"))
-        {
-            canPress = false;
-        }
+        canPress = false;
     }
 }
