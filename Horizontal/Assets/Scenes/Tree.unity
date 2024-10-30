@@ -24756,6 +24756,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 547587b1f91831444b343a50850226cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loadEventSO: {fileID: 11400000, guid: 1db35d747979819488eedd80effa0eba, type: 2}
+  sceneToGo: {fileID: 11400000, guid: 6b02b6d3af69f0942bf7af79c872b426, type: 2}
   positionToGo: {x: -10, y: -14, z: 0}
 --- !u!1 &1778853932
 GameObject:
