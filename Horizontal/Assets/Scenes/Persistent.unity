@@ -635,7 +635,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.1000007, y: 2.4100003, z: -10}
+  m_LocalPosition: {x: -31.8, y: -1.0999997, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1149,7 +1149,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &708454540
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1211,7 +1211,7 @@ Transform:
   m_GameObject: {fileID: 708454539}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.1, y: 0.91, z: 0}
+  m_LocalPosition: {x: -31.8, y: -2.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1297,7 +1297,7 @@ MonoBehaviour:
   faceDir: 0
   speed: 300
   jumpForce: 16.5
-  wallJumpForce: 10
+  wallJumpForce: 5
   hurtForce: 5
   slideDistance: 4.5
   slideSpeed: 0.3
@@ -1602,8 +1602,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3987fc6dcdd7dc4ab0cbbc15d8beb7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerTransform: {fileID: 708454541}
+  firstPosition: {x: -31.8, y: -2.6, z: 0}
   loadEventSO: {fileID: 11400000, guid: 1db35d747979819488eedd80effa0eba, type: 2}
   firstLoadScene: {fileID: 11400000, guid: 56e85c166be89d843af53ec8f2d3748d, type: 2}
+  afterSceneLoadedEvent: {fileID: 11400000, guid: ff82c9d8f32e6f947b2832024c49274b, type: 2}
+  currentLoadedScene: {fileID: 0}
+  sceneToLoad: {fileID: 0}
 --- !u!4 &1055873468
 Transform:
   m_ObjectHideFlags: 0
@@ -2298,7 +2303,7 @@ Transform:
   m_GameObject: {fileID: 1609218087}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.1000007, y: 2.4100003, z: -10}
+  m_LocalPosition: {x: -31.8, y: -1.0999997, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2369,6 +2374,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   impulseSource: {fileID: 1056529184}
   cameraShakeEvent: {fileID: 11400000, guid: 8676312e3135ea9468da46ce9ad78d68, type: 2}
+  afterSceneLoadedEvent: {fileID: 11400000, guid: ff82c9d8f32e6f947b2832024c49274b, type: 2}
 --- !u!1 &1762477564
 GameObject:
   m_ObjectHideFlags: 0

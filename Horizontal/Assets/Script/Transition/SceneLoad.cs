@@ -3,27 +3,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 
 public class SceneLoad : MonoBehaviour
 {
+    public Transform playerTransform;
+    public Vector3 firstPosition;
     [Header("事件监听")]
     public SceneLoadEventSO loadEventSO;
     public GameSceneSO firstLoadScene;
+    [Header("广播")]
+    public VoidEventSO afterSceneLoadedEvent; 
 
     //当前已经加载的场景
     [SerializeField]private GameSceneSO currentLoadedScene;
     [SerializeField] private GameSceneSO sceneToLoad;
     private Vector3 positionToGo;
     private bool fadeScreen;
+    private bool isLoading;
 
     float fadeTime;
     private void Awake()
     {
         //未获得场景使用异步取得场景
         //Addressables.LoadSceneAsync(firstLoadScene.sceneReference, LoadSceneMode.Additive);
-        currentLoadedScene = firstLoadScene;
-        currentLoadedScene.sceneReference.LoadSceneAsync(LoadSceneMode.Additive, true);
+        //currentLoadedScene = firstLoadScene;
+        //currentLoadedScene.sceneReference.LoadSceneAsync(LoadSceneMode.Additive, true);
+    }
+    private void Start()
+    {
+        NewGame();
     }
     private void OnEnable()
     {
@@ -33,8 +43,22 @@ public class SceneLoad : MonoBehaviour
     {
         loadEventSO.LoadRequestEvent -= OnLoadRequestEvent;
     }
+    private void NewGame()
+    {
+        playerTransform.gameObject.SetActive(true);
+        sceneToLoad = firstLoadScene;
+        OnLoadRequestEvent(sceneToLoad, firstPosition, true);
+    }
+    /// <summary>
+    /// 场景加载事件请求
+    /// </summary>
+    /// <param name="loactionToGo">将要加载的场景</param>
+    /// <param name="posToGo">将要传送的点</param>
+    /// <param name="fadeScreen">是否渐入渐出</param>
     private void OnLoadRequestEvent(GameSceneSO loactionToGo, Vector3 posToGo, bool fadeScreen)
     {
+        if (isLoading) return;
+        isLoading = true;
         sceneToLoad = loactionToGo;
         positionToGo = posToGo;
         this.fadeScreen = fadeScreen;
@@ -42,6 +66,11 @@ public class SceneLoad : MonoBehaviour
         if (currentLoadedScene != null)
         {
             StartCoroutine(UnLoadPreviousScene());
+        }
+        else
+        {
+            //若为第一个场景则直接加载场景
+            LoadNewScene();
         }
 
 
@@ -56,10 +85,30 @@ public class SceneLoad : MonoBehaviour
         }
         yield return new WaitForSeconds(fadeTime);
         yield return currentLoadedScene.sceneReference.UnLoadScene();
+        playerTransform.gameObject.SetActive(false);
         LoadNewScene();
     }
     private void LoadNewScene()
     {
-        sceneToLoad.sceneReference.LoadSceneAsync(LoadSceneMode.Additive, true);
+       var loadingOption = sceneToLoad.sceneReference.LoadSceneAsync(LoadSceneMode.Additive, true);
+        loadingOption.Completed += OnLoadCompleted;
+        isLoading = false;
+    }
+    /// <summary>
+    /// 场景加载完成后
+    /// </summary>
+    /// <param name="obj"></param>
+    private void OnLoadCompleted(UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationHandle<SceneInstance> obj)
+    {
+        currentLoadedScene = sceneToLoad;
+        playerTransform.position = positionToGo;
+        playerTransform.gameObject.SetActive(true);
+        if (fadeScreen)
+        {
+            //实现淡入淡出
+        }
+        isLoading = false;
+        //场景加载完成后事件
+        afterSceneLoadedEvent.RaiseEvent();
     }
 }
