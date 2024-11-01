@@ -5,6 +5,10 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
+    [Header("监听事件")]
+    public SceneLoadEventSO loadEventSO;
+    public VoidEventSO afterLoadedEvent;
+
     public PlayerInputCentrol inputCentrol;
     public Vector2 inputDirection;
     private SpriteRenderer spriteRenderer;
@@ -68,13 +72,21 @@ public class PlayerController : MonoBehaviour
     {
         //初始化控制器
         inputCentrol.Enable();
+        loadEventSO.LoadRequestEvent += OnLoadEvent;
+        afterLoadedEvent.OnEventRaised += OnAfterLoadEvent;
     }
     //销毁后
     private void OnDisable()
     {
         //销毁控制器
         inputCentrol.Disable();
+        loadEventSO.LoadRequestEvent -= OnLoadEvent;
+        afterLoadedEvent.OnEventRaised -= OnAfterLoadEvent;
+
     }
+
+
+
     private void Update()
     {
         //控制器输入
@@ -92,6 +104,17 @@ public class PlayerController : MonoBehaviour
     //{
     //    Debug.Log(collision.name);
     //}
+
+    //加载场景时关闭移动检测
+    private void OnLoadEvent(GameSceneSO arg0, Vector3 arg1, bool arg2)
+    {
+        inputCentrol.GamePlayer.Disable();
+    }
+    //加载完成后开启移动检测
+    private void OnAfterLoadEvent()
+    {
+        inputCentrol.GamePlayer.Enable();
+    }
 
     //移动
     public void Move()

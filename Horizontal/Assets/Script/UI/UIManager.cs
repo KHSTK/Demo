@@ -8,23 +8,32 @@ public class UIManager : MonoBehaviour
     public PlayerStatBar playerStatBar;
     [Header("事件监听")]
     public CharacterEventSO healthEvetn;
+    public SceneLoadEventSO sceneLoadEvent;
     
     //注册订阅事件
     private void OnEnable()
     {
         healthEvetn.OnEventRaised += OnHealthEvent;
+        sceneLoadEvent.LoadRequestEvent += OnLoadEvent;
     }
     //取消注册订阅事件
     private void OnDisable()
     {
         healthEvetn.OnEventRaised -= OnHealthEvent;
+        sceneLoadEvent.LoadRequestEvent -= OnLoadEvent;
 
     }
+
 
     private void OnHealthEvent(Character character)
     {
       var persentage= character.currentHealth/character.maxHealth;
         playerStatBar.OnHealthChange(persentage);
         playerStatBar.OnPowerChange(character);
+    }
+    private void OnLoadEvent(GameSceneSO sceneToLoad, Vector3 arg1, bool arg2)
+    {
+        var isMenu = sceneToLoad.sceneType == SceneType.Menu;
+        playerStatBar.gameObject.SetActive(!isMenu);
     }
 }

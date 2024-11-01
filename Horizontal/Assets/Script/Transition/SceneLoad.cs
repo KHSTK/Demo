@@ -14,16 +14,17 @@ public class SceneLoad : MonoBehaviour
     public SceneLoadEventSO loadEventSO;
     public GameSceneSO firstLoadScene;
     [Header("广播")]
-    public VoidEventSO afterSceneLoadedEvent; 
+    public VoidEventSO afterSceneLoadedEvent;
+    public FadeEventSO fadeEvent;
 
     //当前已经加载的场景
     [SerializeField]private GameSceneSO currentLoadedScene;
-    [SerializeField] private GameSceneSO sceneToLoad;
+    private GameSceneSO sceneToLoad;
     private Vector3 positionToGo;
     private bool fadeScreen;
     private bool isLoading;
 
-    float fadeTime;
+    public float fadeTime;
     private void Awake()
     {
         //未获得场景使用异步取得场景
@@ -47,7 +48,8 @@ public class SceneLoad : MonoBehaviour
     {
         playerTransform.gameObject.SetActive(true);
         sceneToLoad = firstLoadScene;
-        OnLoadRequestEvent(sceneToLoad, firstPosition, true);
+        //OnLoadRequestEvent(sceneToLoad, firstPosition, true);
+        loadEventSO.RaisedLoadRequestEvent(sceneToLoad, firstPosition, true);
     }
     /// <summary>
     /// 场景加载事件请求
@@ -81,7 +83,7 @@ public class SceneLoad : MonoBehaviour
     {
         if (fadeScreen)
         {
-            //实现淡入淡出
+            fadeEvent.FadeIn(fadeTime);
         }
         yield return new WaitForSeconds(fadeTime);
         yield return currentLoadedScene.sceneReference.UnLoadScene();
@@ -103,12 +105,18 @@ public class SceneLoad : MonoBehaviour
         currentLoadedScene = sceneToLoad;
         playerTransform.position = positionToGo;
         playerTransform.gameObject.SetActive(true);
-        if (fadeScreen)
-        {
-            //实现淡入淡出
-        }
         isLoading = false;
         //场景加载完成后事件
+        if(currentLoadedScene.sceneType==SceneType.Location)
         afterSceneLoadedEvent.RaiseEvent();
+        StartCoroutine(FadeOut());
+    }
+    private IEnumerator FadeOut()
+    {
+        yield return new WaitForSeconds(fadeTime);
+        if (fadeScreen)
+        {
+            fadeEvent.FadeOut(fadeTime);
+        }
     }
 }
