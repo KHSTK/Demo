@@ -10,15 +10,21 @@ public class SceneLoad : MonoBehaviour
 {
     public Transform playerTransform;
     public Vector3 firstPosition;
+    public Vector3 menuPosition;
     [Header("事件监听")]
     public SceneLoadEventSO loadEventSO;
-    public GameSceneSO firstLoadScene;
+    public VoidEventSO newGame;
+
     [Header("广播")]
     public VoidEventSO afterSceneLoadedEvent;
     public FadeEventSO fadeEvent;
+    public SceneLoadEventSO unloadSceneEventSO;
 
     //当前已经加载的场景
-    [SerializeField]private GameSceneSO currentLoadedScene;
+    [Header("场景")]
+    public GameSceneSO firstLoadScene;
+    public GameSceneSO menuScene;
+    private GameSceneSO currentLoadedScene;
     private GameSceneSO sceneToLoad;
     private Vector3 positionToGo;
     private bool fadeScreen;
@@ -31,18 +37,24 @@ public class SceneLoad : MonoBehaviour
         //Addressables.LoadSceneAsync(firstLoadScene.sceneReference, LoadSceneMode.Additive);
         //currentLoadedScene = firstLoadScene;
         //currentLoadedScene.sceneReference.LoadSceneAsync(LoadSceneMode.Additive, true);
+
     }
     private void Start()
     {
-        NewGame();
+        loadEventSO.RaisedLoadRequestEvent(menuScene, menuPosition, true);
+
+        //NewGame();
     }
     private void OnEnable()
     {
         loadEventSO.LoadRequestEvent += OnLoadRequestEvent;
+        newGame.OnEventRaised += NewGame;
     }
     private void OnDisable()
     {
         loadEventSO.LoadRequestEvent -= OnLoadRequestEvent;
+        newGame.OnEventRaised -= NewGame;
+
     }
     private void NewGame()
     {
@@ -86,6 +98,8 @@ public class SceneLoad : MonoBehaviour
             fadeEvent.FadeIn(fadeTime);
         }
         yield return new WaitForSeconds(fadeTime);
+        //广播事件
+        unloadSceneEventSO.RaisedLoadRequestEvent(sceneToLoad, positionToGo, fadeScreen);
         yield return currentLoadedScene.sceneReference.UnLoadScene();
         playerTransform.gameObject.SetActive(false);
         LoadNewScene();
