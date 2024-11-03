@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class SaveRock : MonoBehaviour, IInteractable
 {
+    [Header("¹ã²¥ÊÂ¼þ")]
+    public VoidEventSO SaveGameEvent;
+
     public SpriteRenderer spriteRenderer;
     public Sprite dark;
     public Sprite light;
@@ -18,6 +21,7 @@ public class SaveRock : MonoBehaviour, IInteractable
         if (!isSave)
         {
             Save();
+            SaveGameEvent.RaiseEvent();
         }
     }
     public void Save()
