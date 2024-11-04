@@ -6,7 +6,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 
-public class SceneLoad : MonoBehaviour
+public class SceneLoad : MonoBehaviour,ISaveable
 {
     public Transform playerTransform;
     public Vector3 firstPosition;
@@ -49,12 +49,15 @@ public class SceneLoad : MonoBehaviour
     {
         loadEventSO.LoadRequestEvent += OnLoadRequestEvent;
         newGame.OnEventRaised += NewGame;
+        ISaveable saveable = this;
+        saveable.RegisterSaveData();
     }
     private void OnDisable()
     {
         loadEventSO.LoadRequestEvent -= OnLoadRequestEvent;
         newGame.OnEventRaised -= NewGame;
-
+        ISaveable saveable = this;
+        saveable.UnRegisterSaveData();
     }
     private void NewGame()
     {
@@ -131,6 +134,27 @@ public class SceneLoad : MonoBehaviour
         if (fadeScreen)
         {
             fadeEvent.FadeOut(fadeTime);
+        }
+    }
+
+    public DataDefinition GetDataID()
+    {
+        return GetComponent<DataDefinition>();
+    }
+
+    public void GetSaveData(Data data)
+    {
+        data.SaveGameScene(currentLoadedScene);
+    }
+
+    public void LoadData(Data data)
+    {
+        var playerID = playerTransform.GetComponent<DataDefinition>().ID;
+        if (data.characterPosDict.ContainsKey(playerID))
+        {
+            positionToGo = data.characterPosDict[playerID];
+            sceneToLoad = data.GetSavedScene();
+            OnLoadRequestEvent(sceneToLoad, positionToGo, true);
         }
     }
 }

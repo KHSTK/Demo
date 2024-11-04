@@ -109,13 +109,23 @@ public class Character : MonoBehaviour,ISaveable
     }
     public void GetSaveData(Data data)
     {
+        //字典中是否已经存在
         if (data.characterPosDict.ContainsKey(GetDataID().ID))
         {
+            //更新坐标
             data.characterPosDict[GetDataID().ID] = transform.position;
+            data.floatSaveData[GetDataID().ID + "health"] = this.currentHealth;
+            data.floatSaveData[GetDataID().ID + "power"] = this.currentPower;
+
         }
         else
         {
+            //保存坐标
             data.characterPosDict.Add(GetDataID().ID, transform.position);
+            //保存血量能量
+            data.floatSaveData.Add(GetDataID().ID + "health", this.currentHealth);
+            data.floatSaveData.Add(GetDataID().ID + "power", this.currentPower);
+
         }
     }
 
@@ -124,6 +134,10 @@ public class Character : MonoBehaviour,ISaveable
         if (data.characterPosDict.ContainsKey(GetDataID().ID))
         {
             transform.position = data.characterPosDict[GetDataID().ID];
+            this.currentHealth = data.floatSaveData[GetDataID().ID + "health"];
+            this.currentPower = data.floatSaveData[GetDataID().ID + "power"];
+            OnHealthChange.Invoke(this);
+
         }
     }
 
