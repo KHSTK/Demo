@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour
     [Header("监听事件")]
     public SceneLoadEventSO loadEventSO;
     public VoidEventSO afterLoadedEvent;
+    public VoidEventSO loadDataEvent;
+    public VoidEventSO backToMenu;
 
     public PlayerInputCentrol inputCentrol;
     public Vector2 inputDirection;
@@ -60,7 +62,7 @@ public class PlayerController : MonoBehaviour
         //攻击
         inputCentrol.GamePlayer.Attack.started += PlayerAttack;
         inputCentrol.GamePlayer.Slide.started += Slide;
-
+        inputCentrol.Enable();
     }
 
 
@@ -71,9 +73,10 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         //初始化控制器
-        inputCentrol.Enable();
         loadEventSO.LoadRequestEvent += OnLoadEvent;
         afterLoadedEvent.OnEventRaised += OnAfterLoadEvent;
+        loadDataEvent.OnEventRaised += OnLoadDataEvent;
+        backToMenu.OnEventRaised += OnLoadDataEvent;
     }
     //销毁后
     private void OnDisable()
@@ -82,11 +85,9 @@ public class PlayerController : MonoBehaviour
         inputCentrol.Disable();
         loadEventSO.LoadRequestEvent -= OnLoadEvent;
         afterLoadedEvent.OnEventRaised -= OnAfterLoadEvent;
-
+        loadDataEvent.OnEventRaised -= OnLoadDataEvent;
+        backToMenu.OnEventRaised -= OnLoadDataEvent;
     }
-
-
-
     private void Update()
     {
         //控制器输入
@@ -106,6 +107,10 @@ public class PlayerController : MonoBehaviour
     //}
 
     //加载场景时关闭移动检测
+    private void OnLoadDataEvent()
+    {
+        isDead = false;
+    }
     private void OnLoadEvent(GameSceneSO arg0, Vector3 arg1, bool arg2)
     {
         inputCentrol.GamePlayer.Disable();

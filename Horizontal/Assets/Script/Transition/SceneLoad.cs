@@ -14,6 +14,7 @@ public class SceneLoad : MonoBehaviour,ISaveable
     [Header("ÊÂ¼þ¼àÌý")]
     public SceneLoadEventSO loadEventSO;
     public VoidEventSO newGame;
+    public VoidEventSO backToMenu;
 
     [Header("¹ã²¥")]
     public VoidEventSO afterSceneLoadedEvent;
@@ -51,6 +52,7 @@ public class SceneLoad : MonoBehaviour,ISaveable
         newGame.OnEventRaised += NewGame;
         ISaveable saveable = this;
         saveable.RegisterSaveData();
+        backToMenu.OnEventRaised += OnBackToMenu;
     }
     private void OnDisable()
     {
@@ -58,7 +60,15 @@ public class SceneLoad : MonoBehaviour,ISaveable
         newGame.OnEventRaised -= NewGame;
         ISaveable saveable = this;
         saveable.UnRegisterSaveData();
+        backToMenu.OnEventRaised -= OnBackToMenu;
     }
+
+    private void OnBackToMenu()
+    {
+        sceneToLoad = menuScene;
+        loadEventSO.RaisedLoadRequestEvent(sceneToLoad, menuPosition, true);
+    }
+
     private void NewGame()
     {
         playerTransform.gameObject.SetActive(true);
@@ -152,7 +162,7 @@ public class SceneLoad : MonoBehaviour,ISaveable
         var playerID = playerTransform.GetComponent<DataDefinition>().ID;
         if (data.characterPosDict.ContainsKey(playerID))
         {
-            positionToGo = data.characterPosDict[playerID];
+            positionToGo = data.characterPosDict[playerID].ToVecort3();
             sceneToLoad = data.GetSavedScene();
             OnLoadRequestEvent(sceneToLoad, positionToGo, true);
         }

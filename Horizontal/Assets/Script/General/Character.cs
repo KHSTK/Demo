@@ -62,9 +62,12 @@ public class Character : MonoBehaviour,ISaveable
     {
         if (other.CompareTag("Water"))
         {
-            currentHealth = 0;
-            OnHealthChange.Invoke(this);
-            OnDead?.Invoke();
+            if (currentHealth > 0)
+            {
+                currentHealth = 0;
+                OnHealthChange.Invoke(this);
+                OnDead?.Invoke();
+            }
         }
     }
     //受伤掉血
@@ -113,18 +116,18 @@ public class Character : MonoBehaviour,ISaveable
         if (data.characterPosDict.ContainsKey(GetDataID().ID))
         {
             //更新坐标
-            data.characterPosDict[GetDataID().ID] = transform.position;
-            data.floatSaveData[GetDataID().ID + "health"] = this.currentHealth;
-            data.floatSaveData[GetDataID().ID + "power"] = this.currentPower;
+            data.characterPosDict[GetDataID().ID] = new SerializeVector3( transform.position);
+            data.floatSaveData[GetDataID().ID + "health"] = this.maxHealth;
+            data.floatSaveData[GetDataID().ID + "power"] = this.maxPower;
 
         }
         else
         {
             //保存坐标
-            data.characterPosDict.Add(GetDataID().ID, transform.position);
+            data.characterPosDict.Add(GetDataID().ID, new SerializeVector3 (transform.position));
             //保存血量能量
-            data.floatSaveData.Add(GetDataID().ID + "health", this.currentHealth);
-            data.floatSaveData.Add(GetDataID().ID + "power", this.currentPower);
+            data.floatSaveData.Add(GetDataID().ID + "health", this.maxHealth);
+            data.floatSaveData.Add(GetDataID().ID + "power", this.maxPower);
 
         }
     }
@@ -133,7 +136,7 @@ public class Character : MonoBehaviour,ISaveable
     {
         if (data.characterPosDict.ContainsKey(GetDataID().ID))
         {
-            transform.position = data.characterPosDict[GetDataID().ID];
+            transform.position = data.characterPosDict[GetDataID().ID].ToVecort3();
             this.currentHealth = data.floatSaveData[GetDataID().ID + "health"];
             this.currentPower = data.floatSaveData[GetDataID().ID + "power"];
             OnHealthChange.Invoke(this);
