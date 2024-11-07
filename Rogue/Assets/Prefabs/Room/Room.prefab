@@ -85,7 +85,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   column: 0
   line: 0
-  roomData: {fileID: 11400000, guid: 92a4971dfd084964c93840af19d018c5, type: 2}
+  roomData: {fileID: 11400000, guid: 3e12005e7bcad8b42b0f919886a3b156, type: 2}
   roomState: 0
 --- !u!1 &3830511920927294156
 GameObject:
