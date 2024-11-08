@@ -16,3 +16,8 @@ public enum RoomState
     Visited,
     Attainable
 }
+public enum LineType
+{
+    Left,
+    Right
+}

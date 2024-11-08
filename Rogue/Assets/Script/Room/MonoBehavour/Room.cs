@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
-    //ÄÄÁĞ
+    //å“ªåˆ—
     public int column;
-    //ÄÄĞĞ
+    //å“ªè¡Œ
     public int line;
     private SpriteRenderer spriteRenderer;
     public RoomDataSo roomData;
@@ -19,16 +19,16 @@ public class Room : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        //´¦Àíµã»÷ÊÂ¼ş
-        Debug.Log("µã»÷·¿¼ä" + roomData.roomType);
+        //å¤„ç†ç‚¹å‡»äº‹ä»¶
+        Debug.Log("ç‚¹å‡»æˆ¿é—´" + roomData.roomType);
     }
     /// <summary>
-    /// Íâ²¿´´½¨·¿¼äÊ±´«Èë
+    /// å¤–éƒ¨åˆ›å»ºæˆ¿é—´æ—¶ä¼ å…¥
     /// </summary>
-    /// <param name="colum">ÁĞÊı</param>
-    /// <param name="line">ĞĞÊı</param>
-    /// <param name="roomData">·¿¼äÊı¾İ</param>
-    public void SetupRoom(int colum,int line, RoomDataSo roomData)
+    /// <param name="colum">åˆ—æ•°</param>
+    /// <param name="line">è¡Œæ•°</param>
+    /// <param name="roomData">æˆ¿é—´æ•°æ®</param>
+    public void SetupRoom(int column,int line, RoomDataSo roomData)
     {
         this.column = column;
         this.line = line;

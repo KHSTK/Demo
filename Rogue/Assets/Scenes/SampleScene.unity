@@ -165,6 +165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapConfig: {fileID: 11400000, guid: e6f499c3836b359418ec8153c70d7651, type: 2}
   roomPrefab: {fileID: 8870690121082875329, guid: e76dd4abe8a4aef43a0e1bd33881132a, type: 3}
+  linePrefab: {fileID: 3842918912122761552, guid: 6d45746df36b2d042973e076a77c21d1, type: 3}
   border: 1.2
 --- !u!1 &519420028
 GameObject:
@@ -319,7 +320,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &2027747420
 SpriteRenderer:
   m_ObjectHideFlags: 0

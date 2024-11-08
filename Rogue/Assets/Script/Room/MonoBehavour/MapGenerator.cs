@@ -3,8 +3,11 @@ using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
 {
+    [Header("åœ°å›¾é…ç½®è¡¨")]
     public MapConfigSO mapConfig;
+    [Header("é¢„åˆ¶ä½“")]
     public Room roomPrefab;
+    public LineRenderer linePrefab;
 
     private float screenHeight;
     private float screenWidth;
@@ -12,15 +15,18 @@ public class MapGenerator : MonoBehaviour
     private Vector3 generatePoint;
     public float border;
     private List<Room> rooms;
+    private List<LineRenderer> lines;
     private void Awake()
     {
-        //ÆÁÄ»¸ßÎªÉãÏñ»ú´óĞ¡µÄÁ½±¶
+        //å±å¹•é«˜ä¸ºæ‘„åƒæœºå¤§å°çš„ä¸¤å€
         screenHeight = Camera.main.orthographicSize * 2;
-        //ÆÁÄ»¿íÎª¸ß*¿í¸ß±È
+        //å±å¹•å®½ä¸ºé«˜*åˆ†è¾¨ç‡æ¯”
         screenWidth = screenHeight * Camera.main.aspect;
         columnWidth = screenWidth / (mapConfig.roomBlueprints.Count+0.5f);
         rooms = new List<Room>();
+        lines=new List<LineRenderer>();
     }
+
     private void Start()
     {
         CreateMap();
@@ -28,51 +34,103 @@ public class MapGenerator : MonoBehaviour
 
     public void CreateMap()
     {
-        //Ñ­»·Éú³ÉÃ¿ĞĞ·¿¼ä
+        //åˆ›å»ºå‰ä¸€åˆ—æˆ¿é—´çš„åˆ—è¡¨
+        List<Room> previousColumn = new List<Room>();
+
+        //å¾ªç¯ç”Ÿæˆæ¯åˆ—æˆ¿é—´
         for (int column = 0; column < mapConfig.roomBlueprints.Count; column++)
         {
             var blueprint = mapConfig.roomBlueprints[column];
-            //Ã¿ÁĞÓĞamount¸ö·¿¼ä
+            //éšæœºæˆ¿é—´æ•°
             var amount = Random.Range(blueprint.min, blueprint.max+1);
-            //³õÊ¼·¿¼ä¸ß
+            //æ¯è¡Œåˆå§‹æˆ¿é—´é«˜
             var startHeight = screenHeight / 2 - screenHeight / (amount + 1);
-            //Ã¿ÁĞµÚÒ»¸ö·¿¼äµÄÎ»ÖÃgeneratePoint
+            //æ¯è¡Œåˆå§‹æˆ¿é—´åæ ‡generatePoint
             generatePoint = new Vector3(-screenWidth/2+border+column*columnWidth, startHeight, 0);
-            //·¿¼äÎ»ÖÃ
+            //æ¯ä¸ªæˆ¿é—´åæ ‡
             var newPosition = generatePoint;
 
-            //Ã¿ĞĞ¼ä¾à
+            //å½“å‰åˆ—æˆ¿é—´åˆ—è¡¨
+            List<Room> currentColumn = new List<Room>();
+            //æ¯è¡Œé—´è·
             var roomGapY = screenHeight / (amount + 1);
-            //Ñ­»·µ±Ç°ÁĞËùÓĞÊıÁ¿Éú³É·¿¼ä
+            //å¾ªç¯ç”Ÿæˆæ¯è¡Œæˆ¿é—´
             for (int i = 0; i < amount; i++)
             {
-                //¹Ì¶¨×îºóÒ»¸ö·¿¼äxÖá
+                //æœ€åä¸€ä¸ªæˆ¿é—´å›ºå®šxè½´
                 if (column == mapConfig.roomBlueprints.Count - 1)
                 {
                     newPosition.x = screenWidth / 2 - border * 2;
                 }
-                ////Ëæ»úÆ«ÒÆ
-                //else if (column != 0)
-                //{
-                //    newPosition.x = generatePoint.x+ Random.Range(-border/2, border/2);
-                //}
+                //éšæœºåç§»
+                else if (column != 0)
+                {
+                   newPosition.x = generatePoint.x+ Random.Range(-border/2, border/2);
+                }
                 newPosition.y = startHeight - roomGapY * i;
                 var room = Instantiate(roomPrefab,newPosition,Quaternion.identity, transform);
                 rooms.Add(room);
+                currentColumn.Add(room);
+            }
+            //åˆ¤æ–­æ˜¯å¦ä¸ºç¬¬ä¸€åˆ—ï¼Œå¦‚æœä¸æ˜¯åˆ™è¿æ¥åˆ°ä¸Šä¸€åˆ—
+            if(previousColumn.Count>0)
+            {
+                //åˆ›å»ºæˆ¿é—´è¿çº¿
+                ConnectRooms(previousColumn, currentColumn);
+            }
+            
+            //è®°å½•å½“å‰åˆ—
+            previousColumn = currentColumn;
+        }
+    }
+
+    private void ConnectRooms(List<Room> colum1, List<Room> colum2)
+    {
+        //è®°å½•å·²è¿æ¥æˆ¿é—´
+        HashSet<Room> connectedColumn2Rooms = new HashSet<Room>();
+        foreach (var room in colum1)
+        {
+            //ç¬¬ä¸€ä¸ªæˆ¿é—´å’Œç¬¬äºŒåˆ—éšæœºæˆ¿é—´äº§ç”Ÿé“¾æ¥
+            var tagerRoom=ConnectToRandomRoom(room,colum2);
+            //å“ˆå¸Œè¡¨è®°å½•å·²è¿æ¥æˆ¿é—´
+            connectedColumn2Rooms.Add(tagerRoom);
+        }
+        //éå†ç¬¬äºŒåˆ—æˆ¿é—´ï¼Œå¦‚æœæœªè¿æ¥åˆ™éšæœºè¿æ¥åˆ°ç¬¬ä¸€åˆ—
+        foreach (var room in colum2){
+            if(!connectedColumn2Rooms.Contains(room)){
+                ConnectToRandomRoom(room, colum1);
             }
         }
     }
 
+    private Room ConnectToRandomRoom(Room room1, List<Room> colum2)
+    {
+        Room targetRoom;
+        //éšæœºé€‰æ‹©ç¬¬äºŒåˆ—æˆ¿é—´
+        targetRoom = colum2[Random.Range(0, colum2.Count)];
+        //åˆ›å»ºæˆ¿é—´ä¹‹é—´çš„è¿çº¿
+        var line =Instantiate(linePrefab,transform);
+        line.SetPosition(0, room1.transform.position);
+        line.SetPosition(1, targetRoom.transform.position);
+
+        lines.Add(line);
+        return targetRoom;
+    }
+
     [ContextMenu(itemName: "ReGenerateRoom")]
-    //ÖØĞÂÉú³ÉµØÍ¼
+    //é‡æ–°ç”Ÿæˆåœ°å›¾
     public void ReGenerateRoom()
     {
-        //Ïú»ÙÒÑÉú³É·¿¼ä
+        //é”€æ¯æ¸¸æˆç‰©ä½“
         foreach (var room in rooms)
         {
             Destroy(room.gameObject);
         }
-        //Çå¿ÕÁĞ±í
+        foreach (var line in lines){
+            Destroy(line.gameObject);
+        }
+        //æ¸…ç©ºåˆ—è¡¨
+        lines.Clear();
         rooms.Clear();
         CreateMap();
     }
