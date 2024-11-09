@@ -14,22 +14,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomBlueprints:
   - min: 2
-    max: 4
+    max: 3
     roomType: 1
   - min: 2
-    max: 4
+    max: 5
     roomType: 11
   - min: 2
-    max: 4
+    max: 5
     roomType: 27
   - min: 2
-    max: 4
+    max: 5
     roomType: 13
   - min: 2
-    max: 4
-    roomType: 31
+    max: 5
+    roomType: 15
   - min: 2
-    max: 4
+    max: 3
     roomType: 16
   - min: 1
     max: 2

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,8 +15,11 @@ public class MapGenerator : MonoBehaviour
     private float columnWidth;
     private Vector3 generatePoint;
     public float border;
-    private List<Room> rooms;
-    private List<LineRenderer> lines;
+    private List<Room> rooms=new();
+    private List<LineRenderer> lines=new();
+    //房间数据
+    public List<RoomDataSo> roomDataList=new();
+    private Dictionary<RoomType, RoomDataSo> roomDataDict=new();
     private void Awake()
     {
         //屏幕高为摄像机大小的两倍
@@ -23,8 +27,11 @@ public class MapGenerator : MonoBehaviour
         //屏幕宽为高*分辨率比
         screenWidth = screenHeight * Camera.main.aspect;
         columnWidth = screenWidth / (mapConfig.roomBlueprints.Count+0.5f);
-        rooms = new List<Room>();
-        lines=new List<LineRenderer>();
+
+        foreach(var roomData in roomDataList)
+        {
+            roomDataDict.Add(roomData.roomType, roomData);
+        }
     }
 
     private void Start()
@@ -42,7 +49,7 @@ public class MapGenerator : MonoBehaviour
         {
             var blueprint = mapConfig.roomBlueprints[column];
             //随机房间数
-            var amount = Random.Range(blueprint.min, blueprint.max+1);
+            var amount = UnityEngine.Random.Range(blueprint.min, blueprint.max+1);
             //每行初始房间高
             var startHeight = screenHeight / 2 - screenHeight / (amount + 1);
             //每行初始房间坐标generatePoint
@@ -65,12 +72,17 @@ public class MapGenerator : MonoBehaviour
                 //随机偏移
                 else if (column != 0)
                 {
-                   newPosition.x = generatePoint.x+ Random.Range(-border/2, border/2);
+                   newPosition.x = generatePoint.x+ UnityEngine.Random.Range(-border/2, border/2);
                 }
                 newPosition.y = startHeight - roomGapY * i;
+                //生成房间
                 var room = Instantiate(roomPrefab,newPosition,Quaternion.identity, transform);
+                RoomType newType= GetRandomRoomType(mapConfig.roomBlueprints[column].roomType);
+
+                room.SetupRoom(column,i,GetRoomDataSo(newType));
                 rooms.Add(room);
                 currentColumn.Add(room);
+
             }
             //判断是否为第一列，如果不是则连接到上一列
             if(previousColumn.Count>0)
@@ -91,25 +103,31 @@ public class MapGenerator : MonoBehaviour
         foreach (var room in colum1)
         {
             //第一个房间和第二列随机房间产生链接
-            var tagerRoom=ConnectToRandomRoom(room,colum2);
+            var tagerRoom=ConnectToRandomRoom(room,colum2,true);
             //哈希表记录已连接房间
             connectedColumn2Rooms.Add(tagerRoom);
         }
         //遍历第二列房间，如果未连接则随机连接到第一列
         foreach (var room in colum2){
             if(!connectedColumn2Rooms.Contains(room)){
-                ConnectToRandomRoom(room, colum1);
+                ConnectToRandomRoom(room, colum1,false);
             }
         }
     }
 
-    private Room ConnectToRandomRoom(Room room1, List<Room> colum2)
+    private Room ConnectToRandomRoom(Room room1, List<Room> colum2,bool isLeft)
     {
         Room targetRoom;
         //随机选择第二列房间
-        targetRoom = colum2[Random.Range(0, colum2.Count)];
+        targetRoom = colum2[UnityEngine.Random.Range(0, colum2.Count)];
         //创建房间之间的连线
         var line =Instantiate(linePrefab,transform);
+        line.GetComponent<Line>().lineType = LineType.Left;
+        if(isLeft){
+            line.GetComponent<Line>().lineType = LineType.Left;
+        }else{
+            line.GetComponent<Line>().lineType = LineType.Right;
+        }
         line.SetPosition(0, room1.transform.position);
         line.SetPosition(1, targetRoom.transform.position);
 
@@ -133,5 +151,16 @@ public class MapGenerator : MonoBehaviour
         lines.Clear();
         rooms.Clear();
         CreateMap();
+    }
+    private RoomDataSo GetRoomDataSo(RoomType roomType)
+    {
+        return roomDataDict[roomType];
+    }
+    private RoomType GetRandomRoomType(RoomType flages)
+    {
+        string[] options=flages.ToString().Split(',');
+        string randomOption = options[UnityEngine.Random.Range(0, options.Length)];
+        RoomType  roomType = (RoomType)Enum.Parse(typeof(RoomType), randomOption);
+        return roomType;
     }
 }

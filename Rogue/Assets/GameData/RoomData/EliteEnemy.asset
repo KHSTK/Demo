@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e7d654cb93fa2f478fa3a1ba0e28b43, type: 3}
+  m_Name: EliteEnemy
+  m_EditorClassIdentifier: 
+  roomIcon: {fileID: 21300000, guid: e6eed6c2563884002ae7cb10446a7474, type: 3}
+  roomType: 2
+  senceToLoad:
+    m_AssetGUID: 22f1f8c07eb672f439fe416722f6c099
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 1
