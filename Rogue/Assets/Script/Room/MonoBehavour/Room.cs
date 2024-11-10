@@ -9,6 +9,9 @@ public class Room : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     public RoomDataSo roomData;
     public RoomState roomState;
+    [Header("广播")]
+    public ObjectEventSO loadRoomEvent; 
+
     private void Awake()
     {
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
@@ -21,6 +24,7 @@ public class Room : MonoBehaviour
     {
         //处理点击事件
         Debug.Log("点击房间" + roomData.roomType);
+        loadRoomEvent.RaiseEvent(roomData,this);
     }
     /// <summary>
     /// 外部创建房间时传入
