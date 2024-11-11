@@ -1,12 +1,54 @@
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.SceneManagement;
 
 public class SceneLoadMananger : MonoBehaviour
 {
-    public void OnLoadRoomEvent(object data){
+    private AssetReference currentScene;
+    public AssetReference map;
+
+
+
+    /// <summary>
+    /// 在房间加载事件中监听
+    /// </summary>
+    /// <param name="data"></param>
+    public async void OnLoadRoomEvent(object data){
         if(data is RoomDataSo){
             var currentRoom = (RoomDataSo)data;
             Debug.Log(currentRoom.roomType);
-
+            //获取点击房间后对应的场景
+            currentScene=currentRoom.senceToLoad;
         }
+        //卸载场景
+        await UnloadSceneTask();
+        //加载房间
+        await LoadSceneTask();
+
+    }
+    /// <summary>
+    /// 异步加载场景
+    /// </summary>
+    /// <returns></returns>
+    private async Awaitable LoadSceneTask(){
+        var s=currentScene.LoadSceneAsync(LoadSceneMode.Additive);
+        await s.Task;
+        if(s.Status==AsyncOperationStatus.Succeeded){
+            Debug.Log("加载成功");
+            SceneManager.SetActiveScene(s.Result.Scene);
+        }
+
+    }
+    private async Awaitable UnloadSceneTask(){
+        await SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
+    }
+    /// <summary>
+    /// 监听返回的房间事件函数
+    /// </summary>
+    public async void LoadMap(){
+        await UnloadSceneTask();
+        currentScene=map;
+        await LoadSceneTask();
     }
 }
