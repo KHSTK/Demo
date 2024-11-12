@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55506a2a89fdd2447b5372a2d03f696b, type: 3}
-  m_Name: Map Layout SO
+  m_Script: {fileID: 11500000, guid: 1616762389d1f5845ba95be08137531d, type: 3}
+  m_Name: After Room Load Event
   m_EditorClassIdentifier: 
-  mapRoomDataList: []
-  mapLineDataList: []
+  description: "\u8FDB\u5165\u623F\u95F4\u540E\u4F20\u9012\u623F\u95F4\u5750\u6807\uFF0C\u66F4\u65B0\u5730\u56FE\u623F\u95F4\u7684State"
+  lastSender: 

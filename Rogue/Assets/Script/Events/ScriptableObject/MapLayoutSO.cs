@@ -15,11 +15,11 @@ public class MapRoomData {
     public int column,line;
     public RoomDataSo roomData;
     public RoomState roomState;
+    public List<Vector2Int> linkTo=new();
 }
 
 [System.Serializable]
 //连线数据
 public class LinePos{
     public SerializeVector3 satrPos,endPos;
-    public LineType lineType;
 }

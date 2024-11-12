@@ -87,7 +87,11 @@ public class MapGenerator : MonoBehaviour
                 //生成房间
                 var room = Instantiate(roomPrefab,newPosition,Quaternion.identity, transform);
                 RoomType newType= GetRandomRoomType(mapConfig.roomBlueprints[column].roomType);
-
+                if(column==0){
+                    room.roomState= RoomState.Attainable;
+                }else{
+                    room.roomState= RoomState.Locked;
+                }
                 room.SetupRoom(column,i,GetRoomDataSo(newType));
                 rooms.Add(room);
                 currentColumn.Add(room);
@@ -120,6 +124,7 @@ public class MapGenerator : MonoBehaviour
                 line.SetPosition(0, column1[i].transform.position);
                 line.SetPosition(1, column2[j].transform.position);
                 lines.Add(line);
+                column1[i].linkTo.Add(new(column2[j].column, column2[j].line));
             }
             nextRoom = Mathf.Min(nextRoom + randomConnections, column2.Count)-1;
         }
@@ -208,7 +213,8 @@ public class MapGenerator : MonoBehaviour
                 column=rooms[i].column,
                 line=rooms[i].line,
                 roomData=rooms[i].roomData,
-                roomState=rooms[i].roomState
+                roomState=rooms[i].roomState,
+                linkTo=rooms[i].linkTo
             };
             mapLayout.mapRoomDataList.Add(room);
         }
@@ -216,7 +222,6 @@ public class MapGenerator : MonoBehaviour
         //添加所有已生成连线
         for(int i = 0; i < lines.Count; i++){
             var line =new LinePos(){
-                lineType=lines[i].GetComponent<Line>().lineType,
                 satrPos=new SerializeVector3(lines[i].GetPosition(0)),
                 endPos=new SerializeVector3(lines[i].GetPosition(1))
             };
@@ -231,13 +236,13 @@ public class MapGenerator : MonoBehaviour
             var newroom = Instantiate(roomPrefab, newPos, Quaternion.identity, transform);
             newroom.roomState = newMapRoomDataList[i].roomState;
             newroom.SetupRoom(newMapRoomDataList[i].column, newMapRoomDataList[i].line,newMapRoomDataList[i].roomData);
+            newroom.linkTo = newMapRoomDataList[i].linkTo;
             rooms.Add(newroom);
         }
         //读取连线数据生成连线
         var newMapLineDataList=mapLayout.mapLineDataList;
         for (int i = 0; i < newMapLineDataList.Count; i++){
             var line =Instantiate(linePrefab,transform);
-            line.GetComponent<Line>().lineType = newMapLineDataList[i].lineType;
             line.SetPosition(0,newMapLineDataList[i].satrPos.ToVector3());
             line.SetPosition(1,newMapLineDataList[i].endPos.ToVector3());
             lines.Add(line);

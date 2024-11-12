@@ -7,6 +7,9 @@ public class SceneLoadMananger : MonoBehaviour
 {
     private AssetReference currentScene;
     public AssetReference map;
+    private Vector2Int currentRoomVector;
+    [Header("广播")]
+    public ObjectEventSO afterRoomLoadEvent;
 
 
 
@@ -15,17 +18,19 @@ public class SceneLoadMananger : MonoBehaviour
     /// </summary>
     /// <param name="data"></param>
     public async void OnLoadRoomEvent(object data){
-        if(data is RoomDataSo){
-            var currentRoom = (RoomDataSo)data;
-            Debug.Log(currentRoom.roomType);
-            //获取点击房间后对应的场景
-            currentScene=currentRoom.senceToLoad;
+        if(data is Room){
+            Room currentRoom= data as Room;
+            var currentData=currentRoom.roomData;
+            currentRoomVector=new(currentRoom.column,currentRoom.line);
+            currentScene=currentData.senceToLoad;
         }
         //卸载场景
         await UnloadSceneTask();
+
         //加载房间
         await LoadSceneTask();
-
+        //传递当前房间坐标信息
+        afterRoomLoadEvent.RaiseEvent(currentRoomVector,this);
     }
     /// <summary>
     /// 异步加载场景
