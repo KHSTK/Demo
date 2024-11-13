@@ -10,7 +10,7 @@ public class Room : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     public RoomDataSo roomData;
     public RoomState roomState;
-    public List<Vector2Int> linkTo = new ();
+    public List<Vector2Int> linkTo = new();
     [Header("广播")]
     public ObjectEventSO loadRoomEvent;
 
@@ -45,6 +45,7 @@ public class Room : MonoBehaviour
             RoomState.Attainable => Color.white,
             RoomState.Locked => new Color(0.5f, 0.5f, 0.5f, 1f),
             RoomState.Visited => new Color(0.5f, 0.8f, 0.5f, 0.5f),
+            _ => throw new System.NotImplementedException(),
         };
     }
 }

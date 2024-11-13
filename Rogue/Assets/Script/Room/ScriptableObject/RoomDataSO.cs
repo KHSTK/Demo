@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-[CreateAssetMenu(menuName ="Map/RoomDataSO")]
+[CreateAssetMenu(menuName = "Map/RoomDataSO")]
 public class RoomDataSo : ScriptableObject
 {
     public Sprite roomIcon;

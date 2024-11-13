@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-[CreateAssetMenu(menuName ="Map/MapConfigSO")]
+[CreateAssetMenu(menuName = "Map/MapConfigSO")]
 public class MapConfigSO : ScriptableObject
 {
     public List<RoomBlueprint> roomBlueprints;

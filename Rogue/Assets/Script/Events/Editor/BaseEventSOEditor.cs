@@ -3,35 +3,43 @@ using UnityEditor;
 using System.Collections.Generic;
 
 [CustomEditor(typeof(BaseEventSO<>))]
-public class BaseEventSOEditor<T> : Editor {
+public class BaseEventSOEditor<T> : Editor
+{
 
     private BaseEventSO<T> baseEventSO;
-    private void OnEnable() {
-        if(baseEventSO==null){
+    private void OnEnable()
+    {
+        if (baseEventSO == null)
+        {
             baseEventSO = (BaseEventSO<T>)target;
         }
     }
-    public override void OnInspectorGUI() {
+    public override void OnInspectorGUI()
+    {
 
         base.OnInspectorGUI();
-        EditorGUILayout.LabelField("订阅数量"+GetListeners().Count);
-        foreach(var listener in GetListeners()){
+        EditorGUILayout.LabelField("订阅数量" + GetListeners().Count);
+        foreach (var listener in GetListeners())
+        {
             EditorGUILayout.LabelField(listener.ToString());
         }
 
     }
-    private List<MonoBehaviour> GetListeners() {
+    private List<MonoBehaviour> GetListeners()
+    {
         List<MonoBehaviour> listeners = new();
-        
-        if(baseEventSO.OnEventRaised == null||baseEventSO==null) 
+
+        if (baseEventSO.OnEventRaised == null || baseEventSO == null)
         {
             return listeners;
         }
 
         var subscribers = baseEventSO.OnEventRaised.GetInvocationList();
-        foreach (var subscriber in subscribers) {
+        foreach (var subscriber in subscribers)
+        {
             var obj = subscriber.Target as MonoBehaviour;
-            if(!listeners.Contains(obj)){
+            if (!listeners.Contains(obj))
+            {
                 listeners.Add(obj);
             }
         }
