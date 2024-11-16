@@ -153,6 +153,7 @@ MonoBehaviour:
   drawDeck: []
   discardDeck: []
   handleCardObjectList: []
+  deckPos: {x: 0, y: 0, z: 0}
 --- !u!4 &418333839
 Transform:
   m_ObjectHideFlags: 0
@@ -389,6 +390,9 @@ MonoBehaviour:
   isHorizontal: 1
   maxWidth: 7
   cardSpacing: 1.5
+  maxAngle: 30
+  angleBetweenCards: 7
+  radius: 17
   centerPoint: {x: 0, y: -4.5, z: 0}
 --- !u!4 &549169686
 Transform:

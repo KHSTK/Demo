@@ -12,6 +12,10 @@ public class Card : MonoBehaviour
         Init(cardData);
     }
 
+    /// <summary>
+    /// 初始化卡牌数据
+    /// </summary>
+    /// <param name="data">卡牌数据</param>
     public void Init(CardDataSO data)
     {
         cardData = data;

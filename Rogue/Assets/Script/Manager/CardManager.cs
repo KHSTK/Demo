@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.Burst.Intrinsics;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -19,6 +20,11 @@ public class CardManager : MonoBehaviour
             currentLibrary.cardLibraryList.Add(item);
         }
     }
+    private void OnDisable()
+    {
+        currentLibrary.cardLibraryList.Clear();
+    }
+
     /// <summary>
     /// 初始化卡牌列表
     /// </summary>
@@ -39,13 +45,20 @@ public class CardManager : MonoBehaviour
         }
     }
 
-    //外部获取卡牌
+    /// <summary>
+    /// 抽卡时调用该函数获取卡牌GameObject
+    /// </summary>
+    /// <returns></returns>
     public GameObject GetCardObject()
     {
-        return pool.GetGameObjectFromPool();
+        
+        var currentCardObject= pool.GetGameObjectFromPool();
+        currentCardObject.transform.localScale= Vector3.zero;
+        return currentCardObject;
     }
     //外部回收卡牌
-    public void RecycleCardObject(GameObject cardObject){
+    public void RecycleCardObject(GameObject cardObject)
+    {
         pool.ReleaseGameObjectToPool(cardObject);
     }
 }
