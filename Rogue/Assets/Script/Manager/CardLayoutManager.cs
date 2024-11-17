@@ -7,15 +7,16 @@ public class CardLayoutManager : MonoBehaviour
     public float maxWidth = 7f; //卡牌最大宽度
     public float cardSpacing = 1.5f; //卡牌间距
     [Header("弧形参数")]
-    public float maxAngle = 35f;
+    public float maxAngle = 16f;
     public float angleBetweenCards = 7f;
     public float radius = 17f;
     public Vector3 centerPoint;
     private List<Vector3> cardPos = new();
     private List<Quaternion> cardRot = new();
 
-    private void Awake() {
-        centerPoint=isHorizontal?Vector3.up*-4f:Vector3.up*-21f;
+    private void Awake()
+    {
+        centerPoint = isHorizontal ? Vector3.up * -4f : Vector3.up * -21f;
     }
 
     /// <summary>
@@ -56,14 +57,16 @@ public class CardLayoutManager : MonoBehaviour
         }
         else
         {
-            float cardAngle=(cardNum-1)*angleBetweenCards/2f;
-            // float totaltAngle=Mathf.Min(maxAngle/2f,cardAngle);
-            // float currentAngle = totaltAngle > 0 ? totaltAngle / (cardNum - 1) : 0;
+            float cardAngle = (cardNum - 1) * angleBetweenCards / 2f;
+            float dynamicAngleBetweenCards = angleBetweenCards;
+            if (cardNum > 1) dynamicAngleBetweenCards = 2f * maxAngle / (cardNum - 1);
+            float totalAngle = Mathf.Min(maxAngle, cardAngle);
+            float totalAngleBetweenCards = Mathf.Min(angleBetweenCards, dynamicAngleBetweenCards);
             for (int i = 0; i < cardNum; i++)
             {
-                var angle = i * angleBetweenCards;
-                var pos = FanCardPos(cardAngle-angle);
-                var rot = Quaternion.Euler(0, 0, cardAngle-angle);
+                var angle = i * totalAngleBetweenCards;
+                var pos = FanCardPos(totalAngle - angle);
+                var rot = Quaternion.Euler(0, 0, totalAngle - angle);
                 cardPos.Add(pos);
                 cardRot.Add(rot);
             }
@@ -71,13 +74,14 @@ public class CardLayoutManager : MonoBehaviour
 
     }
     //计算弧形排布的卡牌位置
-    private Vector3 FanCardPos(float angle){
+    private Vector3 FanCardPos(float angle)
+    {
         return new Vector3(
             //x方向位移
-            centerPoint.x - Mathf.Sin(Mathf.Deg2Rad*angle)*radius,
+            centerPoint.x - Mathf.Sin(Mathf.Deg2Rad * angle) * radius,
             //y方向位移
-            centerPoint.y + Mathf.Cos(Mathf.Deg2Rad*angle)*radius,
-            centerPoint.z=0f
+            centerPoint.y + Mathf.Cos(Mathf.Deg2Rad * angle) * radius,
+            centerPoint.z = 0f
         );
     }
 }

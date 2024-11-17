@@ -62,27 +62,29 @@ public class CardDeck : MonoBehaviour
             //将卡牌对象添加到手牌列表中
             handleCardObjectList.Add(card);
             //每次抽牌后，更新手牌布局，抽牌越多间隔越长
-            var delay=i*0.2f;
+            var delay = i * 0.2f;
             SetCardLayout(delay);
         }
     }
     private void SetCardLayout(float delay)
     {
-        for(int i=0;i<handleCardObjectList.Count;i++)
+        for (int i = 0; i < handleCardObjectList.Count; i++)
         {
-            Card currentCard=handleCardObjectList[i];
-            CardTransForm currentCardTransForm = cardLayoutManager.GetCardTransForm(i,handleCardObjectList.Count);
+            Card currentCard = handleCardObjectList[i];
+            CardTransForm currentCardTransForm = cardLayoutManager.GetCardTransForm(i, handleCardObjectList.Count);
             // currentCard.transform.SetPositionAndRotation(currentCardTransForm.pos, currentCardTransForm.rot);
+            currentCard.isAnimating = true;//设置卡牌正在动画中
             //卡牌缩放变为1，使用DO实现动画 
-            currentCard.transform.DOScale(Vector3.one, 0.2f).SetDelay(delay).onComplete=()=>//在动画执行完成后执行的内容
+            currentCard.transform.DOScale(Vector3.one, 0.2f).SetDelay(delay).onComplete = () =>//在动画执行完成后执行的内容
             {
                 //卡牌位置移动到指定位置，使用DO实现动画
-                currentCard.transform.DOMove(currentCardTransForm.pos, 0.5f);
+                currentCard.transform.DOMove(currentCardTransForm.pos, 0.5f).onComplete = () => currentCard.isAnimating = false;
                 currentCard.transform.DORotateQuaternion(currentCardTransForm.rot, 0.5f);
             };
 
             //卡牌排序
-            currentCard.GetComponent<SortingGroup>().sortingOrder=i;
+            currentCard.GetComponent<SortingGroup>().sortingOrder = i;
+            currentCard.UpdatePosAndRot(currentCardTransForm.pos, currentCardTransForm.rot);
         }
     }
 }

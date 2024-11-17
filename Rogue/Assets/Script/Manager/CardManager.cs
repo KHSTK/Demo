@@ -51,9 +51,9 @@ public class CardManager : MonoBehaviour
     /// <returns></returns>
     public GameObject GetCardObject()
     {
-        
-        var currentCardObject= pool.GetGameObjectFromPool();
-        currentCardObject.transform.localScale= Vector3.zero;
+
+        var currentCardObject = pool.GetGameObjectFromPool();
+        currentCardObject.transform.localScale = Vector3.zero;
         return currentCardObject;
     }
     //外部回收卡牌

@@ -390,7 +390,7 @@ MonoBehaviour:
   isHorizontal: 1
   maxWidth: 7
   cardSpacing: 1.5
-  maxAngle: 30
+  maxAngle: 16
   angleBetweenCards: 7
   radius: 17
   centerPoint: {x: 0, y: -4.5, z: 0}

@@ -9,7 +9,7 @@ public class BaseEventListener<T> : MonoBehaviour
 
     private void OnEnable()
     {
-        if(eventSO != null)
+        if (eventSO != null)
         {
             eventSO.OnEventRaised += ResponseEvent;
         }
