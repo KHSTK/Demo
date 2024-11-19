@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 using DG.Tweening;
+using System.Net.NetworkInformation;
 
 public class CardDeck : MonoBehaviour
 {
@@ -32,7 +33,7 @@ public class CardDeck : MonoBehaviour
                 drawDeck.Add(entry.cardData);
             }
         }
-        //洗牌&&更新洗牌堆和弃牌堆
+        ShuffleDeck();
     }
     [ContextMenu("测试抽卡")]
     public void TestDrawCard()
@@ -47,7 +48,12 @@ public class CardDeck : MonoBehaviour
         {
             if (drawDeck.Count == 0)
             {
-                //洗牌
+                foreach (var item in discardDeck)
+                {
+                    drawDeck.Add(item);//将弃牌堆中的卡牌重新添加到抽牌堆中
+                }
+                discardDeck.Clear();//清空弃牌堆
+                ShuffleDeck();//洗牌
             }
             //获取抽牌堆最上面的数据
             CardDataSO currentCardData = drawDeck[i];
@@ -86,5 +92,33 @@ public class CardDeck : MonoBehaviour
             currentCard.GetComponent<SortingGroup>().sortingOrder = i;
             currentCard.UpdatePosAndRot(currentCardTransForm.pos, currentCardTransForm.rot);
         }
+    }
+    /// <summary>
+    /// 洗牌打乱抽牌堆顺序
+    /// </summary>
+    private void ShuffleDeck()
+    {
+        discardDeck.Clear();
+        //更新UI数量
+        for (int i = 0; i < drawDeck.Count; i++)
+        {
+            //洗牌
+            CardDataSO temp = drawDeck[i];
+            int randomIndex = Random.Range(i, drawDeck.Count);
+            drawDeck[i] = drawDeck[randomIndex];
+            drawDeck[randomIndex] = temp;
+        }
+    }
+    /// <summary>
+    /// 弃牌
+    /// </summary>
+    public void DiscardCard(object obj)
+    {
+        Card card = obj as Card;
+        discardDeck.Add(card.cardData);
+        handleCardObjectList.Remove(card);
+        card.transform.DOScale(Vector3.zero, 0.2f).onComplete = () =>
+        cardManager.RecycleCardObject(card.gameObject);
+        SetCardLayout(0);
     }
 }

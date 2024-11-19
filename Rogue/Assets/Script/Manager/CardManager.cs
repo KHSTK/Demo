@@ -56,7 +56,10 @@ public class CardManager : MonoBehaviour
         currentCardObject.transform.localScale = Vector3.zero;
         return currentCardObject;
     }
-    //外部回收卡牌
+    /// <summary>
+    /// 回收卡牌时调用该函数
+    /// </summary>
+    /// <param name="cardObject"></param>
     public void RecycleCardObject(GameObject cardObject)
     {
         pool.ReleaseGameObjectToPool(cardObject);

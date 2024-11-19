@@ -16,6 +16,9 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public Quaternion originalRot;
     public int originalLayer;
     public bool isAnimating;
+    public Player player;
+    [Header("广播")]
+    public ObjectEventSO discardCardEvent;
 
     private void Start()
     {
@@ -40,7 +43,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             CardType.Buff => "效果",
             _ => throw new System.NotImplementedException()
         };
-
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
     /// <summary>
     /// 设置卡牌的初始位置和旋转
@@ -83,6 +86,23 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         GetComponent<SortingGroup>().sortingOrder = originalLayer;
         transform.DOMove(originalPos, 0.2f);
         transform.DORotateQuaternion(originalRot, 0.2f).onComplete = () => isAnimating = false;
+    }
+    /// <summary>
+    /// 执行卡牌效果
+    /// </summary>
+    /// <param name="from">执行者</param>
+    /// <param name="target">被执行者</param>
+    public void ExecuteCardEffect(CharacterBase from, CharacterBase target)
+    {
+        //减少对应消耗
+        //执行卡牌效果
+        foreach (var effect in cardData.effectList)
+        {
+            effect.Execute(from, target);
+        }
+        //回收卡牌
+        discardCardEvent?.RaiseEvent(this, this);
+
     }
 
 }

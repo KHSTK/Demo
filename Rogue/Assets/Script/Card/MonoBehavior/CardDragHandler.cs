@@ -12,6 +12,8 @@ public class CardDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     private bool canMove;
     private bool canExecute;
     private Vector3 worldPos;
+    private CharacterBase targetCharacter;
+
     private void Awake()
     {
         currentCard = GetComponent<Card>();
@@ -51,6 +53,18 @@ public class CardDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
                 currentCard.transform.Find("Entry/Square").gameObject.SetActive(false);
             }
         }
+        else
+        {
+            if (eventData.pointerEnter == null) return;
+            if (eventData.pointerEnter.CompareTag("Enemy"))
+            {
+                canExecute = true;
+                targetCharacter = eventData.pointerEnter.GetComponent<CharacterBase>();
+                return;
+            }
+            canExecute = false;
+            targetCharacter = null;
+        }
     }
 
     //拖拽结束
@@ -63,6 +77,7 @@ public class CardDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         if (canExecute)
         {
             Debug.Log("执行");
+            currentCard.ExecuteCardEffect(currentCard.player, targetCharacter);
         }
         else
         {

@@ -22,3 +22,9 @@ public enum CardType
     Defense,
     Buff
 }
+public enum EffcetTargetType
+{
+    Self,
+    Target,
+    All
+}

@@ -949,6 +949,8 @@ MonoBehaviour:
   originalRot: {x: 0, y: 0, z: 0, w: 0}
   originalLayer: 0
   isAnimating: 0
+  player: {fileID: 0}
+  discardCardEvent: {fileID: 11400000, guid: 3c96d24dd6f25a34dbe69dd3e7dc71af, type: 2}
 --- !u!114 &-2131020658599229500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -962,7 +964,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arrowPrefab: {fileID: 1706577915937239034, guid: 76eaf9173b2fc6040927d0e31aff6b2f, type: 3}
-  currentArrow: {fileID: 0}
 --- !u!1 &5008942858069914290
 GameObject:
   m_ObjectHideFlags: 0
