@@ -18,6 +18,12 @@ public class CardDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     {
         currentCard = GetComponent<Card>();
     }
+    private void OnDisable()
+    {
+        currentCard.transform.Find("Entry/Square").gameObject.SetActive(false);
+        canMove = false;
+        canExecute = false;
+    }
     //开始拖拽
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -42,7 +48,7 @@ public class CardDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             Vector3 screenPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10);
             worldPos = Camera.main.ScreenToWorldPoint(screenPos);
             currentCard.transform.position = worldPos;
-            if (worldPos.y > 1f)
+            if (worldPos.y > 0.5f)
             {
                 canExecute = true;
                 currentCard.transform.Find("Entry/Square").gameObject.SetActive(true);

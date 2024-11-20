@@ -24,7 +24,6 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         Init(cardData);
     }
-
     /// <summary>
     /// 初始化卡牌数据
     /// </summary>

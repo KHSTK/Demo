@@ -14,12 +14,16 @@ public class CardDeck : MonoBehaviour
     public List<CardDataSO> discardDeck = new();//弃牌堆
     public List<Card> handleCardObjectList = new();//手牌（每回合）
     public Vector3 deckPos;//牌堆位置
+    public int drawCount;//每回合抽牌数量
+    [Header("事件广播")]
+    public IntEventSO drawCountEvent;
+    public IntEventSO discardCountEvent;
 
     //测试用初始化
     private void Start()
     {
         InitDeck();
-        DrawCard(3);
+        drawCount = 3;
     }
 
     //牌堆初始化
@@ -40,6 +44,10 @@ public class CardDeck : MonoBehaviour
     {
         DrawCard(1);
     }
+    public void NewTurnDrawCard()
+    {
+        DrawCard(drawCount);
+    }
 
 
     private void DrawCard(int amount)
@@ -56,9 +64,11 @@ public class CardDeck : MonoBehaviour
                 ShuffleDeck();//洗牌
             }
             //获取抽牌堆最上面的数据
-            CardDataSO currentCardData = drawDeck[i];
+            CardDataSO currentCardData = drawDeck[0];
             //从抽牌堆中移除最上面的数据
-            drawDeck.RemoveAt(i);
+            drawDeck.RemoveAt(0);
+            //修改UI数据
+            drawCountEvent.RaiseEvent(drawDeck.Count, this);
             //获取卡牌对象
             var card = cardManager.GetCardObject().GetComponent<Card>();
             //设置卡牌位置
@@ -108,6 +118,8 @@ public class CardDeck : MonoBehaviour
             drawDeck[i] = drawDeck[randomIndex];
             drawDeck[randomIndex] = temp;
         }
+        drawCountEvent.RaiseEvent(drawDeck.Count, this);
+        discardCountEvent.RaiseEvent(discardDeck.Count, this);
     }
     /// <summary>
     /// 弃牌
@@ -119,6 +131,21 @@ public class CardDeck : MonoBehaviour
         handleCardObjectList.Remove(card);
         card.transform.DOScale(Vector3.zero, 0.2f).onComplete = () =>
         cardManager.RecycleCardObject(card.gameObject);
+        discardCountEvent.RaiseEvent(discardDeck.Count, this);
         SetCardLayout(0);
+    }
+    /// <summary>
+    /// 回合结束弃掉玩家所有卡牌
+    /// </summary>
+    public void OnPlayerTurnEnd()
+    {
+        for (int i = 0; i < handleCardObjectList.Count; i++)
+        {
+            discardDeck.Add(handleCardObjectList[i].cardData);
+            handleCardObjectList[i].transform.DOScale(Vector3.zero, 0.2f).onComplete = () =>
+            cardManager.RecycleCardObject(handleCardObjectList[i].gameObject);
+        }
+        discardCountEvent.RaiseEvent(discardDeck.Count, this);
+        handleCardObjectList.Clear();
     }
 }

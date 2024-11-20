@@ -16,7 +16,7 @@ public class CardLayoutManager : MonoBehaviour
 
     private void Awake()
     {
-        centerPoint = isHorizontal ? Vector3.up * -4f : Vector3.up * -21f;
+        centerPoint = isHorizontal ? centerPoint : Vector3.up * -21f;
     }
 
     /// <summary>
