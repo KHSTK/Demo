@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1616762389d1f5845ba95be08137531d, type: 3}
-  m_Name: PlayerTurnEnd
+  m_Script: {fileID: 11500000, guid: f88f58d40569b174bb23af7776ce1f17, type: 3}
+  m_Name: PlayerEnergyChangeEvent
   m_EditorClassIdentifier: 
-  description: "\u73A9\u5BB6\u56DE\u5408\u7ED3\u675F"
-  lastSender: Gameplay (GameplayPanel)
+  description: "\u5F53\u73A9\u5BB6\u80FD\u91CF\u6539\u53D8\u65F6\u4F20\u9012\u6700\u5927\u80FD\u91CF\u548C\u5F53\u524D\u80FD\u91CF"
+  lastSender: PlayerEnergy (IntVariable)

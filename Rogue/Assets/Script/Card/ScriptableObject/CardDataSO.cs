@@ -6,7 +6,7 @@ public class CardDataSO : ScriptableObject
 {
     public string cardName;
     public Sprite cardSprite;
-    public int carCost;
+    public int cardCost;
     public CardType cardType;
 
     [TextArea]

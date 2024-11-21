@@ -15,6 +15,7 @@ public class CardDeck : MonoBehaviour
     public List<Card> handleCardObjectList = new();//手牌（每回合）
     public Vector3 deckPos;//牌堆位置
     public int drawCount;//每回合抽牌数量
+    public int maxCard;//手牌上限
     [Header("事件广播")]
     public IntEventSO drawCountEvent;
     public IntEventSO discardCountEvent;
@@ -24,6 +25,7 @@ public class CardDeck : MonoBehaviour
     {
         InitDeck();
         drawCount = 3;
+        maxCard = 6;
     }
 
     //牌堆初始化
@@ -56,11 +58,12 @@ public class CardDeck : MonoBehaviour
         {
             if (drawDeck.Count == 0)
             {
-                foreach (var item in discardDeck)
-                {
-                    drawDeck.Add(item);//将弃牌堆中的卡牌重新添加到抽牌堆中
-                }
-                discardDeck.Clear();//清空弃牌堆
+                InitDeck();
+                // foreach (var item in discardDeck)
+                // {
+                //     drawDeck.Add(item);//将弃牌堆中的卡牌重新添加到抽牌堆中
+                // }
+                // discardDeck.Clear();//清空弃牌堆
                 ShuffleDeck();//洗牌
             }
             //获取抽牌堆最上面的数据
@@ -90,6 +93,8 @@ public class CardDeck : MonoBehaviour
             CardTransForm currentCardTransForm = cardLayoutManager.GetCardTransForm(i, handleCardObjectList.Count);
             // currentCard.transform.SetPositionAndRotation(currentCardTransForm.pos, currentCardTransForm.rot);
             currentCard.isAnimating = true;//设置卡牌正在动画中
+            //更新卡牌cost文本颜色
+            currentCard.UpadteCardState();
             //卡牌缩放变为1，使用DO实现动画 
             currentCard.transform.DOScale(Vector3.one, 0.2f).SetDelay(delay).onComplete = () =>//在动画执行完成后执行的内容
             {
@@ -139,6 +144,7 @@ public class CardDeck : MonoBehaviour
     /// </summary>
     public void OnPlayerTurnEnd()
     {
+        if (handleCardObjectList.Count < maxCard) return;
         for (int i = 0; i < handleCardObjectList.Count; i++)
         {
             discardDeck.Add(handleCardObjectList[i].cardData);

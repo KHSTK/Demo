@@ -27,11 +27,31 @@ public class GameplayPanel : MonoBehaviour
         drawAmountLabel.text = "0";
         discardAmountLabel.text = "0";
         turnLabel.text = "开始游戏";
+        endTurnButton.SetEnabled(false);
+
     }
 
     private void OnEndTurnButtonClicked()
     {
+        Debug.Log("玩家回合结束");
         playerTurnEndEvent.RaiseEvent(null, this);
+
+    }
+    public void OnPlayerTurnStart()
+    {
+        Debug.Log("玩家回合开始");
+        turnLabel.text = "玩家回合";
+        turnLabel.style.color = new StyleColor(new Color(0.4f, 0.8f, 0.2f));
+        endTurnButton.SetEnabled(true);
+        rootElement.pickingMode = PickingMode.Ignore;
+    }
+    public void OnEnemyTurnStart()
+    {
+        Debug.Log("敌人回合开始");
+        turnLabel.text = "敌人回合";
+        turnLabel.style.color = new StyleColor(new Color(1f, 0.5f, 0.5f));
+        endTurnButton.SetEnabled(false);
+        rootElement.pickingMode = PickingMode.Position;
     }
 
     private void MoveToWorldPos(VisualElement element, Vector3 worldPos, Vector3 size)
@@ -46,5 +66,9 @@ public class GameplayPanel : MonoBehaviour
     public void UpdateDiscardAmount(int amount)
     {
         discardAmountLabel.text = amount.ToString();
+    }
+    public void UpdateEnergyAmount(int amount)
+    {
+        energyAmountLabel.text = amount.ToString();
     }
 }

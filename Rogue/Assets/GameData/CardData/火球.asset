@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: "\u706B\u7403"
   cardSprite: {fileID: 21300000, guid: 28a02df1369b7fd4eab040459b0cc450, type: 3}
-  carCost: 3
+  cardCost: 1
   cardType: 2
   description: "\u5BF9\u76EE\u6807\u9020\u6210<color=\"white>3</color>\u70B9\u4F24\u5BB3\u5E76\u65BD\u52A0\u707C\u70E7"
+  effectList: []

@@ -27,6 +27,7 @@ public class CardDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     //开始拖拽
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (!currentCard.isAvailable) return;
         switch (currentCard.cardData.cardType)
         {
             case CardType.Attack:
@@ -42,6 +43,7 @@ public class CardDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     //拖拽中
     public void OnDrag(PointerEventData eventData)
     {
+        if (!currentCard.isAvailable) return;
         if (canMove)
         {
             currentCard.isAnimating = true;
@@ -76,6 +78,7 @@ public class CardDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     //拖拽结束
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (!currentCard.isAvailable) return;
         if (currentArrow != null)
         {
             Destroy(currentArrow);

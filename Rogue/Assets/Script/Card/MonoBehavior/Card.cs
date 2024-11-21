@@ -16,9 +16,11 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public Quaternion originalRot;
     public int originalLayer;
     public bool isAnimating;
+    public bool isAvailable;
     public Player player;
     [Header("广播")]
     public ObjectEventSO discardCardEvent;
+    public IntEventSO cardCostEvent;
 
     private void Start()
     {
@@ -32,7 +34,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         cardData = data;
         cardSprite.sprite = data.cardSprite;
-        costText.text = data.carCost.ToString();
+        costText.text = data.cardCost.ToString();
         descriptionText.text = data.description;
         nameText.text = data.cardName.ToString();
         typeText.text = data.cardType switch
@@ -94,6 +96,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public void ExecuteCardEffect(CharacterBase from, CharacterBase target)
     {
         //减少对应消耗
+        cardCostEvent?.RaiseEvent(cardData.cardCost, this);
         //执行卡牌效果
         foreach (var effect in cardData.effectList)
         {
@@ -101,7 +104,11 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         }
         //回收卡牌
         discardCardEvent?.RaiseEvent(this, this);
-
+    }
+    public void UpadteCardState()
+    {
+        isAvailable = player.CurrentEnergy >= cardData.cardCost;
+        costText.color = isAvailable ? Color.green : Color.red;
     }
 
 }

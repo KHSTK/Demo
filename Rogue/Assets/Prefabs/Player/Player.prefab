@@ -164,6 +164,8 @@ GameObject:
   - component: {fileID: -7499831362386587740}
   - component: {fileID: -3772639370422970093}
   - component: {fileID: 8822054242485063418}
+  - component: {fileID: 6885310106080675376}
+  - component: {fileID: 3724618197585647748}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -249,6 +251,8 @@ MonoBehaviour:
   maxHp: 50
   hp: {fileID: 11400000, guid: 1255c6a06aab5da46a238667ec369413, type: 2}
   isDead: 0
+  playerEnergy: {fileID: 11400000, guid: f44e4b3b7bacdbf4bb8a2d0b3aed3fa6, type: 2}
+  maxEnergy: 3
 --- !u!114 &-3772639370422970093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -281,6 +285,62 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarTransForm: {fileID: 6365896277707837266}
+--- !u!114 &6885310106080675376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3068508777468611423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d50d46a7be0dec64cbd13b0e68ef43f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventSO: {fileID: 11400000, guid: 696fb1f783c850341b512a67031b2cc5, type: 2}
+  responseEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -7499831362386587740}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: NewTurn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &3724618197585647748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3068508777468611423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bf3b325d23ab0349b9ea3261290b6f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventSO: {fileID: 11400000, guid: baafb9a1ea683f54a89239b8ce572191, type: 2}
+  responseEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -7499831362386587740}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: UseEnergy
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4672476139466753290
 GameObject:
   m_ObjectHideFlags: 0
