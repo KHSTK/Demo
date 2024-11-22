@@ -250,6 +250,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 50
   hp: {fileID: 11400000, guid: 1255c6a06aab5da46a238667ec369413, type: 2}
+  defense: {fileID: 11400000, guid: b8105944dc10236419d9ccbf8f33a17d, type: 2}
   isDead: 0
   playerEnergy: {fileID: 11400000, guid: f44e4b3b7bacdbf4bb8a2d0b3aed3fa6, type: 2}
   maxEnergy: 3

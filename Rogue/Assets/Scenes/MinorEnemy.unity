@@ -323,6 +323,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MinorEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 7828086682384059276, guid: ebab1f8bfd6d0b048bd714e15dfbe927, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

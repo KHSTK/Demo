@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f88f58d40569b174bb23af7776ce1f17, type: 3}
   m_Name: PlayerEnergyChangeEvent
   m_EditorClassIdentifier: 
-  description: "\u5F53\u73A9\u5BB6\u80FD\u91CF\u6539\u53D8\u65F6\u4F20\u9012\u6700\u5927\u80FD\u91CF\u548C\u5F53\u524D\u80FD\u91CF"
+  description: "\u5F53\u73A9\u5BB6\u80FD\u91CF\u6539\u53D8\u65F6,\u4F20\u9012\u53D8\u5316\u7ED3\u679C"
   lastSender: PlayerEnergy (IntVariable)

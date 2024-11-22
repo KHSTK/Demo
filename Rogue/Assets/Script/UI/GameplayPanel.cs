@@ -11,6 +11,8 @@ public class GameplayPanel : MonoBehaviour
     private VisualElement rootElement;
     private Label turnLabel, energyAmountLabel, drawAmountLabel, discardAmountLabel;
     private Button endTurnButton;
+    private VisualElement defenseElement;
+    private Label defenseLabel;
 
     private void OnEnable()
     {
@@ -20,7 +22,10 @@ public class GameplayPanel : MonoBehaviour
         drawAmountLabel = rootElement.Q<Label>("DrawAmount");
         discardAmountLabel = rootElement.Q<Label>("DisAmount");
         endTurnButton = rootElement.Q<Button>("EndTurn");
+
         MoveToWorldPos(endTurnButton, endTurnButtonPos.position, Vector3.zero);
+
+
 
         endTurnButton.clicked += OnEndTurnButtonClicked;
         energyAmountLabel.text = "0";

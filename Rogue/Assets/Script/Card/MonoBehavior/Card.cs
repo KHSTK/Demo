@@ -96,7 +96,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public void ExecuteCardEffect(CharacterBase from, CharacterBase target)
     {
         //减少对应消耗
-        cardCostEvent?.RaiseEvent(cardData.cardCost, this);
+        cardCostEvent?.RaiseEvent(-cardData.cardCost, this);
         //执行卡牌效果
         foreach (var effect in cardData.effectList)
         {

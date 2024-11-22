@@ -949,6 +949,7 @@ MonoBehaviour:
   originalRot: {x: 0, y: 0, z: 0, w: 0}
   originalLayer: 0
   isAnimating: 0
+  isAvailable: 0
   player: {fileID: 0}
   discardCardEvent: {fileID: 11400000, guid: 3c96d24dd6f25a34dbe69dd3e7dc71af, type: 2}
   cardCostEvent: {fileID: 11400000, guid: baafb9a1ea683f54a89239b8ce572191, type: 2}

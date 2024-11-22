@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f88f58d40569b174bb23af7776ce1f17, type: 3}
-  m_Name: EnemyHpChangeEvent
+  m_Name: CostEnergyEvent
   m_EditorClassIdentifier: 
-  description: "\u654C\u4EBA\u8840\u91CF\u6539\u53D8\u65F6\uFF0C\u4F20\u9012\u53D8\u5316\u7ED3\u679C"
+  description: "\u80FD\u91CF\u6D88\u8017\u4E8B\u4EF6\uFF0C\u4F20\u9012\u80FD\u91CF\u53D8\u5316\u503C"
   lastSender: 

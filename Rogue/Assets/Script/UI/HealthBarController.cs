@@ -10,6 +10,8 @@ public class HealthBarController : MonoBehaviour
     public Transform healthBarTransForm;
     private UIDocument healthBarDocument;
     private ProgressBar healthBar;
+    private VisualElement defenseElement;
+    private Label defenseLabel;
     private void Awake()
     {
         currentCharacter = GetComponent<CharacterBase>();
@@ -36,6 +38,12 @@ public class HealthBarController : MonoBehaviour
         healthBar = healthBarDocument.rootVisualElement.Q<ProgressBar>("HealthBar");
         healthBar.highValue = currentCharacter.MaxHp;
         MoveToWorldPos(healthBar, healthBarTransForm.position, Vector2.zero);
+
+        defenseElement = healthBar.Q<VisualElement>("Defense");
+        defenseLabel = defenseElement.Q<Label>("DefenseAmount");
+        //初始不可见
+        defenseElement.style.display = DisplayStyle.None;
+        defenseLabel.text = "0";
     }
     [ContextMenu("Update HealthBar")]
     public void UpdataHealthBar()
@@ -65,6 +73,9 @@ public class HealthBarController : MonoBehaviour
             {
                 healthBar.AddToClassList("highHealth");
             }
+
         }
+        defenseElement.style.display = currentCharacter.defense.currentValue > 0 ? DisplayStyle.Flex : DisplayStyle.None;
+        defenseLabel.text = currentCharacter.defense.currentValue.ToString();
     }
 }

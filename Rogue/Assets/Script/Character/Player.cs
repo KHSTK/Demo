@@ -10,6 +10,7 @@ public class Player : CharacterBase
     {
         playerEnergy.maxValue = maxEnergy;
         CurrentEnergy = MaxEnergy;
+        base.Start();
     }
     /// <summary>
     /// 每回合逻辑，监听事件
@@ -17,14 +18,12 @@ public class Player : CharacterBase
     public void NewTurn()
     {
         CurrentEnergy = maxEnergy;
-
     }
     public void UseEnergy(int cost)
     {
-        Debug.Log("消耗能量：" + cost + "，当前能量：" + CurrentEnergy);
         if (CurrentEnergy >= cost)
         {
-            CurrentEnergy -= cost;
+            CurrentEnergy += cost;
         }
         else
         {
