@@ -52,8 +52,9 @@ public class CardDeck : MonoBehaviour
     }
 
 
-    private void DrawCard(int amount)
+    public void DrawCard(int amount)
     {
+        SetCardLayout(0);
         for (int i = 0; i < amount; i++)
         {
             if (drawDeck.Count == 0)
@@ -135,9 +136,11 @@ public class CardDeck : MonoBehaviour
         discardDeck.Add(card.cardData);
         handleCardObjectList.Remove(card);
         card.transform.DOScale(Vector3.zero, 0.2f).onComplete = () =>
-        cardManager.RecycleCardObject(card.gameObject);
+        {
+            cardManager.RecycleCardObject(card.gameObject);
+            SetCardLayout(0);
+        };
         discardCountEvent.RaiseEvent(discardDeck.Count, this);
-        SetCardLayout(0);
     }
     /// <summary>
     /// 回合结束弃掉玩家所有卡牌
@@ -145,13 +148,14 @@ public class CardDeck : MonoBehaviour
     public void OnPlayerTurnEnd()
     {
         if (handleCardObjectList.Count < maxCard) return;
-        for (int i = 0; i < handleCardObjectList.Count; i++)
+        var currentCardList = handleCardObjectList;
+        for (int i = 0; i < currentCardList.Count; i = 0)
         {
-            discardDeck.Add(handleCardObjectList[i].cardData);
-            handleCardObjectList[i].transform.DOScale(Vector3.zero, 0.2f).onComplete = () =>
-            cardManager.RecycleCardObject(handleCardObjectList[i].gameObject);
+            DiscardCard(handleCardObjectList[0]);
+            if (handleCardObjectList.Count < 1) break;
         }
-        discardCountEvent.RaiseEvent(discardDeck.Count, this);
+
         handleCardObjectList.Clear();
     }
+
 }

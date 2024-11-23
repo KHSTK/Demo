@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 77854d63c9e760947bb93ff27b38c6b8, type: 3}
-  m_Name: "\u82F9\u679C"
+  m_Name: "\u62BD\u5361"
   m_EditorClassIdentifier: 
-  cardName: "\u82F9\u679C"
-  cardSprite: {fileID: 21300000, guid: 8e1f416c7d68f5f4494ad45eee82af26, type: 3}
+  cardName: "\u62BD\u5361"
+  cardSprite: {fileID: 21300000, guid: f1ec4da94f3fce84887017bd602a7b98, type: 3}
   cardCost: 1
-  cardType: 1
-  description: "\u56DE\u590D<color=\"white>3</color>\u70B9\u751F\u547D\u503C"
+  cardType: 2
+  description: "\u62BD\u4E24\u5F20\u5361"
   effectList:
-  - {fileID: 11400000, guid: 4e8e1c58facd6b947aa84a261f4d2415, type: 2}
+  - {fileID: 11400000, guid: 74037ef5277d2fa459940518c3ef8a0a, type: 2}

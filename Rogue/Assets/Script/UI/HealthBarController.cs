@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Data;
 using System.Dynamic;
 using UnityEngine;
@@ -10,8 +11,11 @@ public class HealthBarController : MonoBehaviour
     public Transform healthBarTransForm;
     private UIDocument healthBarDocument;
     private ProgressBar healthBar;
-    private VisualElement defenseElement;
-    private Label defenseLabel;
+    private VisualElement defenseElement, buffRonudElement;
+    private Label defenseLabel, buffRoundLabel;
+    [Header("Buff素材")]
+    public List<Sprite> buffSpriteList;
+
     private void Awake()
     {
         currentCharacter = GetComponent<CharacterBase>();
@@ -41,9 +45,15 @@ public class HealthBarController : MonoBehaviour
 
         defenseElement = healthBar.Q<VisualElement>("Defense");
         defenseLabel = defenseElement.Q<Label>("DefenseAmount");
+
+        buffRonudElement = healthBar.Q<VisualElement>("Buff");
+        buffRoundLabel = buffRonudElement.Q<Label>("BuffRoundAmount");
         //初始不可见
         defenseElement.style.display = DisplayStyle.None;
+        buffRonudElement.style.display = DisplayStyle.None;
         defenseLabel.text = "0";
+        buffRoundLabel.text = "0";
+
     }
     [ContextMenu("Update HealthBar")]
     public void UpdataHealthBar()
@@ -75,7 +85,12 @@ public class HealthBarController : MonoBehaviour
             }
 
         }
+        //护甲更新
         defenseElement.style.display = currentCharacter.defense.currentValue > 0 ? DisplayStyle.Flex : DisplayStyle.None;
         defenseLabel.text = currentCharacter.defense.currentValue.ToString();
+        //buff更新
+        buffRonudElement.style.display = currentCharacter.buffRound.currentValue > 0 ? DisplayStyle.Flex : DisplayStyle.None;
+        buffRoundLabel.text = currentCharacter.buffRound.currentValue.ToString();
+        buffRonudElement.style.backgroundImage = currentCharacter.baseStrong > 1 ? new StyleBackground(buffSpriteList[0]) : new StyleBackground(buffSpriteList[1]);
     }
 }

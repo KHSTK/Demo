@@ -8,9 +8,9 @@ public class Player : CharacterBase
     public int MaxEnergy { get => playerEnergy.maxValue; }
     protected override void Start()
     {
+        base.Start();
         playerEnergy.maxValue = maxEnergy;
         CurrentEnergy = MaxEnergy;
-        base.Start();
     }
     /// <summary>
     /// 每回合逻辑，监听事件
