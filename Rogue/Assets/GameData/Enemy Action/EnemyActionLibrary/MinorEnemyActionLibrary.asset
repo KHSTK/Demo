@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52abed88bee9f56448d598bdbf4da241, type: 3}
+  m_Name: MinorEnemyActionLibrary
+  m_EditorClassIdentifier: 
+  actionList:
+  - initentIcon: {fileID: 21300000, guid: a34550cedb3234dc085a67e7fb9bf5c8, type: 3}
+    effect: {fileID: 11400000, guid: 9cee8ad327eec714c9d6142dd4c2c75d, type: 2}
+  - initentIcon: {fileID: 21300000, guid: e60462361db3140c59c13b7122a2106c, type: 3}
+    effect: {fileID: 11400000, guid: 7233a0fbeace08144924617841d377c9, type: 2}
+  - initentIcon: {fileID: 21300000, guid: 98d622e3aaa3e464a933a2720153fdae, type: 3}
+    effect: {fileID: 11400000, guid: a81a49616a31d7341beda95ec58a98f1, type: 2}

@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 178f75f389c2b214b9beb84135349764, type: 3}
-  m_Name: PlayerDefense
+  m_Script: {fileID: 11500000, guid: f322719f2fc18c049b051d573d0a4b92, type: 3}
+  m_Name: Normal Damage Effect
   m_EditorClassIdentifier: 
-  maxValue: 0
-  currentValue: 0
-  valueChangeEvent: {fileID: 11400000, guid: 9fb022e5f81dfae43b78a6bbc375fa06, type: 2}
-  description: "\u5B58\u50A8\u73A9\u5BB6\u62A4\u7532"
+  value: 5
+  targetType: 1

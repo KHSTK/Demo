@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Dynamic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -16,14 +17,22 @@ public class HealthBarController : MonoBehaviour
     [Header("Buff素材")]
     public List<Sprite> buffSpriteList;
 
+    private Enemy enemy;
+    private VisualElement intentElement;
+    private Label intentLabel;
+
     private void Awake()
     {
         currentCharacter = GetComponent<CharacterBase>();
+        enemy = GetComponent<Enemy>();
+
     }
     private void Start()
     {
+        string path = "Assets/HealthBar/HealthBar.uxml";
         InitHealthBar();
         UpdataHealthBar();
+        VisualTreeAsset template = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(path);
     }
     private void Update()
     {
@@ -48,11 +57,19 @@ public class HealthBarController : MonoBehaviour
 
         buffRonudElement = healthBar.Q<VisualElement>("Buff");
         buffRoundLabel = buffRonudElement.Q<Label>("BuffRoundAmount");
+
+        intentElement = healthBar.Q<VisualElement>("Intent");
+        intentLabel = healthBar.Q<Label>("IntentAmount");
+
         //初始不可见
         defenseElement.style.display = DisplayStyle.None;
         buffRonudElement.style.display = DisplayStyle.None;
+        intentElement.style.display = DisplayStyle.None;
         defenseLabel.text = "0";
         buffRoundLabel.text = "0";
+        intentLabel.text = "0";
+
+
 
     }
     [ContextMenu("Update HealthBar")]
@@ -93,4 +110,20 @@ public class HealthBarController : MonoBehaviour
         buffRoundLabel.text = currentCharacter.buffRound.currentValue.ToString();
         buffRonudElement.style.backgroundImage = currentCharacter.baseStrong > 1 ? new StyleBackground(buffSpriteList[0]) : new StyleBackground(buffSpriteList[1]);
     }
+
+    [ContextMenu("Update intentBar")]
+    public void UpdateIntentBar()
+    {
+        intentElement.style.display = DisplayStyle.Flex;
+        intentElement.style.backgroundImage = new StyleBackground(enemy.currentAction.initentIcon);
+        intentLabel.text = enemy.currentAction.effect.value.ToString();
+    }
+    /// <summary>
+    /// 敌人回合结束时隐藏
+    /// </summary>
+    public void HideIntentBar()
+    {
+        intentElement.style.display = DisplayStyle.None;
+    }
+
 }

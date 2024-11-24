@@ -215,6 +215,8 @@ GameObject:
   - component: {fileID: 6885310106080675376}
   - component: {fileID: 3724618197585647748}
   - component: {fileID: 6181833822843541637}
+  - component: {fileID: 5160046437812923338}
+  - component: {fileID: 1815262241427037119}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -305,6 +307,7 @@ MonoBehaviour:
   buff: {fileID: 8899012085537312456}
   debuff: {fileID: 6282369541216584748}
   buffRound: {fileID: 11400000, guid: 3720e0d0a9bdf5240a83d5b436474fc2, type: 2}
+  baseStrong: 1
   playerEnergy: {fileID: 11400000, guid: f44e4b3b7bacdbf4bb8a2d0b3aed3fa6, type: 2}
   maxEnergy: 3
 --- !u!114 &-3772639370422970093
@@ -370,6 +373,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 5160046437812923338}
+        m_TargetAssemblyTypeName: PlayerAnimation, Assembly-CSharp
+        m_MethodName: PlayerTurnStar
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &3724618197585647748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -418,6 +433,58 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: CharacterBase, Assembly-CSharp
         m_MethodName: UpdateBuffRound
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 5160046437812923338}
+        m_TargetAssemblyTypeName: PlayerAnimation, Assembly-CSharp
+        m_MethodName: PlayerTurnEnd
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &5160046437812923338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3068508777468611423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a7f3327e2ad8a94b993b78b4803c2c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1815262241427037119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3068508777468611423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d50d46a7be0dec64cbd13b0e68ef43f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventSO: {fileID: 11400000, guid: 3c96d24dd6f25a34dbe69dd3e7dc71af, type: 2}
+  responseEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5160046437812923338}
+        m_TargetAssemblyTypeName: PlayerAnimation, Assembly-CSharp
+        m_MethodName: OnCardEffect
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
