@@ -57,14 +57,19 @@ public class CardDeck : MonoBehaviour
         SetCardLayout(0);
         for (int i = 0; i < amount; i++)
         {
+            if (discardDeck.Count != 0)
+            {
+                foreach (var item in discardDeck)
+                {
+                    drawDeck.Add(item);//将弃牌堆中的卡牌重新添加到抽牌堆中
+                }
+                discardDeck.Clear();//清空弃牌堆
+                ShuffleDeck();//洗牌
+            }
             if (drawDeck.Count == 0)
             {
                 InitDeck();
-                // foreach (var item in discardDeck)
-                // {
-                //     drawDeck.Add(item);//将弃牌堆中的卡牌重新添加到抽牌堆中
-                // }
-                // discardDeck.Clear();//清空弃牌堆
+
                 ShuffleDeck();//洗牌
             }
             //获取抽牌堆最上面的数据
@@ -148,6 +153,20 @@ public class CardDeck : MonoBehaviour
     public void OnPlayerTurnEnd()
     {
         if (handleCardObjectList.Count < maxCard) return;
+        var currentCardList = handleCardObjectList;
+        for (int i = 0; i < currentCardList.Count; i = 0)
+        {
+            DiscardCard(handleCardObjectList[0]);
+            if (handleCardObjectList.Count < 1) break;
+        }
+
+        handleCardObjectList.Clear();
+    }
+    /// <summary>
+    /// 游戏结束弃牌
+    /// </summary>
+    public void GameEndEvent()
+    {
         var currentCardList = handleCardObjectList;
         for (int i = 0; i < currentCardList.Count; i = 0)
         {

@@ -308,6 +308,7 @@ MonoBehaviour:
   debuff: {fileID: 6282369541216584748}
   buffRound: {fileID: 11400000, guid: 3720e0d0a9bdf5240a83d5b436474fc2, type: 2}
   baseStrong: 1
+  DeadEvent: {fileID: 11400000, guid: 1511fafa644201c458358a36e697ce00, type: 2}
   playerEnergy: {fileID: 11400000, guid: f44e4b3b7bacdbf4bb8a2d0b3aed3fa6, type: 2}
   maxEnergy: 3
 --- !u!114 &-3772639370422970093

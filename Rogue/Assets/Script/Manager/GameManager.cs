@@ -4,6 +4,10 @@ public class GameManager : MonoBehaviour
 {
     [Header("地图布局")]
     public MapLayoutSO mapLayout;
+    [Header("广播")]
+    public ObjectEventSO gameWinEvent;
+    public ObjectEventSO gameOverEvent;
+
     /// <summary>
     /// 更新地图布局数据
     /// </summary>
@@ -34,4 +38,21 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    public void CharacterDeadEvent(object character)
+    {
+        if (character is Player)
+        {
+            //玩家死亡
+            Debug.Log("玩家死亡,发出失败通知");
+            gameOverEvent?.RaiseEvent(null, this);
+        }
+        else
+        {
+            //敌人死亡
+            Debug.Log("敌人死亡，发出胜利通知");
+            gameWinEvent?.RaiseEvent(null, this);
+        }
+
+    }
+
 }

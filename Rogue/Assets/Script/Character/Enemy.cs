@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +11,10 @@ public class Enemy : CharacterBase
     protected override void Awake()
     {
         base.Awake();
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+    }
+    protected override void Start()
+    {
+        base.Start();
     }
     public virtual void OnPlayerTurnStart()
     {
@@ -24,6 +28,7 @@ public class Enemy : CharacterBase
     }
     public virtual void OnEnemyTurnStar()
     {
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         switch (currentAction.effect.targetType)
         {
             case EffcetTargetType.Self:
@@ -38,10 +43,28 @@ public class Enemy : CharacterBase
     }
     public void Skill()
     {
-        currentAction.effect.Execute(this, this);
+        // currentAction.effect.Execute(this, this);
+        // animator.SetTrigger("akill");
+        StartCoroutine(DelayAction("skill"));
     }
     public void Attack()
     {
-        currentAction.effect.Execute(this, player);
+        // currentAction.effect.Execute(this, player);
+        // animator.SetTrigger("attack");
+        StartCoroutine(DelayAction("attack"));
+    }
+    IEnumerator DelayAction(string actionName)
+    {
+        animator.SetTrigger(actionName);
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1.0f > 0.6f
+        && !animator.IsInTransition(0) && animator.GetCurrentAnimatorStateInfo(0).IsName(actionName));
+        if (actionName == "attack")
+        {
+            currentAction.effect.Execute(this, player);
+        }
+        else
+        {
+            currentAction.effect.Execute(this, this);
+        }
     }
 }

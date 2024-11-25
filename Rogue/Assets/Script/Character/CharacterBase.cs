@@ -17,9 +17,11 @@ public class CharacterBase : MonoBehaviour
     public IntVariable buffRound;
     public float baseStrong = 1f;
     private float strongEffect = 0.5f;
+    [Header("广播")]
+    public ObjectEventSO DeadEvent;
     protected virtual void Awake()
     {
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
     }
     protected virtual void Start()
     {
@@ -38,13 +40,15 @@ public class CharacterBase : MonoBehaviour
             CurrentHp -= currentDamage;
             Debug.Log("Take Damage:" + currentDamage);
             Debug.Log("CurrentHp" + CurrentHp);
-
+            animator.SetTrigger("hit");
         }
         else
         {
             CurrentHp = 0;
             //当前人物死亡
             isDead = true;
+            animator.SetBool("isDead", isDead);
+            DeadEvent.RaiseEvent(this, this);
         }
     }
     public void UpdateDefense(int amount)

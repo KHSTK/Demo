@@ -560,6 +560,7 @@ MonoBehaviour:
   debuff: {fileID: 1999921091699772960}
   buffRound: {fileID: 11400000, guid: becd6a5c341892e428eeb9250828c4b6, type: 2}
   baseStrong: 1
+  DeadEvent: {fileID: 11400000, guid: 1511fafa644201c458358a36e697ce00, type: 2}
   actionData: {fileID: 11400000, guid: f56dd300b8386284d92c1bdaa5d38b28, type: 2}
   currentAction:
     initentIcon: {fileID: 0}

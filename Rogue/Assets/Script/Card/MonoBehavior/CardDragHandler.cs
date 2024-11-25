@@ -31,8 +31,8 @@ public class CardDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         switch (currentCard.cardData.cardType)
         {
             case CardType.Attack:
-                currentArrow = Instantiate(arrowPrefab, currentCard.transform.position, Quaternion.identity);
-                break;
+            // currentArrow = Instantiate(arrowPrefab, currentCard.transform.position, Quaternion.identity);
+            // break;
             case CardType.Defense:
             case CardType.Buff:
                 canMove = true;
@@ -53,26 +53,29 @@ public class CardDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             if (worldPos.y > 0.5f)
             {
                 canExecute = true;
+                targetCharacter = GameObject.FindWithTag("Enemy").GetComponent<CharacterBase>();
                 currentCard.transform.Find("Entry/Square").gameObject.SetActive(true);
             }
             else
             {
+
                 canExecute = false;
+                targetCharacter = null;
                 currentCard.transform.Find("Entry/Square").gameObject.SetActive(false);
             }
         }
-        else
-        {
-            if (eventData.pointerEnter == null) return;
-            if (eventData.pointerEnter.CompareTag("Enemy"))
-            {
-                canExecute = true;
-                targetCharacter = eventData.pointerEnter.GetComponent<CharacterBase>();
-                return;
-            }
-            canExecute = false;
-            targetCharacter = null;
-        }
+        // else
+        // {
+        //     if (eventData.pointerEnter == null) return;
+        //     if (eventData.pointerEnter.CompareTag("Enemy"))
+        //     {
+        //         canExecute = true;
+        //         targetCharacter = eventData.pointerEnter.GetComponent<CharacterBase>();
+        //         return;
+        //     }
+        //     canExecute = false;
+        //     targetCharacter = null;
+        // }
     }
 
     //拖拽结束
@@ -86,6 +89,7 @@ public class CardDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         if (canExecute)
         {
             Debug.Log("执行");
+            Debug.Log(targetCharacter);
             currentCard.ExecuteCardEffect(currentCard.player, targetCharacter);
         }
         else
