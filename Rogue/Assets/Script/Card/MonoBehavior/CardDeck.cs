@@ -173,8 +173,9 @@ public class CardDeck : MonoBehaviour
             DiscardCard(handleCardObjectList[0]);
             if (handleCardObjectList.Count < 1) break;
         }
-
+        discardDeck.Clear();
         handleCardObjectList.Clear();
+        drawDeck.Clear();
     }
 
 }

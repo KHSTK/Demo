@@ -20,6 +20,7 @@ public class HealthBarController : MonoBehaviour
     private Enemy enemy;
     private VisualElement intentElement;
     private Label intentLabel;
+    public VisualTreeAsset intentTemplate;
 
     private void Awake()
     {
@@ -27,12 +28,11 @@ public class HealthBarController : MonoBehaviour
         enemy = GetComponent<Enemy>();
 
     }
-    private void Start()
+    private void OnEnable()
     {
-        string path = "Assets/HealthBar/HealthBar.uxml";
+        Debug.Log("血条产生坐标：" + healthBarTransForm.position);
         InitHealthBar();
         UpdataHealthBar();
-        VisualTreeAsset template = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(path);
     }
     private void Update()
     {
@@ -40,6 +40,7 @@ public class HealthBarController : MonoBehaviour
     }
     private void MoveToWorldPos(VisualElement element, Vector3 worldPos, Vector3 size)
     {
+        Debug.Log("血条产生坐标：" + worldPos);
         Rect rect = RuntimePanelUtils.CameraTransformWorldToPanelRect(element.panel, worldPos, size, Camera.main);
         element.transform.position = rect.position;
     }

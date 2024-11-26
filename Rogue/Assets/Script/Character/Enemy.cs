@@ -67,4 +67,11 @@ public class Enemy : CharacterBase
             currentAction.effect.Execute(this, this);
         }
     }
+    protected override void DeadEvent()
+    {
+        base.DeadEvent();
+        currentAction.effect = null;
+        currentAction.initentIcon = null;
+    }
+
 }

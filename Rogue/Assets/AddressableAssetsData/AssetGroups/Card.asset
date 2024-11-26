@@ -33,6 +33,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - CardData
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c98571620be2f5d4fad1fe8651ca636b
+    m_Address: "Assets/GameData/CardData/\u62BD\u5361.asset"
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - CardData
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cddab0304bbf55c48b34d9e0e4cdd2c9
     m_Address: "\u82F9\u679C"
     m_ReadOnly: 0

@@ -66,7 +66,10 @@ public class SceneLoadMananger : MonoBehaviour
     /// </summary>
     public async void LoadMap()
     {
-        await UnloadSceneTask();
+        if (SceneManager.GetActiveScene().name != "Persistent")
+        {
+            await UnloadSceneTask();
+        }
         currentScene = map;
         await LoadSceneTask();
     }

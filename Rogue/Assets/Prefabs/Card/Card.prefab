@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2299047712503844691}
   - component: {fileID: 5749306498582547428}
   m_Layer: 0
-  m_Name: Name
+  m_Name: Type
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -102,7 +102,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u653B\u51FB"
+  m_text: "\u6587\u672C\u586B\u5145"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 55cc692c60d7feb40b6dd679ac3658a9, type: 2}
   m_sharedMaterial: {fileID: 7687157553098277160, guid: 55cc692c60d7feb40b6dd679ac3658a9, type: 2}
@@ -188,7 +188,7 @@ GameObject:
   - component: {fileID: 3734352261794916397}
   - component: {fileID: 3264998309238327409}
   m_Layer: 0
-  m_Name: Type
+  m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -278,7 +278,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u653B\u51FB"
+  m_text: "\u6587\u672C\u586B\u5145"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 55cc692c60d7feb40b6dd679ac3658a9, type: 2}
   m_sharedMaterial: {fileID: 7687157553098277160, guid: 55cc692c60d7feb40b6dd679ac3658a9, type: 2}
@@ -519,7 +519,7 @@ SpriteRenderer:
   m_SortingLayerID: -890599381
   m_SortingLayer: 3
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 28a02df1369b7fd4eab040459b0cc450, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -527,7 +527,7 @@ SpriteRenderer:
   m_Size: {x: 15.002358, y: 21.03}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &3191531808441826842
@@ -671,7 +671,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u8FDB\u884C\u4E00\u6B21\u653B\u51FB"
+  m_text: "\u6587\u672C\u586B\u5145"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 55cc692c60d7feb40b6dd679ac3658a9, type: 2}
   m_sharedMaterial: {fileID: 7687157553098277160, guid: 55cc692c60d7feb40b6dd679ac3658a9, type: 2}
@@ -756,7 +756,7 @@ GameObject:
   - component: {fileID: 4650461237301708294}
   - component: {fileID: 4516697993668081539}
   m_Layer: 0
-  m_Name: card_name
+  m_Name: card_type
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -941,10 +941,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardData: {fileID: 0}
   cardSprite: {fileID: 8194678368312510226}
-  typeText: {fileID: 3264998309238327409}
+  typeText: {fileID: 5749306498582547428}
   costText: {fileID: 3795288527683051066}
   descriptionText: {fileID: 6770622404984196689}
-  nameText: {fileID: 5749306498582547428}
+  nameText: {fileID: 3264998309238327409}
   originalPos: {x: 0, y: 0, z: 0}
   originalRot: {x: 0, y: 0, z: 0, w: 0}
   originalLayer: 0
@@ -977,7 +977,7 @@ GameObject:
   - component: {fileID: 1169522422217433008}
   - component: {fileID: 789360635192509854}
   m_Layer: 0
-  m_Name: card_type
+  m_Name: card_name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1330,9 +1330,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '1
-
-'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 55cc692c60d7feb40b6dd679ac3658a9, type: 2}
   m_sharedMaterial: {fileID: 7687157553098277160, guid: 55cc692c60d7feb40b6dd679ac3658a9, type: 2}

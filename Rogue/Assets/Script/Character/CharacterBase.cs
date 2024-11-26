@@ -18,7 +18,7 @@ public class CharacterBase : MonoBehaviour
     public float baseStrong = 1f;
     private float strongEffect = 0.5f;
     [Header("广播")]
-    public ObjectEventSO DeadEvent;
+    public ObjectEventSO deadEvent;
     protected virtual void Awake()
     {
         animator = GetComponentInChildren<Animator>();
@@ -44,11 +44,7 @@ public class CharacterBase : MonoBehaviour
         }
         else
         {
-            CurrentHp = 0;
-            //当前人物死亡
-            isDead = true;
-            animator.SetBool("isDead", isDead);
-            DeadEvent.RaiseEvent(this, this);
+            DeadEvent();
         }
     }
     public void UpdateDefense(int amount)
@@ -104,5 +100,12 @@ public class CharacterBase : MonoBehaviour
     public void ResetDefense()
     {
         defense.SetValue(0);
+    }
+    protected virtual void DeadEvent()
+    {
+        CurrentHp = 0;
+        isDead = true;
+        animator.SetBool("isDead", isDead);
+        deadEvent.RaiseEvent(this, this);
     }
 }

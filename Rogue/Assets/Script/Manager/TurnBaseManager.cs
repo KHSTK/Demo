@@ -65,6 +65,7 @@ public class TurnBaseManager : MonoBehaviour
     }
     public void OnAfterRoomLoadEvent(object room)
     {
+
         Room currentRoom = (Room)room;
         switch (currentRoom.roomData.roomType)
         {
@@ -82,5 +83,12 @@ public class TurnBaseManager : MonoBehaviour
                 GameStart();
                 break;
         }
+    }
+    public void OnLoadMapEvent()
+    {
+        battleEnd = true;
+        isPlayerTurn = false;
+        isEnemyTurn = false;
+        playerObj.SetActive(false);
     }
 }

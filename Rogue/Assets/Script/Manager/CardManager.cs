@@ -12,6 +12,7 @@ public class CardManager : MonoBehaviour
     [Header("卡牌库")]
     public CardLibrarySO newGameLibrary;//新游戏卡牌库
     public CardLibrarySO currentLibrary;//当前玩家卡牌库
+    private int preIndex;
     private void Awake()
     {
         InitCardList();
@@ -63,5 +64,51 @@ public class CardManager : MonoBehaviour
     public void RecycleCardObject(GameObject cardObject)
     {
         pool.ReleaseGameObjectToPool(cardObject);
+    }
+    public CardDataSO GetRandomCardData()
+    {
+        var randomIndex = 0;
+        do
+        {
+            randomIndex = UnityEngine.Random.Range(0, cardDataList.Count);
+        } while (randomIndex == preIndex);//防止抽到相同的卡牌
+        preIndex = randomIndex;
+        return cardDataList[preIndex];
+    }
+    /// <summary>
+    /// 解锁新卡牌
+    /// </summary>
+    /// <param name="cardData"></param>
+    public void AddNewCardToLibrary(List<CardDataSO> addCardDataList)
+    {
+        foreach (var card in addCardDataList)
+        {
+            var newCard = new CardLibraryEntry
+            {
+                cardData = card,
+                amount = 1
+            };
+            // 查找是否已存在该卡牌
+            bool cardExists = false;
+            for (int i = 0; i < currentLibrary.cardLibraryList.Count; i++)
+            {
+                if (currentLibrary.cardLibraryList[i].cardData == card) // 检查引用是否相同
+                {
+                    // 将当前元素赋值给一个变量
+                    CardLibraryEntry entry = currentLibrary.cardLibraryList[i];
+                    entry.amount++; // 修改变量
+                    currentLibrary.cardLibraryList[i] = entry; // 将修改后的变量重新赋值给列表
+                    Debug.Log("增加卡牌数");
+                    Debug.Log(currentLibrary.cardLibraryList[i].cardData.cardName + "数量：" + currentLibrary.cardLibraryList[i].amount);
+                    cardExists = true;
+                    break; // 找到后退出循环
+                }
+            }
+            if (!cardExists)
+            {
+                Debug.Log("添加新卡");
+                currentLibrary.cardLibraryList.Add(newCard);
+            }
+        }
     }
 }
