@@ -8,24 +8,22 @@ public class GameplayPanel : MonoBehaviour
     public ObjectEventSO playerTurnEndEvent;
 
     public Transform endTurnButtonPos;
-    private VisualElement rootElement;
+    private VisualElement rootElement, energyElement;
     private Label turnLabel, energyAmountLabel, drawAmountLabel, discardAmountLabel;
     private Button endTurnButton;
-    private VisualElement defenseElement;
-    private Label defenseLabel;
 
     private void OnEnable()
     {
         rootElement = GetComponent<UIDocument>().rootVisualElement;
+        energyElement = rootElement.Q<VisualElement>("EnergyElement");
         turnLabel = rootElement.Q<Label>("TurnLabel");
         energyAmountLabel = rootElement.Q<Label>("EnergyAmount");
         drawAmountLabel = rootElement.Q<Label>("DrawAmount");
         discardAmountLabel = rootElement.Q<Label>("DisAmount");
         endTurnButton = rootElement.Q<Button>("EndTurn");
 
+
         MoveToWorldPos(endTurnButton, endTurnButtonPos.position, Vector3.zero);
-
-
 
         endTurnButton.clicked += OnEndTurnButtonClicked;
         energyAmountLabel.text = "0";
@@ -75,5 +73,9 @@ public class GameplayPanel : MonoBehaviour
     public void UpdateEnergyAmount(int amount)
     {
         energyAmountLabel.text = amount.ToString();
+    }
+    public void OnGameWinEvent()
+    {
+        endTurnButton.SetEnabled(false);
     }
 }

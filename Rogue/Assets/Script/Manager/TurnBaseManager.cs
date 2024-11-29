@@ -12,21 +12,12 @@ public class TurnBaseManager : MonoBehaviour
     [Header("事件广播")]
     public ObjectEventSO playerTurnStartEvent;
     public ObjectEventSO enemyTurnStartEvent;
-    public ObjectEventSO enemyTurnEndEvent;
     private void Update()
     {
         if (battleEnd == true) return;
         if (isEnemyTurn)
         {
-            timeCounter += Time.deltaTime;
-            if (timeCounter >= enemyTurnDuration)
-            {
-                timeCounter = 0f;
-                //敌人回合结束，切换到玩家回合
-                EnemyTurnEnd();
-                Debug.Log("敌人回合结束");
-                isPlayerTurn = true;
-            }
+
         }
         if (isPlayerTurn)
         {
@@ -50,8 +41,12 @@ public class TurnBaseManager : MonoBehaviour
 
     public void EnemyTurnEnd()
     {
-        isEnemyTurn = false;
-        enemyTurnEndEvent.RaiseEvent(null, this);
+        timeCounter = 0f;
+        //敌人回合结束，切换到玩家回合
+        Debug.Log("敌人回合结束");
+        isPlayerTurn = true;
+        // isEnemyTurn = false;
+        // enemyTurnEndEvent.RaiseEvent(null, this);
     }
     public void PlayerTurnStart()
     {
@@ -75,6 +70,7 @@ public class TurnBaseManager : MonoBehaviour
                 break;
             case RoomType.RestRoom:
                 playerObj.SetActive(true);
+                playerObj.GetComponent<PlayerAnimation>().SetPlayerSleep();
                 break;
             case RoomType.MinorEnemy:
             case RoomType.EliteEnemy:
@@ -90,5 +86,9 @@ public class TurnBaseManager : MonoBehaviour
         isPlayerTurn = false;
         isEnemyTurn = false;
         playerObj.SetActive(false);
+    }
+    public void NewGame()
+    {
+        playerObj.GetComponent<Player>().NewGame();
     }
 }

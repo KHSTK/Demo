@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -7,6 +8,9 @@ public class GameManager : MonoBehaviour
     [Header("广播")]
     public ObjectEventSO gameWinEvent;
     public ObjectEventSO gameOverEvent;
+    public ObjectEventSO gameEndEvent;
+
+
 
     /// <summary>
     /// 更新地图布局数据
@@ -38,6 +42,10 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// 角色死亡事件
+    /// </summary>
+    /// <param name="character"></param>
     public void CharacterDeadEvent(object character)
     {
         if (character is Player)
@@ -45,6 +53,12 @@ public class GameManager : MonoBehaviour
             //玩家死亡
             Debug.Log("玩家死亡,发出失败通知");
             gameOverEvent?.RaiseEvent(null, this);
+            NewGameEvent();
+        }
+        else if (character is Boss)
+        {
+            gameEndEvent?.RaiseEvent(null, this);
+            NewGameEvent();
         }
         else
         {
@@ -53,6 +67,14 @@ public class GameManager : MonoBehaviour
             gameWinEvent?.RaiseEvent(null, this);
         }
 
+    }
+    /// <summary>
+    /// 新游戏事件
+    /// </summary>
+    public void NewGameEvent()
+    {
+        mapLayout.mapLineDataList.Clear();
+        mapLayout.mapRoomDataList.Clear();
     }
 
 }

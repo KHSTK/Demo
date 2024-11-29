@@ -3,6 +3,7 @@ using System.Data;
 using System.Dynamic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 
 public class HealthBarController : MonoBehaviour
@@ -16,21 +17,13 @@ public class HealthBarController : MonoBehaviour
     private Label defenseLabel, buffRoundLabel;
     [Header("Buff素材")]
     public List<Sprite> buffSpriteList;
-
+    private VisualElement intentBar;
     private Enemy enemy;
-    private VisualElement intentElement;
-    private Label intentLabel;
     public VisualTreeAsset intentTemplate;
-
-    private void Awake()
+    private void OnEnable()
     {
         currentCharacter = GetComponent<CharacterBase>();
         enemy = GetComponent<Enemy>();
-
-    }
-    private void OnEnable()
-    {
-        Debug.Log("血条产生坐标：" + healthBarTransForm.position);
         InitHealthBar();
         UpdataHealthBar();
     }
@@ -59,16 +52,13 @@ public class HealthBarController : MonoBehaviour
         buffRonudElement = healthBar.Q<VisualElement>("Buff");
         buffRoundLabel = buffRonudElement.Q<Label>("BuffRoundAmount");
 
-        intentElement = healthBar.Q<VisualElement>("Intent");
-        intentLabel = healthBar.Q<Label>("IntentAmount");
+        intentBar = healthBar.Q<VisualElement>("IntentBar");
 
         //初始不可见
         defenseElement.style.display = DisplayStyle.None;
         buffRonudElement.style.display = DisplayStyle.None;
-        intentElement.style.display = DisplayStyle.None;
         defenseLabel.text = "0";
         buffRoundLabel.text = "0";
-        intentLabel.text = "0";
 
 
 
@@ -113,18 +103,28 @@ public class HealthBarController : MonoBehaviour
     }
 
     [ContextMenu("Update intentBar")]
-    public void UpdateIntentBar()
+    public void UpdateIntentBar(EnemyAction currentAction)
     {
-        intentElement.style.display = DisplayStyle.Flex;
-        intentElement.style.backgroundImage = new StyleBackground(enemy.currentAction.initentIcon);
-        intentLabel.text = enemy.currentAction.effect.value.ToString();
+        var intent = intentTemplate.Instantiate();
+        var intentElement = intent.Q<VisualElement>("Intent");
+        var intentLabel = intent.Q<Label>("IntentAmount");
+        intentBar.Add(intent);
+        intentBar.style.display = DisplayStyle.Flex;
+        intentLabel.text = currentAction.effect.value.ToString();
+        intentElement.style.backgroundImage = new StyleBackground(currentAction.initentIcon);
     }
     /// <summary>
     /// 敌人回合结束时隐藏
     /// </summary>
     public void HideIntentBar()
     {
-        intentElement.style.display = DisplayStyle.None;
+        intentBar.Clear();
+        // 遍历intentBar的所有子物体
+        // foreach (var child in intentBar.Children())
+        // {
+        //     intentBar.Remove(child);
+        // }
+        intentBar.style.display = DisplayStyle.None;
     }
 
 }

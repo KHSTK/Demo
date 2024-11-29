@@ -11,8 +11,15 @@ public class Player : CharacterBase
     protected override void Start()
     {
         base.Start();
+        // TODO：继续游戏，当前hp等于上次保存的hp
+        CurrentHp = CurrentHp;
         playerEnergy.maxValue = maxEnergy;
         CurrentEnergy = MaxEnergy;
+    }
+    private void OnEnable()
+    {
+        buffRound.SetValue(0);
+        ResetDefense();
     }
     /// <summary>
     /// 每回合逻辑，监听事件
@@ -31,5 +38,13 @@ public class Player : CharacterBase
         {
             Debug.Log("能量不足");
         }
+    }
+    public void NewGame()
+    {
+        isDead = false;
+        CurrentHp = MaxHp;
+        buffRound.currentValue = 0;
+        ResetDefense();
+        NewTurn();
     }
 }

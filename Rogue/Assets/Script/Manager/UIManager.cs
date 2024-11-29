@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -7,6 +8,8 @@ public class UIManager : MonoBehaviour
     public GameObject gameOverPanel;
     public GameObject gameWinPanel;
     public GameObject pickCardPanel;
+    public GameObject resetRoomPanel;
+    public GameObject openTreasurePanel;
     public void OnLoadRoomEvent(object obj)
     {
         Room currentRoom = obj as Room;
@@ -15,8 +18,10 @@ public class UIManager : MonoBehaviour
             case RoomType.Shop:
                 break;
             case RoomType.Treasure:
+                openTreasurePanel?.SetActive(true);
                 break;
             case RoomType.RestRoom:
+                resetRoomPanel?.SetActive(true);
                 break;
             case RoomType.MinorEnemy:
             case RoomType.EliteEnemy:
@@ -34,17 +39,18 @@ public class UIManager : MonoBehaviour
         gameOverPanel?.SetActive(false);
         gameWinPanel?.SetActive(false);
         pickCardPanel?.SetActive(false);
-
+        resetRoomPanel?.SetActive(false);
+        openTreasurePanel?.SetActive(false);
     }
     public void OnGameWinEvent()
     {
-        gamePanel?.SetActive(false);
-        gameWinPanel?.SetActive(true);
+        StartCoroutine(ClosePanel(gamePanel));
+        StartCoroutine(OpenPanel(gameWinPanel));
     }
     public void OnGameOverEvent()
     {
-        gamePanel?.SetActive(false);
-        gameOverPanel?.SetActive(true);
+        StartCoroutine(ClosePanel(gamePanel));
+        StartCoroutine(OpenPanel(gameOverPanel));
     }
     public void OnPickCardEvent()
     {
@@ -53,5 +59,17 @@ public class UIManager : MonoBehaviour
     public void OnPickCardOverEvent()
     {
         pickCardPanel?.SetActive(false);
+    }
+    IEnumerator OpenPanel(GameObject panel)
+    {
+        Debug.Log("OpenPanel");
+        yield return new WaitForSeconds(1f);
+        panel.SetActive(true);
+    }
+    IEnumerator ClosePanel(GameObject panel)
+    {
+        Debug.Log("ClosePanel");
+        yield return new WaitForSeconds(1f);
+        panel.SetActive(false);
     }
 }

@@ -7,16 +7,17 @@ public class SceneLoadMananger : MonoBehaviour
 {
     private AssetReference currentScene;
     public AssetReference map;
+    public AssetReference menu;
+    public GameObject fadePanel;
     private Vector2Int currentRoomVector;
     private Room currentRoom;
     [Header("广播")]
     public ObjectEventSO roomLoadUpdateEvent;
     public ObjectEventSO AfterRoomloadEvent;
-
-
-    private void Start()
+    private void Awake()
     {
         currentRoomVector = Vector2Int.one * -1;
+        LoadMenu();
     }
 
     /// <summary>
@@ -52,6 +53,8 @@ public class SceneLoadMananger : MonoBehaviour
         await s.Task;
         if (s.Status == AsyncOperationStatus.Succeeded)
         {
+            fadePanel.GetComponent<FadePanel>().FadeOut(0.4f);
+            fadePanel.SetActive(false);
             Debug.Log("加载成功");
             SceneManager.SetActiveScene(s.Result.Scene);
         }
@@ -59,7 +62,12 @@ public class SceneLoadMananger : MonoBehaviour
     }
     private async Awaitable UnloadSceneTask()
     {
-        await SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
+        fadePanel.SetActive(true);
+        fadePanel.GetComponent<FadePanel>().FadeIn(0.4f);
+        //等待一段事件后执行
+        await Awaitable.WaitForSecondsAsync(0.4f);
+        //完全加载场景后继续
+        await Awaitable.FromAsyncOperation(SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene()));
     }
     /// <summary>
     /// 监听返回的房间事件函数
@@ -72,5 +80,18 @@ public class SceneLoadMananger : MonoBehaviour
         }
         currentScene = map;
         await LoadSceneTask();
+    }
+    public async void LoadMenu()
+    {
+        if (SceneManager.GetActiveScene().name != "Persistent" && currentScene != null)
+        {
+            await UnloadSceneTask();
+        }
+        currentScene = menu;
+        await LoadSceneTask();
+    }
+    public void NewGameEvent()
+    {
+        LoadMap();
     }
 }

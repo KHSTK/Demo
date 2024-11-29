@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Map/MapLayoutSO", order = 0)]
+[CreateAssetMenu(fileName = "MapLayoutSO", menuName = "Map/MapLayoutSO", order = 0)]
 public class MapLayoutSO : ScriptableObject
 {
     public List<MapRoomData> mapRoomDataList = new();

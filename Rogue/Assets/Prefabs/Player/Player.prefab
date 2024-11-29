@@ -78,7 +78,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 983631301942774979}
@@ -217,7 +217,6 @@ GameObject:
   - component: {fileID: 6181833822843541637}
   - component: {fileID: 5160046437812923338}
   - component: {fileID: 1815262241427037119}
-  - component: {fileID: 8140358691801932846}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -235,8 +234,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -6, y: -3, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6074717336521441893}
   - {fileID: 6365896277707837266}
@@ -309,7 +308,7 @@ MonoBehaviour:
   debuff: {fileID: 6282369541216584748}
   buffRound: {fileID: 11400000, guid: 3720e0d0a9bdf5240a83d5b436474fc2, type: 2}
   baseStrong: 1
-  deadEvent: {fileID: 0}
+  deadEvent: {fileID: 11400000, guid: 1511fafa644201c458358a36e697ce00, type: 2}
   playerEnergy: {fileID: 11400000, guid: f44e4b3b7bacdbf4bb8a2d0b3aed3fa6, type: 2}
   maxEnergy: 3
 --- !u!114 &-3772639370422970093
@@ -496,34 +495,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &8140358691801932846
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3068508777468611423}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d50d46a7be0dec64cbd13b0e68ef43f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  eventSO: {fileID: 11400000, guid: f77f7d84693f0db47bef767af1f49777, type: 2}
-  responseEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8822054242485063418}
-        m_TargetAssemblyTypeName: HealthBarController, Assembly-CSharp
-        m_MethodName: InitHealthBar
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &4672476139466753290
 GameObject:
   m_ObjectHideFlags: 0
@@ -549,7 +520,7 @@ Transform:
   m_GameObject: {fileID: 4672476139466753290}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 4.5, z: 0}
+  m_LocalPosition: {x: 0, y: 7.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -16,13 +16,13 @@ MonoBehaviour:
   m_GUID: 9240fe5f1d45a6544b510d91ae35854b
   m_SerializeEntries:
   - m_GUID: 5f6b95d78a477f1409cb524bc455dc6d
-    m_Address: "Assets/GameData/CardData/\u524A\u5F31.asset"
+    m_Address: "\u524A\u5F31"
     m_ReadOnly: 0
     m_SerializedLabels:
     - CardData
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6c80b5340609dd04193faa9c60ec025e
-    m_Address: "Assets/GameData/CardData/\u5F3A\u5316.asset"
+    m_Address: "\u5F3A\u5316"
     m_ReadOnly: 0
     m_SerializedLabels:
     - CardData
@@ -34,7 +34,7 @@ MonoBehaviour:
     - CardData
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c98571620be2f5d4fad1fe8651ca636b
-    m_Address: "Assets/GameData/CardData/\u62BD\u5361.asset"
+    m_Address: "\u62BD\u5361"
     m_ReadOnly: 0
     m_SerializedLabels:
     - CardData

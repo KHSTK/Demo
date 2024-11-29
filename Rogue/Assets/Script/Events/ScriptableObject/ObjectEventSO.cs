@@ -1,5 +1,5 @@
 using UnityEngine;
-[CreateAssetMenu(menuName = "Events/ObjectEventSO")]
+[CreateAssetMenu(fileName = "ObjectEventSO", menuName = "Events/ObjectEventSO")]
 public class ObjectEventSO : BaseEventSO<object>
 {
 

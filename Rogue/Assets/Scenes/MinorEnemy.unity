@@ -206,67 +206,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &4316537870470654654
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3755568123273445416, guid: 05f2f4ea41ba84f459f4d4ec2a6223b7, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3755568123273445416, guid: 05f2f4ea41ba84f459f4d4ec2a6223b7, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3755568123273445416, guid: 05f2f4ea41ba84f459f4d4ec2a6223b7, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3755568123273445416, guid: 05f2f4ea41ba84f459f4d4ec2a6223b7, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3755568123273445416, guid: 05f2f4ea41ba84f459f4d4ec2a6223b7, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3755568123273445416, guid: 05f2f4ea41ba84f459f4d4ec2a6223b7, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3755568123273445416, guid: 05f2f4ea41ba84f459f4d4ec2a6223b7, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3755568123273445416, guid: 05f2f4ea41ba84f459f4d4ec2a6223b7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3755568123273445416, guid: 05f2f4ea41ba84f459f4d4ec2a6223b7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3755568123273445416, guid: 05f2f4ea41ba84f459f4d4ec2a6223b7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6402086999001078386, guid: 05f2f4ea41ba84f459f4d4ec2a6223b7, type: 3}
-      propertyPath: m_Name
-      value: BackToMap
-      objectReference: {fileID: 0}
-    - target: {fileID: 6402086999001078386, guid: 05f2f4ea41ba84f459f4d4ec2a6223b7, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 05f2f4ea41ba84f459f4d4ec2a6223b7, type: 3}
 --- !u!1001 &5703787726358285924
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -285,11 +224,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2757829844325425059, guid: ebab1f8bfd6d0b048bd714e15dfbe927, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.06
+      value: 4.3
       objectReference: {fileID: 0}
     - target: {fileID: 2757829844325425059, guid: ebab1f8bfd6d0b048bd714e15dfbe927, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.1
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 2757829844325425059, guid: ebab1f8bfd6d0b048bd714e15dfbe927, type: 3}
       propertyPath: m_LocalPosition.z
@@ -327,6 +266,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 6108615828461336804, guid: ebab1f8bfd6d0b048bd714e15dfbe927, type: 3}
+      propertyPath: enemyTurnEndEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: d5fced55105766a48b582fe7a684fd97, type: 2}
     - target: {fileID: 7828086682384059276, guid: ebab1f8bfd6d0b048bd714e15dfbe927, type: 3}
       propertyPath: m_Name
       value: MinorEnemy
@@ -349,5 +292,4 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 972110750}
-  - {fileID: 4316537870470654654}
   - {fileID: 5703787726358285924}
