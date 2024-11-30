@@ -59,7 +59,7 @@ public class Enemy : CharacterBase
         {
             var actionName = currentActionList[r - 1].effect.targetType == EffcetTargetType.Self ? "skill" : "attack";
             animator.SetTrigger(actionName);
-            yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1.0f > 0.6f
+            yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1.0f > 0.8f
             && !animator.IsInTransition(0) && animator.GetCurrentAnimatorStateInfo(0).IsName(actionName));
             if (actionName == "skill")
             {

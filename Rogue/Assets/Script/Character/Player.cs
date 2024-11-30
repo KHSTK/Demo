@@ -11,7 +11,6 @@ public class Player : CharacterBase
     protected override void Start()
     {
         base.Start();
-        // TODO：继续游戏，当前hp等于上次保存的hp
         CurrentHp = CurrentHp;
         playerEnergy.maxValue = maxEnergy;
         CurrentEnergy = MaxEnergy;

@@ -13,17 +13,15 @@ public class CardManager : MonoBehaviour
     public CardLibrarySO newGameLibrary;//新游戏卡牌库
     public CardLibrarySO currentLibrary;//当前玩家卡牌库
     private int preIndex;
-    private void Awake()
+    public void OnNewGame()
     {
+        Debug.Log("新游戏时清空玩家卡牌库");
+        currentLibrary.cardLibraryList.Clear();
         InitCardList();
         foreach (var item in newGameLibrary.cardLibraryList)
         {
             currentLibrary.cardLibraryList.Add(item);
         }
-    }
-    private void OnDisable()
-    {
-        currentLibrary.cardLibraryList.Clear();
     }
 
     /// <summary>

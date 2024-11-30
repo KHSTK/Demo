@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class SceneLoadMananger : MonoBehaviour
 {
     private AssetReference currentScene;
+    public GameObject setting;
     public AssetReference map;
     public AssetReference menu;
     public GameObject fadePanel;
@@ -38,10 +39,13 @@ public class SceneLoadMananger : MonoBehaviour
 
         //加载房间
         await LoadSceneTask();
-        //传递当前房间坐标信息
-        roomLoadUpdateEvent.RaiseEvent(currentRoomVector, this);
         //房间加载完成事件
         AfterRoomloadEvent.RaiseEvent(currentRoom, this);
+    }
+    public void GameWinEvent()
+    {
+        //传递当前房间坐标信息
+        roomLoadUpdateEvent.RaiseEvent(currentRoomVector, this);
     }
     /// <summary>
     /// 异步加载场景
@@ -79,6 +83,7 @@ public class SceneLoadMananger : MonoBehaviour
             await UnloadSceneTask();
         }
         currentScene = map;
+        setting.SetActive(true);
         await LoadSceneTask();
     }
     public async void LoadMenu()
@@ -88,6 +93,7 @@ public class SceneLoadMananger : MonoBehaviour
             await UnloadSceneTask();
         }
         currentScene = menu;
+        setting.SetActive(false);
         await LoadSceneTask();
     }
     public void NewGameEvent()

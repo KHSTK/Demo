@@ -23,15 +23,18 @@ public class MenuPanel : MonoBehaviour
 
     private void OnNewGameButtonClicked()
     {
+        Debug.Log("新游戏");
         newGameEvent.RaiseEvent(null, this);
     }
 
     private void OnLoadGameButtonClicked()
     {
+        Debug.Log("继续游戏");
         loadGameEvent.RaiseEvent(null, this);
     }
     private void OnQuitGameButtonClicked()
     {
+        Debug.Log("退出游戏");
         Application.Quit();
     }
     public void CanLoadGameEvent()
