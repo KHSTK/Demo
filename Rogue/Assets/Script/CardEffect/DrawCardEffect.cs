@@ -6,5 +6,6 @@ public class DrawCardEffect : Effect
     public override void Execute(CharacterBase from, CharacterBase target)
     {
         drawCardEvent?.RaiseEvent(value, this);
+        Debug.Log("DrawCardEffect");
     }
 }

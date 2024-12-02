@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f88f58d40569b174bb23af7776ce1f17, type: 3}
-  m_Name: DrawCardEvent
+  m_Script: {fileID: 11500000, guid: 1616762389d1f5845ba95be08137531d, type: 3}
+  m_Name: RestRoomOverEvent
   m_EditorClassIdentifier: 
-  description: "\u62BD\u5361\u4E8B\u4EF6\uFF0C\u901A\u77E5\u8FDB\u884C\u62BD\u5361"
+  description: "\u8FDB\u5165\u4F11\u606F\u623F\u95F4\u8FD4\u56DE\u540E\u901A\u77E5\u66F4\u65B0\u5730\u56FE"
   lastSender: 

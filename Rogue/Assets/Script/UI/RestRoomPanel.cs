@@ -8,6 +8,7 @@ public class RestRoomPanel : MonoBehaviour
     private Button restButton, backToMapButton;
     public Effect restEffect;
     public ObjectEventSO loadMapEvent;
+    public ObjectEventSO restRoomOverEvent;
     private CharacterBase player;
     private void OnEnable()
     {
@@ -30,6 +31,7 @@ public class RestRoomPanel : MonoBehaviour
     private void OnBackToMapButtonClicked()
     {
         loadMapEvent.RaiseEvent(null, this);
+        restRoomOverEvent.RaiseEvent(null, this);
     }
 
 }

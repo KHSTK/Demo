@@ -1,13 +1,12 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem.UI;
-using UnityEngine.Rendering;
+
 
 public class CardDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public GameObject arrowPrefab;
     private GameObject currentArrow;
-
+    private CardDeck cardDeck; //引用卡组
     private Card currentCard;
     private bool canMove;
     private bool canExecute;
@@ -17,17 +16,19 @@ public class CardDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     private void Awake()
     {
         currentCard = GetComponent<Card>();
+        cardDeck = GameObject.FindGameObjectWithTag("CardDeck").GetComponent<CardDeck>();
     }
     private void OnDisable()
     {
-        currentCard.transform.Find("Entry/Square").gameObject.SetActive(false);
+        currentCard.transform.Find("Entry/Use").gameObject.SetActive(false);
+        currentCard.transform.Find("Entry/Dis").gameObject.SetActive(false);
         canMove = false;
         canExecute = false;
     }
     //开始拖拽
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (!currentCard.isAvailable) return;
+        if (!currentCard.isAvailable && !cardDeck.needDiscard) return;
         switch (currentCard.cardData.cardType)
         {
             case CardType.Attack:
@@ -43,25 +44,28 @@ public class CardDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     //拖拽中
     public void OnDrag(PointerEventData eventData)
     {
-        if (!currentCard.isAvailable) return;
         if (canMove)
         {
             currentCard.isAnimating = true;
             Vector3 screenPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10);
             worldPos = Camera.main.ScreenToWorldPoint(screenPos);
             currentCard.transform.position = worldPos;
-            if (worldPos.y > 0.5f)
+            if (cardDeck.needDiscard && worldPos.y > 0.5f)
+            {
+                currentCard.transform.Find("Entry/Dis").gameObject.SetActive(true);
+            }
+            else if (worldPos.y > 0.5f)
             {
                 canExecute = true;
                 targetCharacter = GameObject.FindWithTag("Enemy").GetComponent<CharacterBase>();
-                currentCard.transform.Find("Entry/Square").gameObject.SetActive(true);
+                currentCard.transform.Find("Entry/Use").gameObject.SetActive(true);
             }
             else
             {
 
                 canExecute = false;
                 targetCharacter = null;
-                currentCard.transform.Find("Entry/Square").gameObject.SetActive(false);
+                currentCard.transform.Find("Entry/Use").gameObject.SetActive(false);
             }
         }
         // else
@@ -81,10 +85,14 @@ public class CardDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     //拖拽结束
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (!currentCard.isAvailable) return;
-        if (currentArrow != null)
+        // if (currentArrow != null)
+        // {
+        //     Destroy(currentArrow);
+        // }
+        if (cardDeck.needDiscard)
         {
-            Destroy(currentArrow);
+            cardDeck.DiscardCard(currentCard);
+            cardDeck.OnPlayerTurnEnd();
         }
         if (canExecute)
         {

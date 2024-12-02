@@ -8,49 +8,33 @@ public class DataManager : MonoBehaviour
     public MapLayoutSO mapLayoutSO;
     public IntVariable playerHP;
     private string savePath;
-    private DataList dataList;
     private void Awake()
     {
-        dataList = new DataList(mapLayoutSO, playerCardLibrary, playerHP);
         savePath = Application.persistentDataPath + "/SaveData/";
         Debug.Log(savePath);
         Load();
     }
     public void Save()
     {
-        string jsonPath = savePath + "Data.sav";
-        string jsonData = JsonConvert.SerializeObject(dataList);
-        if (!File.Exists(jsonPath))
+        string mapLayoutPath = savePath + "mapLayout.sav";
+        string mapLayoutData = JsonConvert.SerializeObject(mapLayoutSO);
+        if (!File.Exists(mapLayoutPath))
         {
             Directory.CreateDirectory(savePath);
         }
-        File.WriteAllText(jsonPath, jsonData);
+        File.WriteAllText(mapLayoutPath, mapLayoutData);
         Debug.Log("Save Data Success");
     }
     public void Load()
     {
-        string jsonPath = savePath + "Data.sav";
-        if (File.Exists(jsonPath))
+        string mapLayoutPath = savePath + "mapLayout.sav";
+        if (File.Exists(mapLayoutPath))
         {
-            string data = File.ReadAllText(jsonPath);
-            var jsonData = JsonConvert.DeserializeObject<DataList>(data);
-            dataList = jsonData;
+            string mapLayoutData = File.ReadAllText(mapLayoutPath);
+            var jsonData = JsonConvert.DeserializeObject<MapLayoutSO>(mapLayoutData);
+            mapLayoutSO = jsonData;
             Debug.Log("Load Data Success");
         }
-        mapLayoutSO = dataList.mapLayout;
-        playerCardLibrary = dataList.cardLibrary;
-        playerHP = dataList.playerHP;
     }
 }
-public class DataList
-{
-    public MapLayoutSO mapLayout;
-    public CardLibrarySO cardLibrary;
-    public IntVariable playerHP;
-    public DataList(MapLayoutSO mapLayout, CardLibrarySO cardLibrary, IntVariable playerHP)
-    {
-        this.mapLayout = mapLayout;
-        this.cardLibrary = cardLibrary;
-        this.playerHP = playerHP;
-    }
-}
+

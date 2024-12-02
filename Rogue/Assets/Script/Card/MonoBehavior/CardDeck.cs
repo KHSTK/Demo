@@ -16,9 +16,11 @@ public class CardDeck : MonoBehaviour
     public Vector3 deckPos;//牌堆位置
     public int drawCount;//每回合抽牌数量
     public int maxCard;//手牌上限
+    public bool needDiscard = false;//是否需要弃牌
     [Header("事件广播")]
     public IntEventSO drawCountEvent;
     public IntEventSO discardCountEvent;
+    public ObjectEventSO playerTurnEndEvent;
 
     //测试用初始化
     private void Start()
@@ -28,6 +30,10 @@ public class CardDeck : MonoBehaviour
         maxCard = 6;
     }
 
+    private void Update()
+    {
+
+    }
     //牌堆初始化
     public void InitDeck()
     {
@@ -41,7 +47,6 @@ public class CardDeck : MonoBehaviour
         }
         ShuffleDeck();
     }
-    [ContextMenu("测试抽卡")]
     public void TestDrawCard()
     {
         DrawCard(1);
@@ -54,6 +59,7 @@ public class CardDeck : MonoBehaviour
 
     public void DrawCard(int amount)
     {
+        Debug.Log("抽牌数量：" + amount);
         SetCardLayout(0);
         for (int i = 0; i < amount; i++)
         {
@@ -148,19 +154,30 @@ public class CardDeck : MonoBehaviour
         discardCountEvent.RaiseEvent(discardDeck.Count, this);
     }
     /// <summary>
-    /// 回合结束弃掉玩家所有卡牌
+    /// 回合结束检测玩家手牌
     /// </summary>
     public void OnPlayerTurnEnd()
     {
-        if (handleCardObjectList.Count < maxCard) return;
-        var currentCardList = handleCardObjectList;
-        for (int i = 0; i < currentCardList.Count; i = 0)
-        {
-            DiscardCard(handleCardObjectList[0]);
-            if (handleCardObjectList.Count < 1) break;
-        }
 
-        handleCardObjectList.Clear();
+        //回合结束后如果不需要弃牌
+        Debug.Log("回合结束检测玩家手牌");
+        if (handleCardObjectList.Count <= maxCard)
+        {
+            needDiscard = false;
+            playerTurnEndEvent.RaiseEvent(null, this);
+        }
+        else
+        {
+            needDiscard = true;
+        }
+        // var currentCardList = handleCardObjectList;
+        // for (int i = 0; i < currentCardList.Count; i = 0)
+        // {
+        //     DiscardCard(handleCardObjectList[0]);
+        //     if (handleCardObjectList.Count < 1) break;
+        // }
+
+        // handleCardObjectList.Clear();
     }
     /// <summary>
     /// 游戏结束弃牌

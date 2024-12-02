@@ -536,7 +536,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cd37536c1830f647be5160aa8b04879, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTurnEndEvent: {fileID: 11400000, guid: b6540f1320574f046a21f327a3b2b910, type: 2}
+  playerTurnEndEvent: {fileID: 11400000, guid: 455fa0086de6a6c499aa30270bad9960, type: 2}
   endTurnButtonPos: {fileID: 774920518}
 --- !u!114 &169444782
 MonoBehaviour:
@@ -885,7 +885,7 @@ GameObject:
   - component: {fileID: 418333848}
   m_Layer: 0
   m_Name: CardDeck
-  m_TagString: Untagged
+  m_TagString: CardDeck
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -910,8 +910,10 @@ MonoBehaviour:
   deckPos: {x: 0, y: 0, z: 0}
   drawCount: 0
   maxCard: 0
+  needDiscard: 0
   drawCountEvent: {fileID: 11400000, guid: 3a25630921484ce4093c64217cc56f3a, type: 2}
   discardCountEvent: {fileID: 11400000, guid: 524bee77e5fad5d47953d61cad1b8573, type: 2}
+  playerTurnEndEvent: {fileID: 11400000, guid: b6540f1320574f046a21f327a3b2b910, type: 2}
 --- !u!4 &418333839
 Transform:
   m_ObjectHideFlags: 0
@@ -995,7 +997,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d50d46a7be0dec64cbd13b0e68ef43f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eventSO: {fileID: 11400000, guid: b6540f1320574f046a21f327a3b2b910, type: 2}
+  eventSO: {fileID: 11400000, guid: 455fa0086de6a6c499aa30270bad9960, type: 2}
   responseEvent:
     m_PersistentCalls:
       m_Calls:
@@ -1696,6 +1698,7 @@ GameObject:
   - component: {fileID: 949820567}
   - component: {fileID: 949820568}
   - component: {fileID: 949820569}
+  - component: {fileID: 949820570}
   m_Layer: 0
   m_Name: SceneLoad Manager
   m_TagString: Untagged
@@ -1802,18 +1805,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 949820565}
-        m_TargetAssemblyTypeName: SceneLoadMananger, Assembly-CSharp
-        m_MethodName: GameWinEvent
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &949820567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1898,6 +1889,34 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &949820570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 949820562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d50d46a7be0dec64cbd13b0e68ef43f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventSO: {fileID: 11400000, guid: b9b06bc87a3054f478dced5c1219600b, type: 2}
+  responseEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 949820565}
+        m_TargetAssemblyTypeName: SceneLoadMananger, Assembly-CSharp
+        m_MethodName: GameWinEvent
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1173541552
 GameObject:
   m_ObjectHideFlags: 0
@@ -1964,6 +1983,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   restEffect: {fileID: 11400000, guid: 756e130e1dc468741aeac6119d696eb8, type: 2}
   loadMapEvent: {fileID: 11400000, guid: 39e67c47644a7974080f79e37d3ab1a3, type: 2}
+  restRoomOverEvent: {fileID: 11400000, guid: b9b06bc87a3054f478dced5c1219600b, type: 2}
 --- !u!1 &1284927607
 GameObject:
   m_ObjectHideFlags: 0
@@ -2332,111 +2352,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1699087546
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1699087547}
-  - component: {fileID: 1699087548}
-  - component: {fileID: 1699087550}
-  - component: {fileID: 1699087549}
-  m_Layer: 0
-  m_Name: DataManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1699087547
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1699087546}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1699087548
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1699087546}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b12e20b27bcf2c84086e27d92fbe9ed6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerCardLibrary: {fileID: 11400000, guid: eb77fcfc12227c249a8e092f05702ed7, type: 2}
-  mapLayoutSO: {fileID: 11400000, guid: 20ebcaf5e8234ca42bf3d4eec57266e6, type: 2}
-  playerHP: {fileID: 11400000, guid: 1255c6a06aab5da46a238667ec369413, type: 2}
---- !u!114 &1699087549
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1699087546}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d50d46a7be0dec64cbd13b0e68ef43f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  eventSO: {fileID: 11400000, guid: aa3dbb96de2f86a4f93fcccd64f8b333, type: 2}
-  responseEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1699087548}
-        m_TargetAssemblyTypeName: DataManager, Assembly-CSharp
-        m_MethodName: Save
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &1699087550
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1699087546}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d50d46a7be0dec64cbd13b0e68ef43f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  eventSO: {fileID: 11400000, guid: 39e67c47644a7974080f79e37d3ab1a3, type: 2}
-  responseEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1699087548}
-        m_TargetAssemblyTypeName: DataManager, Assembly-CSharp
-        m_MethodName: Save
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &1753727730
 GameObject:
   m_ObjectHideFlags: 0
@@ -2820,7 +2735,6 @@ SceneRoots:
   - {fileID: 1753727732}
   - {fileID: 919670529}
   - {fileID: 5376354}
-  - {fileID: 1699087547}
   - {fileID: 418333839}
   - {fileID: 549169686}
   - {fileID: 639963743}
